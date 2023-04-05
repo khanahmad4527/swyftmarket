@@ -13,24 +13,24 @@ import { HomeAction } from "./home.action";
 import { Product } from "@/utils/types";
 
 interface HomeState {
-  isLoadingMobile: boolean;
-  isErrorMobile: boolean;
-  isLoadingTv: boolean;
-  isErrorTv: boolean;
-  isLoadingHome: boolean;
-  isErrorHome: boolean;
+  getMobileIsLoading: boolean;
+  getMobileIsError: boolean;
+  getTvIsLoading: boolean;
+  getTvIsError: boolean;
+  getHomeIsLoading: boolean;
+  getHomeIsError: boolean;
   mobileData: Product[];
   tvData: Product[];
   homeData: Product[];
 }
 
 const initialState: HomeState = {
-  isLoadingMobile: false,
-  isErrorMobile: false,
-  isLoadingTv: false,
-  isErrorTv: false,
-  isLoadingHome: false,
-  isErrorHome: false,
+  getMobileIsLoading: false,
+  getMobileIsError: false,
+  getTvIsLoading: false,
+  getTvIsError: false,
+  getHomeIsLoading: false,
+  getHomeIsError: false,
   mobileData: [],
   tvData: [],
   homeData: [],
@@ -45,16 +45,16 @@ export const homeReducer = (
     case GET_MOBILES_LOADING: {
       return {
         ...state,
-        isLoadingMobile: true,
-        isErrorMobile: false,
+        getMobileIsLoading: true,
+        getMobileIsError: false,
       };
     }
 
     case GET_MOBILES_SUCCESS: {
       return {
         ...state,
-        isLoadingMobile: false,
-        isErrorMobile: false,
+        getMobileIsLoading: false,
+        getMobileIsError: false,
         mobileData: action.payload,
       };
     }
@@ -62,24 +62,24 @@ export const homeReducer = (
     case GET_MOBILES_ERROR: {
       return {
         ...state,
-        isLoadingMobile: false,
-        isErrorMobile: true,
+        getMobileIsLoading: false,
+        getMobileIsError: true,
       };
     }
 
     case GET_TVS_LOADING: {
       return {
         ...state,
-        isLoadingTv: true,
-        isErrorTv: false,
+        getTvIsLoading: true,
+        getTvIsError: false,
       };
     }
 
     case GET_TVS_SUCCESS: {
       return {
         ...state,
-        isLoadingTv: false,
-        isErrorTv: false,
+        getTvIsLoading: false,
+        getTvIsError: false,
         tvData: action.payload,
       };
     }
@@ -87,24 +87,24 @@ export const homeReducer = (
     case GET_TVS_ERROR: {
       return {
         ...state,
-        isLoadingTv: false,
-        isErrorTv: true,
+        getTvIsLoading: false,
+        getTvIsError: true,
       };
     }
 
     case GET_HOMEAPPLIANCES_LOADING: {
       return {
         ...state,
-        isLoadingHome: true,
-        isErrorHome: false,
+        getHomeIsLoading: true,
+        getHomeIsError: false,
       };
     }
 
     case GET_HOMEAPPLIANCES_SUCCESS: {
       return {
         ...state,
-        isLoadingHome: false,
-        isErrorHome: false,
+        getHomeIsLoading: false,
+        getHomeIsError: false,
         homeData: action.payload,
       };
     }
@@ -112,8 +112,8 @@ export const homeReducer = (
     case GET_HOMEAPPLIANCES_ERROR: {
       return {
         ...state,
-        isLoadingHome: false,
-        isErrorHome: true,
+        getHomeIsLoading: false,
+        getHomeIsError: true,
       };
     }
 

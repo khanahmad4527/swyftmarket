@@ -14,8 +14,8 @@ type AuthState = {
     lastname: string;
     email: string;
   };
-  isLoading: boolean;
-  isError: boolean;
+  getAuthIsLoading: boolean;
+  getAuthIsError: boolean;
   isAuth: boolean;
 };
 
@@ -32,8 +32,8 @@ const initialState: AuthState = {
     lastname,
     email,
   },
-  isLoading: false,
-  isError: false,
+  getAuthIsLoading: false,
+  getAuthIsError: false,
   isAuth: token ? true : false,
 };
 
@@ -46,8 +46,8 @@ export const authReducer = (
     case GET_AUTH_LOADING: {
       return {
         ...state,
-        isLoading: true,
-        isError: false,
+        getAuthIsLoading: true,
+        getAuthIsError: false,
       };
     }
 
@@ -68,8 +68,8 @@ export const authReducer = (
           lastname: action.payload.userData.lastname,
           email: action.payload.userData.email,
         },
-        isLoading: false,
-        isError: false,
+        getAuthIsLoading: false,
+        getAuthIsError: false,
         isAuth: true,
       };
     }
@@ -77,8 +77,8 @@ export const authReducer = (
     case GET_AUTH_ERROR: {
       return {
         ...state,
-        isLoading: false,
-        isError: true,
+        getAuthIsLoading: false,
+        getAuthIsError: true,
       };
     }
 

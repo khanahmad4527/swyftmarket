@@ -18,6 +18,22 @@ export interface Product {
   updatedAt: string;
 }
 
+export interface ProductSearchParams {
+  q?: string;
+  category?: string[];
+  brand?: string[];
+  _page?: number;
+  _limit?: number;
+  _sort?: string;
+  _order?: "asc" | "desc";
+  price_gte?: number | undefined;
+  price_lte?: number | undefined;
+  discount_gte?: number | undefined;
+  discount_lte?: number | undefined;
+  rating_gte?: number | undefined;
+  rating_lte?: number | undefined;
+}
+
 export interface userData {
   _id: string;
   firstname: string;

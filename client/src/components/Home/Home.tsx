@@ -8,6 +8,7 @@ import {
 } from "../../redux/home/home.action";
 import CategoryCarosuel from "./CategoryCarosuel";
 import ProductCarouel from "./ProductCarouel";
+import { useRouter } from "next/router";
 
 const Home = () => {
   const mobile = useAppSelector((store) => store.home);
@@ -15,6 +16,7 @@ const Home = () => {
   const home = useAppSelector((store) => store.home);
 
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     /**********    page will always loads at top position   ******************/
@@ -33,26 +35,28 @@ const Home = () => {
     // }
   }, []);
 
+  console.log("query", router.query);
+
   return (
     <Flex flexDirection="column">
       <CategoryCarosuel />
       <ProductCarouel
         title="Mobiles"
         data={mobile.mobileData}
-        loading={mobile.isLoadingMobile}
-        error={mobile.isErrorMobile}
+        loading={mobile.getMobileIsLoading}
+        error={mobile.getMobileIsError}
       />
       <ProductCarouel
         title="Tvs"
         data={tv.tvData}
-        loading={tv.isLoadingTv}
-        error={tv.isErrorTv}
+        loading={tv.getTvIsLoading}
+        error={tv.getTvIsError}
       />
       <ProductCarouel
         title="Home Appliances"
         data={home.homeData}
-        loading={home.isLoadingHome}
-        error={home.isErrorHome}
+        loading={home.getHomeIsLoading}
+        error={home.getHomeIsError}
       />
       {/* To maintain the margin bottom with footer on home page */}
       <Box mt={"20px"}></Box>

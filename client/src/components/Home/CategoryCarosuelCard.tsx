@@ -8,6 +8,7 @@ import {
   Box,
   Square,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 const CategoryCarosuelCard = ({
   image,
@@ -18,13 +19,15 @@ const CategoryCarosuelCard = ({
   title: string;
   link: string;
 }) => {
+  const router = useRouter();
+
   return (
     <Card
       w="180px"
       h="190px"
       margin="auto"
       cursor="pointer"
-      //onClick={() => navigate(link)}
+      onClick={() => router.push(link)}
     >
       <CardBody>
         <Stack spacing={6}>

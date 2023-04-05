@@ -9,6 +9,7 @@ import { AuthAction } from "./auth.action";
 
 type AuthState = {
   userDetails: {
+    id: string;
     firstname: string;
     lastname: string;
     email: string;
@@ -20,12 +21,13 @@ type AuthState = {
 
 const token = Cookies.get("token");
 
-const { firstname, lastname, email } = JSON.parse(
+const { firstname, lastname, email, id } = JSON.parse(
   Cookies.get("smUserData") || "{}"
-) as { firstname: string; lastname: string; email: string };
+) as { firstname: string; lastname: string; email: string; id: string };
 
 const initialState: AuthState = {
   userDetails: {
+    id,
     firstname,
     lastname,
     email,
@@ -53,7 +55,7 @@ export const authReducer = (
       if (action.payload.userData) {
         Cookies.set("token", action.payload.token, { expires: 3 });
         Cookies.set("smUserData", JSON.stringify(action.payload.userData), {
-          expires: 3, // Set cookie expiration time to 7 days
+          expires: 3, // Set cookie expiration time to 3 days
           sameSite: "lax", // Set sameSite to lax
         });
       }
@@ -61,6 +63,7 @@ export const authReducer = (
       return {
         ...state,
         userDetails: {
+          id: action.payload.userData._id,
           firstname: action.payload.userData.firstname,
           lastname: action.payload.userData.lastname,
           email: action.payload.userData.email,

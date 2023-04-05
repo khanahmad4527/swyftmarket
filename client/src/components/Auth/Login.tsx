@@ -15,6 +15,7 @@ import {
   useToast,
   Text,
   Divider,
+  Square,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -35,7 +36,7 @@ export default function Login() {
 
   const { isAuth } = useAppSelector((store) => store.auth);
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setIsButton(true);
     const { status, role } = await existingUser(email, password);
@@ -51,6 +52,8 @@ export default function Login() {
       });
       if (role === "admin" || role === "superadmin") {
         router.push("/admin");
+      } else {
+        router.push("/");
       }
       setIsButton(false);
     } else if (status === 404) {
@@ -78,47 +81,42 @@ export default function Login() {
     setPassword("");
   };
 
-  useEffect(() => {
-    const { asPath, query } = router;
-    const { from } = query;
-    if (isAuth) {
-      router.replace(
-        "/login",
-        { query: { from: asPath } },
-        { shallow: true, scroll: false }
-      );
-    }
-  }, [isAuth, router]);
+  // useEffect(() => {
+  //   const { asPath, query } = router;
+  //   const { from } = query;
+  //   if (isAuth) {
+  //     router.replace(
+  //       "/login",
+  //       { query: { from: asPath } },
+  //       { shallow: true, scroll: false }
+  //     );
+  //   }
+  // }, [isAuth]);
 
   return (
     <Flex minH={"100vh"} align={"center"} justify={"center"} color="sm.sparkle">
-      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6} w="max-content">
         <Stack align={"center"}>
-          <Heading fontSize={"22px"} fontWeight={400} color="lf.black">
-            Log In
+          <Heading fontSize={"36px"} fontWeight={400} color="lf.black">
+            Login to your account
           </Heading>
         </Stack>
-        <Divider />
-        <Text textAlign={"center"} fontSize="13px" fontWeight={400}>
-          Sign in so you can save items to your wishlists, track your orders,
-          and check out faster!
-        </Text>
-        <Box rounded={"lg"} boxShadow={"lg"} p={8}>
+        <Box rounded={"lg"} boxShadow={"lg"} p={8} bgColor={"white"}>
           <form onSubmit={handleSubmit}>
             <Stack spacing={4}>
               <FormControl isRequired>
                 <FormLabel>Email</FormLabel>
                 <Input
                   border="2px solid"
-                  borderColor={"teal.500"}
+                  borderColor={"yellow.500"}
                   _focus={{
                     boxShadow: "none",
                     border: "2px solid",
-                    borderColor: "teal.500",
+                    borderColor: "yellow.500",
                   }}
                   _hover={{
                     border: "2px solid",
-                    borderColor: "teal.500",
+                    borderColor: "yellow.500",
                   }}
                   type="email"
                   value={email}
@@ -131,15 +129,15 @@ export default function Login() {
                 <InputGroup>
                   <Input
                     border="2px solid"
-                    borderColor={"teal.500"}
+                    borderColor={"yellow.500"}
                     _focus={{
                       boxShadow: "none",
                       border: "2px solid",
-                      borderColor: "teal.500",
+                      borderColor: "yellow.500",
                     }}
                     _hover={{
                       border: "2px solid",
-                      borderColor: "teal.500",
+                      borderColor: "yellow.500",
                     }}
                     type={showPassword ? "text" : "password"}
                     value={password}
@@ -148,7 +146,8 @@ export default function Login() {
 
                   <InputRightElement h={"full"}>
                     <Button
-                      variant={"ghost"}
+                      bg="none"
+                      _hover={{ bg: "none" }}
                       onClick={() =>
                         setShowPassword((showPassword) => !showPassword)
                       }
@@ -164,7 +163,7 @@ export default function Login() {
                   align={"start"}
                   justify={"space-between"}
                 >
-                  <Checkbox colorScheme={"teal"}>Remember me</Checkbox>
+                  <Checkbox colorScheme={"yellow"}>Remember me</Checkbox>
                   <Link>Forgot password?</Link>
                 </Stack>
 
@@ -172,11 +171,12 @@ export default function Login() {
                   type="submit"
                   isLoading={isButton}
                   loadingText="Loging"
-                  bg="lf.button"
-                  color="white"
+                  bg="sm.sparkle"
+                  color="yellow.500"
+                  textTransform={"uppercase"}
                   _hover={{
-                    color: "lf.black",
-                    bg: "teal.500",
+                    color: "sm.sparkle",
+                    bg: "yellow.500",
                   }}
                 >
                   Login
@@ -185,7 +185,7 @@ export default function Login() {
               <Stack pt={6}>
                 <Text align={"center"}>
                   No account?{" "}
-                  <Link href="/signup" color="teal.500">
+                  <Link href="/signup" color="yellow.500">
                     Create one!
                   </Link>
                 </Text>

@@ -20,26 +20,21 @@ const Home = () => {
     /**********    page will always loads at top position   ******************/
     window.scrollTo(0, 0);
 
-    if (!mobile.mobileData.length) {
-      dispatch(getMobiles());
-    }
+    // if (!mobile.mobileData.length) {
+    //   dispatch(getMobiles());
+    // }
 
-    if (!tv.tvData.length) {
-      dispatch(getTvs());
-    }
+    // if (!tv.tvData.length) {
+    //   dispatch(getTvs());
+    // }
 
-    if (!home.homeData.length) {
-      dispatch(getHomeAppliances());
-    }
-  }, [
-    dispatch,
-    home.homeData.length,
-    mobile.mobileData.length,
-    tv.tvData.length,
-  ]);
+    // if (!home.homeData.length) {
+    //   dispatch(getHomeAppliances());
+    // }
+  }, []);
 
   return (
-    <Flex flexDirection="column" bg="yellow.500">
+    <Flex flexDirection="column">
       <CategoryCarosuel />
       <ProductCarouel
         title="Mobiles"

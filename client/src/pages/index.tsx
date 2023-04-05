@@ -1,5 +1,7 @@
 import Head from "next/head";
 import Home from "@/components/Home/Home";
+import Footer from "@/components/Footer/Footer";
+import Navbar from "@/components/Navbar/Navbar";
 
 export default function LoginPage() {
   return (
@@ -12,7 +14,9 @@ export default function LoginPage() {
       </Head>
 
       <main>
+        <Navbar />
         <Home />
+        <Footer />
       </main>
     </>
   );

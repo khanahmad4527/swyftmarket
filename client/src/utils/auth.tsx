@@ -1,15 +1,15 @@
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "@/redux/store";
 import { ReactNode } from "react";
 
 const Auth = ({ children }: { children: ReactNode }) => {
+  const { isAuth } = useAppSelector((store) => store.auth);
   const router = useRouter();
-  const { isAuth } = useSelector((store: any) => store.auth);
 
   if (isAuth) {
     return children;
   } else {
-    router.push("/login");
+    router.push("/login", undefined, { shallow: true });
     return null;
   }
 };

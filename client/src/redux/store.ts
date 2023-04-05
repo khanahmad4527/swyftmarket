@@ -7,8 +7,10 @@ import {
 } from "redux";
 import thunk from "redux-thunk";
 import { homeReducer } from "./home/home.reducer";
+import { authReducer } from "./auth/auth.reducer";
 
 const rootReducer = combineReducers({
+  auth: authReducer,
   home: homeReducer,
 });
 

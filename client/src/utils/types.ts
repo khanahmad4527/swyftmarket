@@ -17,3 +17,24 @@ export interface Product {
   addedAt: string;
   updatedAt: string;
 }
+
+export interface userData {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  hashedPassword: string;
+  role: string;
+}
+
+export interface User {
+  token: string;
+  userData: userData;
+}
+
+export interface NewUser {
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+}

@@ -10,6 +10,7 @@ import {
   GET_HOMEAPPLIANCES_ERROR,
 } from "./home.types";
 import { HomeAction } from "./home.action";
+import { Product } from "@/utils/types";
 
 interface HomeState {
   isLoadingMobile: boolean;
@@ -18,9 +19,9 @@ interface HomeState {
   isErrorTv: boolean;
   isLoadingHome: boolean;
   isErrorHome: boolean;
-  mobileData: any[];
-  tvData: any[];
-  homeData: any[];
+  mobileData: Product[];
+  tvData: Product[];
+  homeData: Product[];
 }
 
 const initialState: HomeState = {

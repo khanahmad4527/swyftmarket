@@ -23,7 +23,7 @@ const initialState: ProductState = {
 export const productsReducer = (
   state: ProductState = initialState,
   action: ProductAction
-): ProductAction => {
+): ProductState => {
   const { type } = action;
   switch (type) {
     case GET_PRODUCTS_LOADING: {

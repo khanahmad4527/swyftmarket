@@ -9,11 +9,13 @@ import thunk from "redux-thunk";
 import { homeReducer } from "./home/home.reducer";
 import { authReducer } from "./auth/auth.reducer";
 import { productsReducer } from "./products/products.reducer";
+import { productDetailReducer } from "./product-detail/productDetail.reducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   home: homeReducer,
   products: productsReducer,
+  productDetail: productDetailReducer,
 });
 
 /*****************       In Production    ***************************/

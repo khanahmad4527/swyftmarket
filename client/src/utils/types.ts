@@ -32,6 +32,7 @@ export interface ProductSearchParams {
   discount_lte?: number | undefined;
   rating_gte?: number | undefined;
   rating_lte?: number | undefined;
+  [key: string]: any;
 }
 
 export interface userData {

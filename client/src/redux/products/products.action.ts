@@ -51,8 +51,6 @@ export const getProducts =
     dispatch(getProductsLoading());
     try {
       const responce = await instance.get(`/products`, { params });
-      console.log("param", params);
-      console.log("res", responce);
       const data = responce.data;
       const totalProductCount = responce.headers["x-total-count"];
       dispatch(getProductsSuccess(data, totalProductCount));

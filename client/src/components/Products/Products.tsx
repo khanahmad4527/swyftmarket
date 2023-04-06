@@ -26,7 +26,6 @@ import { getProducts } from "../../redux/products/products.action";
 import Loading from "../../utils/Loading";
 import Error from "../../utils/Error";
 import { useRouter } from "next/router";
-import { ParsedUrlQuery } from "querystring";
 import { Product, ProductSearchParams } from "@/utils/types";
 //import { getCartData } from "../../redux/cart/cart.actions";
 
@@ -40,8 +39,8 @@ const Products = () => {
   const [currentPage, setCurrentPage] = useState<number>(
     Number(query._page) || 1
   );
-  const [q, setQ] = useState<string>(
-    Array.isArray(query.q) ? query.q[0] : query.q || ""
+  const [q, setQ] = useState<string | undefined>(
+    Array.isArray(query.q) ? query.q[0] : query.q || undefined
   );
   const [sort, setSort] = useState<string>(
     Array.isArray(query._sort) ? query._sort[0] : query._sort || "rating"
@@ -178,27 +177,32 @@ const Products = () => {
     window.scrollTo(0, 0);
 
     const params: ProductSearchParams = {
-      ...(q !== null && { q }),
+      q: q,
       category: category,
       brand: brand,
       _page: currentPage > 1 ? currentPage : 1,
       _limit: productPerPage,
       _sort: sort,
       _order: order as "desc" | "asc",
-      ...(price_gte !== undefined && { price_gte }),
-      ...(price_lte !== undefined && { price_lte }),
-      ...(discount_gte !== undefined && { discount_gte }),
-      ...(discount_lte !== undefined && { discount_lte }),
-      ...(rating_gte !== undefined && { rating_gte }),
-      ...(rating_lte !== undefined && { rating_lte }),
+      price_gte: price_gte,
+      price_lte: price_lte,
+      discount_gte: discount_gte,
+      discount_lte: discount_lte,
+      rating_gte: rating_gte,
+      rating_lte: rating_lte,
     };
 
-    dispatch(getProducts(params));
+    // filter out the null or undefined values from the params object
+    const filteredParams = Object.fromEntries(
+      Object.entries(params).filter(([key, value]) => value != null)
+    );
 
     router.push({
       pathname: "/products",
-      query: params,
+      query: filteredParams,
     });
+
+    dispatch(getProducts(filteredParams));
   }, [
     q,
     currentPage,
@@ -215,35 +219,45 @@ const Products = () => {
     rating_lte,
   ]);
 
-  // useEffect(() => {
-  //   let navQuery = searchParams.get("q");
-  //   if (navQuery !== "" && navQuery !== q) {
-  //     setQ(navQuery);
-  //   }
+  useEffect(() => {
+    let navQuery = query.q;
+    if (navQuery !== undefined && navQuery !== q) {
+      setQ(Array.isArray(navQuery) ? navQuery[0] : navQuery);
+    }
 
-  //   let navCategory = searchParams.getAll("category");
-  //   if (
-  //     navCategory.length &&
-  //     JSON.stringify(navCategory) !== JSON.stringify(category)
-  //   ) {
-  //     setCategory(navCategory);
-  //   }
+    let navCategory = query.category;
+    if (
+      Array.isArray(navCategory) &&
+      JSON.stringify(navCategory) !== JSON.stringify(category)
+    ) {
+      setCategory(navCategory);
+    }
 
-  //   if (navCategory.length === 0 && category.length !== 0) {
-  //     searchParams.delete("category");
-  //     setCategory(navCategory);
-  //   }
+    if (navCategory?.length === 0 && category.length !== 0) {
+      const queryParams = { ...router.query };
+      delete queryParams.category;
+      router.push({
+        pathname: router.pathname,
+        query: queryParams,
+      });
+      setCategory([]);
+    }
 
-  //   if (navQuery === "" && q !== "") {
-  //     searchParams.set("q", "");
-  //     setQ("");
-  //   }
+    if (navQuery === "" && q !== "") {
+      const queryParams = { ...router.query };
+      queryParams.q = "";
+      router.push({
+        pathname: router.pathname,
+        query: queryParams,
+      });
+      setQ("");
+    }
 
-  //   let navPage = Number(searchParams.get("_page"));
-  //   if (navPage !== 0 && navPage !== currentPage) {
-  //     setCurrentPage(navPage);
-  //   }
-  // }, [location]);
+    let navPage = Number(query._page);
+    if (navPage !== 0 && navPage !== currentPage) {
+      setCurrentPage(navPage);
+    }
+  }, [router]);
 
   /**********    state for the drawer   ******************/
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -364,6 +378,7 @@ const Products = () => {
           bottom={0}
           bgColor="sm.sparkle"
           display={isVisible ? "center" : "none"}
+          style={{ width: "100%", height: "60px" }}
         >
           <Button
             bgColor={"sm.buff"}

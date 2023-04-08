@@ -26,6 +26,8 @@ import Loading from "../../utils/Loading";
 import { useRouter } from "next/router";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
+import { Cart } from "@/utils/types";
+import { addToCart, getCartData } from "@/redux/cart/cart.actions";
 
 export default function ProductDetail() {
   const [imageIndex, setImageIndex] = useState<number>(0);
@@ -75,25 +77,25 @@ export default function ProductDetail() {
     brand?: string;
   } = productDetailData;
 
-  //   const { getIsLoading, getIsError, cartData } = useAppSelector(
-  //     (store) => store.cart
-  //   );
+  const { getCartIsLoading, getCartIsError, cartData } = useAppSelector(
+    (store) => store.cart
+  );
+
+  const { isAuth } = useAppSelector((store) => store.auth);
 
   const dispatch = useAppDispatch();
 
-  const handleAddToCart = (item: any) => {
-    console.log(item);
-    // const updatedCartData = [item, ...cartData];
-    // setIsAdded(true);
-    // dispatch(addToCart(updatedCartData));
-    // toast({
-    //   title: "Added to cart",
-    //   description: "We've added the product in your cart",
-    //   status: "success",
-    //   duration: 2000,
-    //   isClosable: true,
-    //   position: "top",
-    // });
+  const handleAddToCart = (item: Cart) => {
+    setIsAdded(true);
+    dispatch(addToCart(item));
+    toast({
+      title: "Added to cart",
+      description: "We've added the product in your cart",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+      position: "top",
+    });
   };
 
   useEffect(() => {
@@ -104,25 +106,27 @@ export default function ProductDetail() {
     }
   }, [id]);
 
-  //   useEffect(() => {
-  //     if (cartData && cartData.length === 0) {
-  //       dispatch(getCartData(authId));
-  //     }
+  useEffect(() => {
+    if (isAuth) {
+      if (cartData && cartData.length === 0) {
+        dispatch(getCartData());
+      }
 
-  //     for (let i = 0; i < cartData.length; i++) {
-  //       if (cartData[i].id == id) {
-  //         setIsAdded(true);
-  //       }
-  //     }
-  //   }, [cartData.length]);
+      for (let i = 0; i < cartData.length; i++) {
+        if (cartData[i].productId === id) {
+          setIsAdded(true);
+        }
+      }
+    }
+  }, [cartData.length]);
 
-  if (getProductDetailIsLoading) {
+  if (getProductDetailIsLoading || getCartIsLoading) {
     return (
       <Flex w="100%" h="100vh">
         <Loading />
       </Flex>
     );
-  } else if (getProductDetailIsError) {
+  } else if (getProductDetailIsError || getCartIsError) {
     return (
       <Flex w="100%" h="100vh">
         <Error />
@@ -299,20 +303,31 @@ export default function ProductDetail() {
                     color: "sm.sparkle",
                     bg: "yellow.500",
                   }}
-                  onClick={() =>
-                    handleAddToCart({
-                      productId: id,
-                      title,
-                      category,
-                      itemPrice: discountPrice && discountPrice,
-                      quantity: 1,
-                      totalPrice: discountPrice && discountPrice * 1,
-                      image,
-                      colour: colours && colours[0][0],
-                      size: sizes && sizes[0],
-                      description,
-                    })
-                  }
+                  onClick={() => {
+                    if (!isAuth) {
+                      toast({
+                        title: "Kindly login",
+                        description: "Please login first to add products",
+                        status: "warning",
+                        duration: 2000,
+                        isClosable: true,
+                        position: "top",
+                      });
+                    } else {
+                      handleAddToCart({
+                        productId: id,
+                        title,
+                        category,
+                        itemPrice: discountPrice && discountPrice,
+                        quantity: 1,
+                        totalPrice: discountPrice && discountPrice * 1,
+                        image,
+                        colour: colours && colours[0][0],
+                        size: sizes && sizes[0],
+                        description,
+                      });
+                    }
+                  }}
                 >
                   Add to cart
                 </Button>

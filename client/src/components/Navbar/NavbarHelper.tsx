@@ -39,7 +39,7 @@ import { SearchIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { BiUserCircle } from "react-icons/bi";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { logout } from "@/redux/auth/auth.action";
-//import { getCartData } from "../../redux/cart/cart.actions";
+import { getCartData } from "../../redux/cart/cart.actions";
 import { FiShoppingCart } from "react-icons/fi";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -114,8 +114,13 @@ const Navbar = () => {
     isAuth,
   } = useAppSelector((store) => store.auth);
 
-  // const { getIsLoading, getIsError, postIsLoading, postIsError, cartData } =
-  //   useSelector((store) => store.cart);
+  const {
+    getCartIsLoading,
+    getCartIsError,
+    postCartIsLoading,
+    postCartIsError,
+    cartData,
+  } = useAppSelector((store) => store.cart);
 
   const dispatch = useAppDispatch();
 
@@ -403,7 +408,7 @@ const Navbar = () => {
             position="relative"
           >
             <Icon boxSize={50} as={FiShoppingCart} color="sm.buff" />
-            {/* {getIsLoading ? (
+            {getCartIsLoading ? (
               <Spinner
                 position="absolute"
                 top={0}
@@ -427,7 +432,7 @@ const Navbar = () => {
               >
                 {cartData && cartData.length}
               </Circle>
-            )} */}
+            )}
           </Square>
         )}
 

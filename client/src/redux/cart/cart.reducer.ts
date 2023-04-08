@@ -19,30 +19,30 @@ import { CartAction } from "./cart.actions";
 import { Cart } from "@/utils/types";
 
 interface CartState {
-  cartGetIsLoading: boolean;
-  cartGetIsError: boolean;
-  cartPostIsLoading: boolean;
-  cartPostIsError: boolean;
-  cartPatchIsLoading: boolean;
-  cartPatchIsError: boolean;
-  cartDeleteIsLoading: boolean;
-  cartDeleteIsError: boolean;
-  cartEmptyIsLoading: boolean;
-  cartEmptyIsError: boolean;
+  getCartIsLoading: boolean;
+  getCartIsError: boolean;
+  postCartIsLoading: boolean;
+  postCartIsError: boolean;
+  patchCartIsLoading: boolean;
+  patchCartIsError: boolean;
+  deleteCartIsLoading: boolean;
+  deleteCartIsError: boolean;
+  emptyCartIsLoading: boolean;
+  emptyCartIsError: boolean;
   cartData: Cart[];
 }
 
 const initState: CartState = {
-  cartGetIsLoading: false,
-  cartGetIsError: false,
-  cartPostIsLoading: false,
-  cartPostIsError: false,
-  cartPatchIsLoading: false,
-  cartPatchIsError: false,
-  cartDeleteIsLoading: false,
-  cartDeleteIsError: false,
-  cartEmptyIsLoading: false,
-  cartEmptyIsError: false,
+  getCartIsLoading: false,
+  getCartIsError: false,
+  postCartIsLoading: false,
+  postCartIsError: false,
+  patchCartIsLoading: false,
+  patchCartIsError: false,
+  deleteCartIsLoading: false,
+  deleteCartIsError: false,
+  emptyCartIsLoading: false,
+  emptyCartIsError: false,
   cartData: [],
 };
 
@@ -55,16 +55,16 @@ export const cartReducer = (
     case GET_CART_ITEMS_LOADING: {
       return {
         ...state,
-        cartGetIsLoading: true,
-        cartGetIsError: false,
+        getCartIsLoading: true,
+        getCartIsError: false,
       };
     }
 
     case GET_CART_ITEMS_SUCCESS: {
       return {
         ...state,
-        cartGetIsLoading: false,
-        cartGetIsError: false,
+        getCartIsLoading: false,
+        getCartIsError: false,
         cartData: action.payload,
       };
     }
@@ -72,24 +72,24 @@ export const cartReducer = (
     case GET_CART_ITEMS_ERROR: {
       return {
         ...state,
-        cartGetIsLoading: false,
-        cartGetIsError: true,
+        getCartIsLoading: false,
+        getCartIsError: true,
       };
     }
 
     case ADD_ITEM_TO_CART_LOADING: {
       return {
         ...state,
-        cartPostIsLoading: true,
-        cartPostIsError: false,
+        postCartIsLoading: true,
+        postCartIsError: false,
       };
     }
 
     case ADD_ITEM_TO_CART_SUCCESS: {
       return {
         ...state,
-        cartPostIsLoading: false,
-        cartPostIsError: false,
+        postCartIsLoading: false,
+        postCartIsError: false,
         cartData: [action.payload, ...state.cartData],
       };
     }
@@ -97,24 +97,24 @@ export const cartReducer = (
     case ADD_ITEM_TO_CART_ERROR: {
       return {
         ...state,
-        cartPostIsLoading: false,
-        cartPostIsError: true,
+        postCartIsLoading: false,
+        postCartIsError: true,
       };
     }
 
     case UPDATE_CART_ITEMS_LOADING: {
       return {
         ...state,
-        cartPatchIsLoading: true,
-        cartPatchIsError: false,
+        patchCartIsLoading: true,
+        patchCartIsError: false,
       };
     }
 
     case UPDATE_CART_ITEMS_SUCCESS: {
       return {
         ...state,
-        cartPatchIsLoading: false,
-        cartPatchIsError: false,
+        patchCartIsLoading: false,
+        patchCartIsError: false,
         cartData: state.cartData.map((item) =>
           item._id === action.payload._id ? action.payload : item
         ),
@@ -124,24 +124,24 @@ export const cartReducer = (
     case UPDATE_CART_ITEMS_ERROR: {
       return {
         ...state,
-        cartPatchIsLoading: false,
-        cartPatchIsError: true,
+        patchCartIsLoading: false,
+        patchCartIsError: true,
       };
     }
 
     case REMOVE_CART_ITEMS_LOADING: {
       return {
         ...state,
-        cartDeleteIsLoading: true,
-        cartDeleteIsError: false,
+        deleteCartIsLoading: true,
+        deleteCartIsError: false,
       };
     }
 
     case REMOVE_CART_ITEMS_SUCCESS: {
       return {
         ...state,
-        cartDeleteIsLoading: false,
-        cartDeleteIsError: false,
+        deleteCartIsLoading: false,
+        deleteCartIsError: false,
         cartData: state.cartData.filter(
           (item) => item._id !== action.payload._id
         ),
@@ -151,24 +151,24 @@ export const cartReducer = (
     case REMOVE_CART_ITEMS_ERROR: {
       return {
         ...state,
-        cartDeleteIsLoading: false,
-        cartDeleteIsError: true,
+        deleteCartIsLoading: false,
+        deleteCartIsError: true,
       };
     }
 
     case EMPTY_CART_ITEMS_LOADING: {
       return {
         ...state,
-        cartEmptyIsLoading: true,
-        cartEmptyIsError: false,
+        emptyCartIsLoading: true,
+        emptyCartIsError: false,
       };
     }
 
     case EMPTY_CART_ITEMS_SUCCESS: {
       return {
         ...state,
-        cartEmptyIsLoading: false,
-        cartEmptyIsError: false,
+        emptyCartIsLoading: false,
+        emptyCartIsError: false,
         cartData: [],
       };
     }
@@ -176,8 +176,8 @@ export const cartReducer = (
     case EMPTY_CART_ITEMS_ERROR: {
       return {
         ...state,
-        cartEmptyIsLoading: false,
-        cartEmptyIsError: true,
+        emptyCartIsLoading: false,
+        emptyCartIsError: true,
       };
     }
 

@@ -22,17 +22,17 @@ const Home = () => {
     /**********    page will always loads at top position   ******************/
     window.scrollTo(0, 0);
 
-    // if (!mobile.mobileData.length) {
-    //   dispatch(getMobiles());
-    // }
+    if (!mobile.mobileData.length) {
+      dispatch(getMobiles());
+    }
 
-    // if (!tv.tvData.length) {
-    //   dispatch(getTvs());
-    // }
+    if (!tv.tvData.length) {
+      dispatch(getTvs());
+    }
 
-    // if (!home.homeData.length) {
-    //   dispatch(getHomeAppliances());
-    // }
+    if (!home.homeData.length) {
+      dispatch(getHomeAppliances());
+    }
   }, []);
 
   console.log("query", router.query);

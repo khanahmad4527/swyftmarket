@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Card, CardBody, Image, Stack, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 const ProductCard = ({
   _id,
@@ -12,6 +13,8 @@ const ProductCard = ({
   image: string;
   price: number;
 }) => {
+  const router = useRouter();
+
   return (
     <Box padding="20px">
       <Card
@@ -26,7 +29,7 @@ const ProductCard = ({
         margin="auto"
         cursor="pointer"
         _hover={{ transform: "scale(1.1)", transition: "all 0.2s ease-in" }}
-        //onClick={() => navigate(`/product/${id}`)}
+        onClick={() => router.push(`/product/${_id}`)}
       >
         <CardBody>
           <Image

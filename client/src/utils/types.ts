@@ -46,6 +46,25 @@ export interface AddToCart {
   description: string;
 }
 
+export interface NestedAddress {
+  street_address: string;
+  apartment: string;
+  city: string;
+  state: string;
+  pincode: number;
+}
+
+export interface Address {
+  _id: string;
+  userId: string;
+  country: string;
+  firstname: string;
+  lastname: string;
+  mobile: string;
+  address: NestedAddress;
+  email: string;
+}
+
 export interface ProductSearchParams {
   q?: string;
   category?: string[];

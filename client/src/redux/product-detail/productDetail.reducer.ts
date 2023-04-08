@@ -9,13 +9,13 @@ import { Product } from "@/utils/types";
 interface ProductDetailState {
   getProductDetailIsLoading: boolean;
   getProductDetailIsError: boolean;
-  productDetailData: Product | {};
+  productDetailData: Product;
 }
 
 const initialState: ProductDetailState = {
   getProductDetailIsLoading: false,
   getProductDetailIsError: false,
-  productDetailData: {},
+  productDetailData: {} as Product, // type assertion to get rig of empty object or undefined
 };
 
 export const productDetailReducer = (

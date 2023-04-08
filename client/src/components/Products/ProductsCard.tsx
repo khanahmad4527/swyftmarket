@@ -15,6 +15,7 @@ import { FiShoppingCart } from "react-icons/fi";
 import { useAppDispatch } from "@/redux/store";
 //import { addToCart } from "../../redux/cart/cart.actions";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 function ProductsCard({
   _id,
@@ -90,27 +91,28 @@ function ProductsCard({
       cursor="pointer"
       _hover={{ shadow: "lg" }}
     >
-      <Image
-        onClick={() => router.push(`/product/${_id}`)}
-        src={images[0][0] || image}
-        alt="Image belongs to Amazon. Used for educatinal purposes and showcasing web development skills only."
-        w={{
-          base: "200px",
-          sm: "250px",
-          md: "350px",
-          lg: "400px",
-        }}
-        h={{
-          base: "200px",
-          sm: "250px",
-          md: "350px",
-          lg: "400px",
-        }}
-        p="10px"
-        display="block"
-        margin="auto"
-        objectFit="contain"
-      />
+      <Link href={`/product/${_id}`}>
+        <Image
+          src={images[0][0] || image}
+          alt="Image belongs to Amazon. Used for educatinal purposes and showcasing web development skills only."
+          w={{
+            base: "200px",
+            sm: "250px",
+            md: "350px",
+            lg: "400px",
+          }}
+          h={{
+            base: "200px",
+            sm: "250px",
+            md: "350px",
+            lg: "400px",
+          }}
+          p="10px"
+          display="block"
+          margin="auto"
+          objectFit="contain"
+        />
+      </Link>
 
       <Stack p="6" spacing={2}>
         <Flex mt="1" justifyContent="space-between" alignContent="center">

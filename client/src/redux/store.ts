@@ -10,12 +10,14 @@ import { homeReducer } from "./home/home.reducer";
 import { authReducer } from "./auth/auth.reducer";
 import { productsReducer } from "./products/products.reducer";
 import { productDetailReducer } from "./product-detail/productDetail.reducer";
+import { cartReducer } from "./cart/cart.reducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   home: homeReducer,
   products: productsReducer,
   productDetail: productDetailReducer,
+  cart: cartReducer,
 });
 
 /*****************       In Production    ***************************/

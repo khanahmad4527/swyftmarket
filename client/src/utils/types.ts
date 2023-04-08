@@ -18,6 +18,21 @@ export interface Product {
   updatedAt: string;
 }
 
+export interface Cart {
+  _id?: string;
+  productId?: string;
+  userId?: string;
+  title: string;
+  category: string;
+  itemPrice: number;
+  quantity: number;
+  totalPrice: number;
+  image: string;
+  colour: string;
+  size: string;
+  description: string;
+}
+
 export interface ProductSearchParams {
   q?: string;
   category?: string[];

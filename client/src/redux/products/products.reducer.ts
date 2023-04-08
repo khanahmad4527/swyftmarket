@@ -1,9 +1,9 @@
-import { ProductAction } from "./products.action";
 import {
   GET_PRODUCTS_LOADING,
   GET_PRODUCTS_SUCCESS,
   GET_PRODUCTS_ERROR,
 } from "./products.types";
+import { ProductAction } from "./products.action";
 import { Product } from "@/utils/types";
 
 interface ProductState {

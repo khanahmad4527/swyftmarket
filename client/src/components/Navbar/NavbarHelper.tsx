@@ -144,9 +144,9 @@ const Navbar = () => {
     /**********    page will always loads at top position   ******************/
     window.scrollTo(0, 0);
 
-    // if (isAuth && cartData.length === 0) {
-    //   dispatch(getCartData(id));
-    // }
+    if (isAuth && cartData.length === 0) {
+      dispatch(getCartData());
+    }
   }, [isAuth]);
 
   return (

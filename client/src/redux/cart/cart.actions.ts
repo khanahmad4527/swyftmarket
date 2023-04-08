@@ -1,6 +1,6 @@
 import instance from "../../utils/axiosInstance";
 import { AppDispatch } from "../store";
-import { Cart } from "@/utils/types";
+import { Cart, AddToCart } from "@/utils/types";
 import {
   GET_CART_ITEMS_LOADING,
   GET_CART_ITEMS_SUCCESS,
@@ -178,7 +178,7 @@ export const getCartData = (): any => async (dispatch: AppDispatch) => {
 };
 
 export const addToCart =
-  (newCart: Cart): any =>
+  (newCart: AddToCart): any =>
   async (dispatch: AppDispatch) => {
     dispatch(addCartLoading());
     try {

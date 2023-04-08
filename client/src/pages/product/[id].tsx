@@ -19,14 +19,13 @@ import { useEffect, useState } from "react";
 import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import { MdLocalShipping } from "react-icons/md";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-//import { addToCart, getCartData } from "../../redux/cart/cart.actions";
 import { getProductDetail } from "../../redux/product-detail/productDetail.actions";
 import Error from "../../utils/Error";
 import Loading from "../../utils/Loading";
 import { useRouter } from "next/router";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
-import { Cart } from "@/utils/types";
+import { AddToCart, Cart, Product } from "@/utils/types";
 import { addToCart, getCartData } from "@/redux/cart/cart.actions";
 
 export default function ProductDetail() {
@@ -46,6 +45,7 @@ export default function ProductDetail() {
   } = useAppSelector((store) => store.productDetail);
 
   const {
+    _id,
     title,
     category,
     price,
@@ -60,22 +60,9 @@ export default function ProductDetail() {
     quantity,
     description,
     brand,
-  }: {
-    title?: string;
-    category?: string;
-    price?: number;
-    discount?: number;
-    discountPrice?: number;
-    rating?: number;
-    reviews?: number;
-    image?: string;
-    images?: string[][];
-    colours?: string[][];
-    sizes?: string[];
-    quantity?: number;
-    description?: string;
-    brand?: string;
-  } = productDetailData;
+    addedAt,
+    updatedAt,
+  }: Product = productDetailData;
 
   const { getCartIsLoading, getCartIsError, cartData } = useAppSelector(
     (store) => store.cart
@@ -85,7 +72,7 @@ export default function ProductDetail() {
 
   const dispatch = useAppDispatch();
 
-  const handleAddToCart = (item: Cart) => {
+  const handleAddToCart = (item: AddToCart) => {
     setIsAdded(true);
     dispatch(addToCart(item));
     toast({
@@ -216,7 +203,7 @@ export default function ProductDetail() {
 
               <Box as={"header"}>
                 <Box color="yellow.500" fontWeight={300} fontSize={"2xl"}>
-                  <Rating rating={4} />
+                  <Rating rating={rating && rating} />
                 </Box>
               </Box>
 
@@ -318,7 +305,7 @@ export default function ProductDetail() {
                         productId: id,
                         title,
                         category,
-                        itemPrice: discountPrice && discountPrice,
+                        itemPrice: discountPrice,
                         quantity: 1,
                         totalPrice: discountPrice && discountPrice * 1,
                         image,

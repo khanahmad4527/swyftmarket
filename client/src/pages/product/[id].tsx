@@ -24,6 +24,8 @@ import { getProductDetail } from "../../redux/product-detail/productDetail.actio
 import Error from "../../utils/Error";
 import Loading from "../../utils/Loading";
 import { useRouter } from "next/router";
+import Navbar from "@/components/Navbar/Navbar";
+import Footer from "@/components/Footer/Footer";
 
 export default function ProductDetail() {
   const [imageIndex, setImageIndex] = useState<number>(0);
@@ -128,203 +130,207 @@ export default function ProductDetail() {
     );
   } else
     return (
-      <Grid
-        p={10}
-        w="100%"
-        margin="auto"
-        templateColumns={{ base: "1fr", lg: "0fr 4fr 5fr" }}
-        gap={10}
-      >
-        <GridItem>
-          <Flex
-            justifyContent="center"
-            flexDirection={{ base: "row", lg: "column" }}
-            gap="10px"
-            flexWrap="wrap"
-          >
-            {images &&
-              images.map((image, index) => {
-                return (
-                  <Square
-                    key={Date() + Math.random()}
-                    style={{
-                      width: "50px",
-                      height: "60px",
-                      border: "1px solid #FFEB3B",
-                    }}
-                    {...(imageIndex === index
-                      ? {
-                          border: "1px solid",
-                          borderColor: "yellow.500",
-                          boxShadow: "0px 0px 5px 2px rgba(214, 158, 46, 1)",
-                        }
-                      : {})}
-                    tabIndex={0}
-                    onFocus={() => setImageIndex(index)}
-                    onMouseOver={() => setImageIndex(index)}
-                  >
-                    <Image
-                      p={1}
-                      src={image[0]}
-                      alt="Image belongs to Amazon. Used for educatinal purposes and showcasing web development skills only."
-                      w="100%"
-                      h="100%"
-                      objectFit="contain"
-                      bgColor="white"
-                    />
-                  </Square>
-                );
-              })}
-          </Flex>
-        </GridItem>
-
-        <GridItem>
-          <Flex w="100%">
-            <Image
-              p={5}
-              bgColor="white"
-              src={images && images[0][imageIndex]}
-              alt="Image belongs to Amazon. Used for educatinal purposes and showcasing web development skills only."
-              align="center"
-              w="100%"
-              h={{ base: "100%", sm: "400px", lg: "500px" }}
-              objectFit="contain"
-            />
-          </Flex>
-        </GridItem>
-
-        <GridItem>
-          <Stack spacing={{ base: 6, md: 10 }} color="sm.sparkle">
-            <Box as={"header"}>
-              <Heading
-                wordBreak="break-word"
-                lineHeight={1.1}
-                fontWeight={600}
-                fontSize={{ base: "2xl", sm: "4xl", lg: "5xl" }}
-              >
-                {title && title}
-              </Heading>
-            </Box>
-
-            <Box as={"header"}>
-              <Box color="yellow.500" fontWeight={300} fontSize={"2xl"}>
-                <Rating rating={4} />
-              </Box>
-            </Box>
-
-            <Box as={"header"}>
-              <Text fontWeight={500} fontSize={"3xl"}>
-                <span>&#8377;</span> {price && formatMoney(price)}
-              </Text>
-            </Box>
-
-            <Stack
-              spacing={{ base: 4, sm: 6 }}
-              direction={"column"}
-              divider={<StackDivider />}
+      <>
+        <Navbar />
+        <Grid
+          p={10}
+          w="100%"
+          margin="auto"
+          templateColumns={{ base: "1fr", lg: "0fr 4fr 5fr" }}
+          gap={10}
+        >
+          <GridItem>
+            <Flex
+              justifyContent="center"
+              flexDirection={{ base: "row", lg: "column" }}
+              gap="10px"
+              flexWrap="wrap"
             >
-              <Box>
-                <Text
-                  fontSize={{ base: "16px", lg: "18px" }}
-                  color="yellow.500"
-                  fontWeight={"500"}
-                  textTransform={"uppercase"}
-                  mb={"4"}
+              {images &&
+                images.map((image, index) => {
+                  return (
+                    <Square
+                      key={Date() + Math.random()}
+                      style={{
+                        width: "50px",
+                        height: "60px",
+                        border: "1px solid #FFEB3B",
+                      }}
+                      {...(imageIndex === index
+                        ? {
+                            border: "1px solid",
+                            borderColor: "yellow.500",
+                            boxShadow: "0px 0px 5px 2px rgba(214, 158, 46, 1)",
+                          }
+                        : {})}
+                      tabIndex={0}
+                      onFocus={() => setImageIndex(index)}
+                      onMouseOver={() => setImageIndex(index)}
+                    >
+                      <Image
+                        p={1}
+                        src={image[0]}
+                        alt="Image belongs to Amazon. Used for educatinal purposes and showcasing web development skills only."
+                        w="100%"
+                        h="100%"
+                        objectFit="contain"
+                        bgColor="white"
+                      />
+                    </Square>
+                  );
+                })}
+            </Flex>
+          </GridItem>
+
+          <GridItem>
+            <Flex w="100%">
+              <Image
+                p={5}
+                bgColor="white"
+                src={images && images[0][imageIndex]}
+                alt="Image belongs to Amazon. Used for educatinal purposes and showcasing web development skills only."
+                align="center"
+                w="100%"
+                h={{ base: "100%", sm: "400px", lg: "500px" }}
+                objectFit="contain"
+              />
+            </Flex>
+          </GridItem>
+
+          <GridItem>
+            <Stack spacing={{ base: 6, md: 10 }} color="sm.sparkle">
+              <Box as={"header"}>
+                <Heading
+                  wordBreak="break-word"
+                  lineHeight={1.1}
+                  fontWeight={600}
+                  fontSize={{ base: "2xl", sm: "4xl", lg: "5xl" }}
                 >
-                  Product Details
-                </Text>
-
-                <List spacing={2}>
-                  <ListItem>
-                    <Text as={"span"} fontWeight={"bold"}>
-                      Brand:
-                    </Text>{" "}
-                    {brand && brand}
-                  </ListItem>
-                  <ListItem wordBreak={"break-word"}>
-                    <Text as={"span"} fontWeight={"bold"}>
-                      Description:
-                    </Text>{" "}
-                    {description && description}
-                  </ListItem>
-                </List>
+                  {title && title}
+                </Heading>
               </Box>
-            </Stack>
-            {isAdded ? (
-              <Button
-                rounded={"none"}
-                w={"full"}
-                mt={8}
-                size={"lg"}
-                py={"7"}
-                color="sm.sparkle"
-                bg="yellow.500"
-                textTransform={"uppercase"}
-                _hover={{
-                  transform: "translateY(2px)",
-                  boxShadow: "lg",
-                  bg: "sm.sparkle",
-                  color: "yellow.500",
-                }}
-                onClick={() =>
-                  toast({
-                    title: "Product in cart",
-                    description: "Product is already in the cart",
-                    status: "warning",
-                    duration: 2000,
-                    isClosable: true,
-                    position: "top",
-                  })
-                }
-              >
-                In Cart
-              </Button>
-            ) : (
-              <Button
-                rounded={"none"}
-                w={"full"}
-                mt={8}
-                size={"lg"}
-                py={"7"}
-                bg="sm.sparkle"
-                color="yellow.500"
-                textTransform={"uppercase"}
-                _hover={{
-                  transform: "translateY(2px)",
-                  boxShadow: "lg",
-                  color: "sm.sparkle",
-                  bg: "yellow.500",
-                }}
-                onClick={() =>
-                  handleAddToCart({
-                    productId: id,
-                    title,
-                    category,
-                    itemPrice: discountPrice && discountPrice,
-                    quantity: 1,
-                    totalPrice: discountPrice && discountPrice * 1,
-                    image,
-                    colour: colours && colours[0][0],
-                    size: sizes && sizes[0],
-                    description,
-                  })
-                }
-              >
-                Add to cart
-              </Button>
-            )}
 
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent={"center"}
-            >
-              <MdLocalShipping />
-              <Text>2-3 business days delivery</Text>
+              <Box as={"header"}>
+                <Box color="yellow.500" fontWeight={300} fontSize={"2xl"}>
+                  <Rating rating={4} />
+                </Box>
+              </Box>
+
+              <Box as={"header"}>
+                <Text fontWeight={500} fontSize={"3xl"}>
+                  <span>&#8377;</span> {price && formatMoney(price)}
+                </Text>
+              </Box>
+
+              <Stack
+                spacing={{ base: 4, sm: 6 }}
+                direction={"column"}
+                divider={<StackDivider />}
+              >
+                <Box>
+                  <Text
+                    fontSize={{ base: "16px", lg: "18px" }}
+                    color="yellow.500"
+                    fontWeight={"500"}
+                    textTransform={"uppercase"}
+                    mb={"4"}
+                  >
+                    Product Details
+                  </Text>
+
+                  <List spacing={2}>
+                    <ListItem>
+                      <Text as={"span"} fontWeight={"bold"}>
+                        Brand:
+                      </Text>{" "}
+                      {brand && brand}
+                    </ListItem>
+                    <ListItem wordBreak={"break-word"}>
+                      <Text as={"span"} fontWeight={"bold"}>
+                        Description:
+                      </Text>{" "}
+                      {description && description}
+                    </ListItem>
+                  </List>
+                </Box>
+              </Stack>
+              {isAdded ? (
+                <Button
+                  rounded={"none"}
+                  w={"full"}
+                  mt={8}
+                  size={"lg"}
+                  py={"7"}
+                  color="sm.sparkle"
+                  bg="yellow.500"
+                  textTransform={"uppercase"}
+                  _hover={{
+                    transform: "translateY(2px)",
+                    boxShadow: "lg",
+                    bg: "sm.sparkle",
+                    color: "yellow.500",
+                  }}
+                  onClick={() =>
+                    toast({
+                      title: "Product in cart",
+                      description: "Product is already in the cart",
+                      status: "warning",
+                      duration: 2000,
+                      isClosable: true,
+                      position: "top",
+                    })
+                  }
+                >
+                  In Cart
+                </Button>
+              ) : (
+                <Button
+                  rounded={"none"}
+                  w={"full"}
+                  mt={8}
+                  size={"lg"}
+                  py={"7"}
+                  bg="sm.sparkle"
+                  color="yellow.500"
+                  textTransform={"uppercase"}
+                  _hover={{
+                    transform: "translateY(2px)",
+                    boxShadow: "lg",
+                    color: "sm.sparkle",
+                    bg: "yellow.500",
+                  }}
+                  onClick={() =>
+                    handleAddToCart({
+                      productId: id,
+                      title,
+                      category,
+                      itemPrice: discountPrice && discountPrice,
+                      quantity: 1,
+                      totalPrice: discountPrice && discountPrice * 1,
+                      image,
+                      colour: colours && colours[0][0],
+                      size: sizes && sizes[0],
+                      description,
+                    })
+                  }
+                >
+                  Add to cart
+                </Button>
+              )}
+
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent={"center"}
+              >
+                <MdLocalShipping />
+                <Text>2-3 business days delivery</Text>
+              </Stack>
             </Stack>
-          </Stack>
-        </GridItem>
-      </Grid>
+          </GridItem>
+        </Grid>
+        <Footer />
+      </>
     );
 }
 

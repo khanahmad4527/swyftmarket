@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Footer from "@/components/Footer/Footer";
-import Navbar from "@/components/Navbar/NavbarHelper";
+import Navbar from "@/components/Navbar/Navbar";
 import Cart from "@/components/Cart/Cart";
 
 export default function CartPage() {

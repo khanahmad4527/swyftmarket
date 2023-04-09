@@ -11,6 +11,7 @@ import { authReducer } from "./auth/auth.reducer";
 import { productsReducer } from "./products/products.reducer";
 import { productDetailReducer } from "./product-detail/productDetail.reducer";
 import { cartReducer } from "./cart/cart.reducer";
+import { checkoutReducer } from "./checkout/checkout.reducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   products: productsReducer,
   productDetail: productDetailReducer,
   cart: cartReducer,
+  checkout: checkoutReducer,
 });
 
 /*****************       In Production    ***************************/

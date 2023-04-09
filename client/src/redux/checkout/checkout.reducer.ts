@@ -15,114 +15,135 @@ import {
   GET_COUPONS_SUCCESS,
   GET_COUPONS_ERROR,
 } from "./checkout.types";
+import { AddressAction } from "./checkout.actions";
+import { Address } from "@/utils/types";
 
-const initState = {
-  checkoutGetIsLoading: false,
-  checkoutGetIsError: false,
-  couponsGetIsLoading: false,
-  couponsGetIsError: false,
-  checkoutPostIsLoading: false,
-  checkoutPostIsError: false,
-  checkoutPatchIsLoading: false,
-  checkoutPatchIsError: false,
-  checkoutDeleteIsLoading: false,
-  checkoutDeleteIsError: false,
+interface CheckoutState {
+  getCheckoutIsLoading: boolean;
+  getCheckoutIsError: boolean;
+  postCheckoutIsLoading: boolean;
+  postCheckoutIsError: boolean;
+  updateCheckoutIsLoading: boolean;
+  updateCheckoutIsError: boolean;
+  deleteCheckoutIsLoading: boolean;
+  deleteCheckoutIsError: boolean;
+  userAddress: Address[];
+  getCouponIsLoading: boolean;
+  getCouponIsError: boolean;
+  coupons: string[];
+}
+
+const initState: CheckoutState = {
+  getCheckoutIsLoading: false,
+  getCheckoutIsError: false,
+  postCheckoutIsLoading: false,
+  postCheckoutIsError: false,
+  updateCheckoutIsLoading: false,
+  updateCheckoutIsError: false,
+  deleteCheckoutIsLoading: false,
+  deleteCheckoutIsError: false,
   userAddress: [],
+  getCouponIsLoading: false,
+  getCouponIsError: false,
   coupons: [],
 };
 
-export const checkoutReducer = (state = initState, { type, payload }) => {
+export const checkoutReducer = (
+  state: CheckoutState = initState,
+  action: AddressAction
+): CheckoutState => {
+  const { type } = action;
   switch (type) {
     case GET_ADDRESS_LOADING: {
       return {
         ...state,
-        checkoutGetIsLoading: true,
-        checkoutGetIsError: false,
+        getCheckoutIsLoading: true,
+        getCheckoutIsError: false,
       };
     }
 
     case GET_ADDRESS_SUCCESS: {
       return {
         ...state,
-        checkoutGetIsLoading: false,
-        checkoutGetIsError: false,
-        userAddress: payload,
+        getCheckoutIsLoading: false,
+        getCheckoutIsError: false,
+        userAddress: action.payload,
       };
     }
 
     case GET_ADDRESS_ERROR: {
       return {
         ...state,
-        checkoutGetIsLoading: false,
-        checkoutGetIsError: true,
+        getCheckoutIsLoading: false,
+        getCheckoutIsError: true,
       };
     }
 
-    case GET_COUPONS_LOADING: {
-      return {
-        ...state,
-        couponsGetIsLoading: true,
-        couponsGetIsError: false,
-      };
-    }
+    // case GET_COUPONS_LOADING: {
+    //   return {
+    //     ...state,
+    //     getCouponIsLoading: true,
+    //     getCouponIsError: false,
+    //   };
+    // }
 
-    case GET_COUPONS_SUCCESS: {
-      return {
-        ...state,
-        couponsGetIsLoading: false,
-        couponsGetIsError: false,
-        coupons: payload,
-      };
-    }
+    // case GET_COUPONS_SUCCESS: {
+    //   return {
+    //     ...state,
+    //     getCouponIsLoading: false,
+    //     getCouponIsError: false,
+    //     coupons: action.payload,
+    //   };
+    // }
 
-    case GET_COUPONS_ERROR: {
-      return {
-        ...state,
-        couponsGetIsLoading: false,
-        couponsGetIsError: true,
-      };
-    }
+    // case GET_COUPONS_ERROR: {
+    //   return {
+    //     ...state,
+    //     getCouponIsLoading: false,
+    //     getCouponIsError: true,
+    //   };
+    // }
 
     case ADD_ADDRESS_LOADING: {
       return {
         ...state,
-        checkoutPostIsLoading: true,
-        checkoutPostIsError: false,
+        postCheckoutIsLoading: true,
+        postCheckoutIsError: false,
       };
     }
 
     case ADD_ADDRESS_SUCCESS: {
       return {
         ...state,
-        checkoutPostIsLoading: false,
-        checkoutPostIsError: false,
-        userAddress: [payload, ...state.userAddress],
+        postCheckoutIsLoading: false,
+        postCheckoutIsError: false,
+        userAddress: [action.payload, ...state.userAddress],
       };
     }
 
     case ADD_ADDRESS_ERROR: {
       return {
         ...state,
-        checkoutPostIsLoading: false,
-        checkoutPostIsError: true,
+        postCheckoutIsLoading: false,
+        postCheckoutIsError: true,
       };
     }
 
     case UPDATE_ADDRESS_LOADING: {
       return {
         ...state,
-        checkoutPatchIsLoading: true,
-        checkoutPatchIsError: false,
+        updateCheckoutIsLoading: true,
+        updateCheckoutIsError: false,
       };
     }
 
     case UPDATE_ADDRESS_SUCCESS: {
       return {
         ...state,
-        checkoutPatchIsLoading: false,
-        checkoutPatchIsError: false,
+        updateCheckoutIsLoading: false,
+        updateCheckoutIsError: false,
         userAddress: state.userAddress.map((item) =>
-          item._id === payload._id ? payload : item
+          item._id === action.payload._id ? action.payload : item
         ),
       };
     }
@@ -130,26 +151,26 @@ export const checkoutReducer = (state = initState, { type, payload }) => {
     case UPDATE_ADDRESS_ERROR: {
       return {
         ...state,
-        checkoutPatchIsLoading: false,
-        checkoutPatchIsError: true,
+        updateCheckoutIsLoading: false,
+        updateCheckoutIsError: true,
       };
     }
 
     case REMOVE_ADDRESS_LOADING: {
       return {
         ...state,
-        checkoutDeleteIsLoading: true,
-        checkoutDeleteIsError: false,
+        deleteCheckoutIsLoading: true,
+        deleteCheckoutIsError: false,
       };
     }
 
     case REMOVE_ADDRESS_SUCCESS: {
       return {
         ...state,
-        checkoutDeleteIsLoading: false,
-        checkoutDeleteIsError: false,
+        deleteCheckoutIsLoading: false,
+        deleteCheckoutIsError: false,
         userAddress: state.userAddress.filter(
-          (item) => item._id !== payload._id
+          (item) => item._id !== action.payload._id
         ),
       };
     }
@@ -157,8 +178,8 @@ export const checkoutReducer = (state = initState, { type, payload }) => {
     case REMOVE_ADDRESS_ERROR: {
       return {
         ...state,
-        checkoutDeleteIsLoading: false,
-        checkoutDeleteIsError: true,
+        deleteCheckoutIsLoading: false,
+        deleteCheckoutIsError: true,
       };
     }
 

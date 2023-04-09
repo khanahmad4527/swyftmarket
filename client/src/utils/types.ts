@@ -46,12 +46,12 @@ export interface AddToCart {
   description: string;
 }
 
-export interface NestedAddress {
+interface NestedAddress {
   street_address: string;
   apartment: string;
   city: string;
   state: string;
-  pincode: number;
+  pincode?: number;
 }
 
 export interface Address {
@@ -72,6 +72,28 @@ export interface AddAddress {
   mobile: string;
   address: NestedAddress;
   email: string;
+}
+
+interface OrderItem {
+  quantity: number;
+  title: string;
+  itemPrice: number;
+}
+
+export interface Order {
+  _id: string;
+  userId: string;
+  orderDate: string;
+  paidAmount: number;
+  paymentMethod: string;
+  items: OrderItem[];
+}
+
+export interface AddOrder {
+  orderDate: string;
+  paidAmount: number;
+  paymentMethod: string;
+  items: OrderItem[];
 }
 
 export interface ProductSearchParams {

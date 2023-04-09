@@ -65,6 +65,15 @@ export interface Address {
   email: string;
 }
 
+export interface AddAddress {
+  country: string;
+  firstname: string;
+  lastname: string;
+  mobile: string;
+  address: NestedAddress;
+  email: string;
+}
+
 export interface ProductSearchParams {
   q?: string;
   category?: string[];

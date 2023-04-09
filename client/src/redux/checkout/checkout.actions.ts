@@ -1,6 +1,6 @@
 import instance from "../../utils/axiosInstance";
 import { AppDispatch } from "../store";
-import { Address } from "@/utils/types";
+import { AddAddress, Address } from "@/utils/types";
 import {
   GET_ADDRESS_LOADING,
   GET_ADDRESS_SUCCESS,
@@ -187,7 +187,7 @@ export const getAddress = (): any => async (dispatch: AppDispatch) => {
 // };
 
 export const addAddress =
-  (payload: any): any =>
+  (payload: AddAddress): any =>
   async (dispatch: AppDispatch) => {
     dispatch(addAddressLoading());
     try {
@@ -199,7 +199,7 @@ export const addAddress =
   };
 
 export const updateAddress =
-  (id: string, updatedAddress: any): any =>
+  (id: string, updatedAddress: AddAddress): any =>
   async (dispatch: AppDispatch) => {
     dispatch(updateAddressLoading());
     try {

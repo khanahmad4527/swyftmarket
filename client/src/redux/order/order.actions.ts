@@ -74,7 +74,7 @@ const addOrdersError = (): AddOrdersErrorAction => {
 
 /*****    action creators dispatch function     *****/
 
-export const getOrderData = () => async (dispatch: AppDispatch) => {
+export const getOrderData = (): any => async (dispatch: AppDispatch) => {
   dispatch(getOrdersLoading());
   try {
     const responce = await instance.get(`/orders`);
@@ -85,7 +85,8 @@ export const getOrderData = () => async (dispatch: AppDispatch) => {
 };
 
 export const addToOrder =
-  (newOrder: AddOrder) => async (dispatch: AppDispatch) => {
+  (newOrder: AddOrder): any =>
+  async (dispatch: AppDispatch) => {
     dispatch(addOrdersLoading());
     try {
       const responce = await instance.post(`/orders/add`, newOrder);

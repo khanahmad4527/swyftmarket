@@ -1,7 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 const { connection } = require("./config/database.js");
-const { userRoute } = require("./routes/user.route");
+const {
+  singleProductRouter,
+  productsRouter,
+  cartRouter,
+  addressRouter,
+  orderRouter,
+  couponRouter,
+} = require("./routes/user.route");
 const { userAuthRoute } = require("./routes/user.auth.route");
 require("dotenv").config();
 
@@ -13,7 +20,23 @@ app.use(express.json());
 
 app.use("/user/auth", userAuthRoute);
 
-app.use("/", userRoute);
+/** single product route */
+app.use("/product", singleProductRouter);
+
+/** products route */
+app.use("/products", productsRouter);
+
+/** cart route */
+app.use("/cart", cartRouter);
+
+/** address route */
+app.use("/address", addressRouter);
+
+/** orders route */
+app.use("/orders", orderRouter);
+
+/** coupons route */
+app.use("/coupons", couponRouter);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, async () => {

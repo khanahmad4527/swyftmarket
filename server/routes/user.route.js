@@ -1,5 +1,11 @@
 const express = require("express");
-const userRoute = express.Router();
+const productsRouter = express.Router();
+const singleProductRouter = express.Router();
+const cartRouter = express.Router();
+const addressRouter = express.Router();
+const orderRouter = express.Router();
+const couponRouter = express.Router();
+
 const { getProducts, getSingleProduct } = require("../controllers/products");
 const {
   getCart,
@@ -15,51 +21,42 @@ const {
   deleteAddress,
 } = require("../controllers/address");
 const { getOrders, addOrder } = require("../controllers/orders");
+const { getCoupons } = require("../controllers/coupon");
 const { validator } = require("../middlewares/validator");
 
-const routesToValidate = [
-  "/cart",
-  "/cart/add",
-  "/cart/update/:cartId",
-  "/cart/delete/:cartId",
-  "/cart/emptycart",
-  "/address",
-  "/address/add",
-  "/address/update/:addressId",
-  "/address/delete/:addressId",
-  "/orders",
-  "/orders/add",
-];
+singleProductRouter.get("/:productId", getSingleProduct);
 
-// Loop through the array of routes to validate and apply the middleware to each one
-routesToValidate.forEach((route) => {
-  userRoute.use(route, validator);
-});
+productsRouter.get("/", getProducts);
 
-userRoute.get("/product/:productId", getSingleProduct);
+couponRouter.get("/", getCoupons);
 
-userRoute.get("/products", getProducts);
+cartRouter.get("/", validator, getCart);
 
-userRoute.get("/cart", getCart);
+cartRouter.post("/add", validator, addCart);
 
-userRoute.post("/cart/add", addCart);
+cartRouter.patch("/update/:cartId", validator, updateCart);
 
-userRoute.patch("/cart/update/:cartId", updateCart);
+cartRouter.delete("/delete/:cartId", validator, deleteCart);
 
-userRoute.delete("/cart/delete/:cartId", deleteCart);
+cartRouter.delete("/emptycart", validator, emptyCart);
 
-userRoute.delete("/cart/emptycart", emptyCart);
+addressRouter.get("/", validator, getAddress);
 
-userRoute.get("/address", getAddress);
+addressRouter.post("/add", validator, addAddress);
 
-userRoute.post("/address/add", addAddress);
+addressRouter.patch("/update/:addressId", validator, updateAddress);
 
-userRoute.patch("/address/update/:addressId", updateAddress);
+addressRouter.delete("/delete/:addressId", validator, deleteAddress);
 
-userRoute.delete("/address/delete/:addressId", deleteAddress);
+orderRouter.get("/", validator, getOrders);
 
-userRoute.get("/orders", getOrders);
+orderRouter.post("/add", validator, addOrder);
 
-userRoute.post("/orders/add", addOrder);
-
-module.exports = { userRoute };
+module.exports = {
+  singleProductRouter,
+  productsRouter,
+  cartRouter,
+  addressRouter,
+  orderRouter,
+  couponRouter,
+};

@@ -1,6 +1,7 @@
 import Head from "next/head";
 import CheckoutNavbar from "@/components/Checkout/CheckoutNavbar";
 import Checkout from "@/components/Checkout/Checkout";
+import Auth from "@/utils/auth";
 
 export default function CheckoutPage() {
   return (
@@ -12,10 +13,12 @@ export default function CheckoutPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <CheckoutNavbar />
-        <Checkout />
-      </main>
+      <Auth>
+        <main>
+          <CheckoutNavbar />
+          <Checkout />
+        </main>
+      </Auth>
     </>
   );
 }

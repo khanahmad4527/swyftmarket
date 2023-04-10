@@ -97,7 +97,7 @@ export default function Login() {
     <Flex minH={"100vh"} align={"center"} justify={"center"} color="sm.sparkle">
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6} w="max-content">
         <Stack align={"center"}>
-          <Heading fontSize={"36px"} fontWeight={400} color="lf.black">
+          <Heading fontSize={"36px"} fontWeight={400} color="sm.sparkle">
             Login to your account
           </Heading>
         </Stack>

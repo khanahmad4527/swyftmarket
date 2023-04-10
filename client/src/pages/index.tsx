@@ -3,7 +3,7 @@ import Home from "@/components/Home/Home";
 import Footer from "@/components/Footer/Footer";
 import Navbar from "@/components/Navbar/Navbar";
 
-export default function LoginPage() {
+export default function HomePage() {
   return (
     <>
       <Head>

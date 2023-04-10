@@ -1,21 +1,18 @@
 import Head from "next/head";
-import VerifyEmail from "./VerifyEmail";
+import VerifyOTP from "./VerifyOTP";
 
-export default function VerifyEmailPage() {
+export default function VerifyOTPPage() {
   return (
     <>
       <Head>
-        <title>Verify Email - SwyftMarket</title>
-        <meta
-          name="description"
-          content="Add products to cart on SwyftMarket"
-        />
+        <title>Verify OTP - SwyftMarket</title>
+        <meta name="description" content="Verify your account" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
-        <VerifyEmail />
+        <VerifyOTP />
       </main>
     </>
   );

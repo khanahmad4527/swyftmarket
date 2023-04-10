@@ -61,7 +61,7 @@ const CartCard = ({ item }: CartCard) => {
             w="100%"
             h="200px"
             objectFit="contain"
-            onClick={() => router.push(`/product/${item._id}`)}
+            onClick={() => router.push(`/product/${item.productId}`)}
           />
         </GridItem>
 

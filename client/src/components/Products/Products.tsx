@@ -27,7 +27,6 @@ import Loading from "../../utils/Loading";
 import Error from "../../utils/Error";
 import { useRouter } from "next/router";
 import { Product, ProductSearchParams } from "@/utils/types";
-//import { getCartData } from "../../redux/cart/cart.actions";
 
 const Products = () => {
   const router = useRouter();
@@ -49,7 +48,9 @@ const Products = () => {
     Array.isArray(query._order) ? query._order[0] : query._order || "desc"
   );
   const [category, setCategory] = useState<string[]>(
-    typeof query.category === "string" ? [query.category] : query.category || []
+    typeof query.category === "string" && query.category !== ""
+      ? [query.category]
+      : query.category || []
   );
   const [brand, setBrand] = useState<string[]>(
     typeof query.brand === "string" ? [query.brand] : query.brand || []
@@ -88,15 +89,6 @@ const Products = () => {
     totalProductCount: number;
     productsData: Product[];
   } = useAppSelector((store) => store.products);
-
-  // const { getIsLoading, getIsError, postIsLoading, postIsError, cartData } =
-  //   useAppSelector((store) => store.cart);
-
-  // useEffect(() => {
-  //   if (cartData && cartData.length === 0) {
-  //     dispatch(getCartData(id));
-  //   }
-  // }, []);
 
   const dispatch = useAppDispatch();
 
@@ -167,7 +159,12 @@ const Products = () => {
 
   const resetFilter = () => {
     if (query.q) {
-      query.q = "";
+      router.push({
+        pathname: "/products",
+        query: {
+          q: "",
+        },
+      });
     }
     setQ("");
   };
@@ -220,24 +217,34 @@ const Products = () => {
   ]);
 
   useEffect(() => {
-    let navQuery = query.q;
-    if (navQuery !== undefined && navQuery !== q) {
-      setQ(Array.isArray(navQuery) ? navQuery[0] : navQuery);
+    let navQuery = Array.isArray(query?.q) ? query?.q[0] : query?.q;
+    if (navQuery !== undefined && navQuery !== "" && navQuery !== q) {
+      setQ(navQuery);
     }
 
-    let navCategory = query.category;
+    let navCategory = Array.isArray(query?.category)
+      ? query?.category
+      : typeof query?.category === "string" && query?.category !== ""
+      ? [query?.category]
+      : [];
+
     if (
       Array.isArray(navCategory) &&
+      navCategory.length &&
       JSON.stringify(navCategory) !== JSON.stringify(category)
     ) {
       setCategory(navCategory);
     }
 
-    if (navCategory?.length === 0 && category.length !== 0) {
+    if (
+      Array.isArray(navCategory) &&
+      navCategory.length === 0 &&
+      category.length !== 0
+    ) {
       const queryParams = { ...router.query };
       delete queryParams.category;
       router.push({
-        pathname: router.pathname,
+        pathname: "/products",
         query: queryParams,
       });
       setCategory([]);
@@ -247,14 +254,15 @@ const Products = () => {
       const queryParams = { ...router.query };
       queryParams.q = "";
       router.push({
-        pathname: router.pathname,
+        pathname: "/products",
         query: queryParams,
       });
       setQ("");
     }
 
-    let navPage = Number(query._page);
-    if (navPage !== 0 && navPage !== currentPage) {
+     let navPage = Number(query._page);
+
+    if (navPage && navPage !== 0 && navPage !== currentPage) {
       setCurrentPage(navPage);
     }
   }, [router]);

@@ -22,6 +22,7 @@ import { useFormik } from "formik";
 import { isEmailAvailable } from "../../redux/auth/auth.action";
 import { signUpSchema } from "../../schemas/auth";
 import { useRouter } from "next/router";
+import instance from "@/utils/axiosInstance";
 
 interface SignupFormValues {
   firstname: string;
@@ -60,8 +61,8 @@ export default function Signup() {
         };
 
         setIsButton(true);
-        const status = await isEmailAvailable(user_data);
-        if (status === 409) {
+        const responce = await isEmailAvailable(user_data);
+        if (responce.status === 409) {
           toast({
             title: "Email address already in use",
             description: "Email address already associated with an account",
@@ -71,17 +72,27 @@ export default function Signup() {
             isClosable: true,
           });
           setIsButton(false);
-        } else if (status === 201) {
+        } else if (responce.status === 201) {
           toast({
             title: "Account created successfully",
-            description: "You can now login with your email and password",
+            description: "Kindly verify your email.",
             status: "success",
             duration: 3000,
             position: "top",
             isClosable: true,
           });
           setIsButton(false);
-          router.push("/login");
+
+          const userId = responce?.data?.userId;
+
+          const otpResponce = await instance.post("/user/verify/generateotp", {
+            userId,
+          });
+          const { OTP } = otpResponce.data;
+
+          await instance.post("/user/verify/sendemail", { code:OTP, userId });
+
+          router.push(`/verify/${userId}`);
         } else {
           toast({
             title: "Server Error",
@@ -106,7 +117,7 @@ export default function Signup() {
             <Heading
               fontSize={"22px"}
               fontWeight={400}
-              color="lf.black"
+              color="sm.sparkle"
               textAlign={"center"}
             >
               Sign up

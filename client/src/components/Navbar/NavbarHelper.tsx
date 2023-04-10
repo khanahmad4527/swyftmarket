@@ -55,8 +55,8 @@ const Navbar = () => {
   const toast = useToast();
 
   const categories = [
-    { name: "air_conditioner", displayName: "Air Conditioner" },
-    { name: "beds", displayName: "Beds" },
+    { name: "dress", displayName: "Dress" },
+    { name: "shoes", displayName: "Shoes" },
     { name: "dining_tables", displayName: "Dining Tables" },
     { name: "earbuds", displayName: "Earbuds" },
     { name: "electronics", displayName: "Electronics" },
@@ -76,22 +76,38 @@ const Navbar = () => {
   ];
 
   const handleSearch = () => {
-    const { q, category } = router.query;
+    const { q } = router.query;
 
-    if (category) {
-      router.push({
-        pathname: "/products",
-        query: {
-          q: query,
-          category: Array.isArray(category) ? category : [category],
-          _page: 1,
-        },
-      });
+    if (category.length) {
+      if (q) {
+        router.push({
+          pathname: "/products",
+          query: {
+            q: query,
+            category: Array.isArray(category) ? category : [category],
+            _page: 1,
+          },
+        });
+      } else {
+        router.push(
+          `/products?q=${query}&category=${category}&_page=1&_limit=10&_sort=rating&_order=desc`
+        );
+      }
     } else {
-      router.push({
-        pathname: "/products",
-        query: { q: query, _page: 1 },
-      });
+      if (q) {
+        router.push({
+          pathname: "/products",
+          query: {
+            q: query,
+            category: Array.isArray(category) ? category : [category],
+            _page: 1,
+          },
+        });
+      } else {
+        router.push(
+          `/products?q=${query}&_page=1&_limit=10&_sort=rating&_order=desc`
+        );
+      }
     }
   };
 
@@ -100,6 +116,7 @@ const Navbar = () => {
       Array.isArray(router.query?.q) ? router.query.q[0] : router.query?.q || ""
     );
     let searchCategory = router.query?.category;
+
     if (typeof searchCategory === "string") {
       setCategory([searchCategory]);
     } else if (searchCategory?.length) {
@@ -107,7 +124,7 @@ const Navbar = () => {
     } else {
       setCategory([]);
     }
-  }, []);
+  }, [router]);
 
   const {
     userDetails: { id },
@@ -144,8 +161,10 @@ const Navbar = () => {
     /**********    page will always loads at top position   ******************/
     window.scrollTo(0, 0);
 
-    if (isAuth && cartData.length === 0) {
-      dispatch(getCartData());
+    if (isAuth) {
+      if (!cartData.length) {
+        dispatch(getCartData());
+      }
     }
   }, [isAuth]);
 

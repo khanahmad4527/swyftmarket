@@ -172,7 +172,6 @@ export const getCartData = (): any => async (dispatch: AppDispatch) => {
     const responce = await instance.get(`/cart`);
     dispatch(getCartSuccess(responce.data));
   } catch (error) {
-    console.log("error", error);
     dispatch(getCartError());
   }
 };

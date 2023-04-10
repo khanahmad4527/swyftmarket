@@ -12,10 +12,11 @@ import {
 import { useEffect, useState } from "react";
 import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";
-import { useAppDispatch } from "@/redux/store";
-//import { addToCart } from "../../redux/cart/cart.actions";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { addToCart } from "../../redux/cart/cart.actions";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { AddToCart, Product } from "@/utils/types";
 
 function ProductsCard({
   _id,
@@ -33,37 +34,25 @@ function ProductsCard({
   quantity,
   description,
   brand,
-}: {
-  _id: string;
-  title: string;
-  category: string;
-  price: number;
-  discount: number;
-  discountPrice: number;
-  rating: number;
-  reviews: number;
-  image: string;
-  images: string[][];
-  colours: string[][];
-  sizes: string[];
-  quantity: number;
-  description: string;
-  brand: string;
-}) {
+}: Product) {
   const [isAdded, setIsAdded] = useState(false);
 
   const router = useRouter();
 
   const toast = useToast();
 
+  const { getCartIsLoading, getCartIsError, cartData } = useAppSelector(
+    (store) => store.cart
+  );
+
+  const { isAuth } = useAppSelector((store) => store.auth);
+
   const dispatch = useAppDispatch();
 
-  const handleAddToCart = (item: any) => {
+  const handleAddToCart = (item: AddToCart) => {
     setIsAdded(true);
 
-    //const updatedCartData = [item, ...cartData];
-
-    //dispatch(addToCart(updatedCartData));
+    dispatch(addToCart(item));
     toast({
       title: "Added to cart",
       description: "We've added the product in your cart",
@@ -75,11 +64,11 @@ function ProductsCard({
   };
 
   useEffect(() => {
-    // for (let i = 0; i < cartData.length; i++) {
-    //   if (cartData[i]._id == _id) {
-    //     setIsAdded(true);
-    //   }
-    // }
+    for (let i = 0; i < cartData.length; i++) {
+      if (cartData[i].productId === _id) {
+        setIsAdded(true);
+      }
+    }
   }, []);
 
   return (
@@ -149,7 +138,7 @@ function ProductsCard({
             </Box>
           ) : (
             <Box
-              display={{ base: "none", ll: "flex" }}
+              display={{ base: "none", lg: "flex" }}
               onClick={() =>
                 handleAddToCart({
                   productId: _id,
@@ -188,7 +177,7 @@ function ProductsCard({
         <Flex
           justifyContent="space-between"
           alignItems="center"
-          display={{ base: "flex", ll: "none" }}
+          display={{ base: "flex", lg: "none" }}
         >
           <Box>
             <Text fontSize="20px">

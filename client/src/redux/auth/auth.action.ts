@@ -86,12 +86,10 @@ export const existingUser = async (email: string, password: string) => {
 
 export const isEmailAvailable = async (newUser: NewUser) => {
   try {
-    await instance.post(`/user/auth/register`, newUser);
-
-    return 201;
+    const responce = await instance.post(`/user/auth/register`, newUser);
+    return responce;
   } catch (error: any) {
-    console.log(error);
-    return error.response.status;
+    return error.response;
   }
 };
 

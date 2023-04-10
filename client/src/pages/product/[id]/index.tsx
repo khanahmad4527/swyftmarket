@@ -1,14 +1,19 @@
 import Head from "next/head";
 import Footer from "@/components/Footer/Footer";
 import Navbar from "@/components/Navbar/Navbar";
-import Cart from "@/components/Cart/Cart";
-import Auth from "@/utils/auth";
+import ProductDetail from "./ProductDetail";
+import { useRouter } from "next/router";
 
-export default function CartPage() {
+export default function ProductDetailPage() {
+  const router = useRouter();
+  const id: string = Array.isArray(router.query?.id)
+    ? router.query.id[0]
+    : router.query.id || "";
+
   return (
     <>
       <Head>
-        <title>Cart - SwyftMarket</title>
+        <title>{`Product ${id} - SwyftMarket`}</title>
         <meta
           name="description"
           content="Add products to cart on SwyftMarket"
@@ -17,13 +22,11 @@ export default function CartPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Auth>
-        <main>
-          <Navbar />
-          <Cart />
-          <Footer />
-        </main>
-      </Auth>
+      <main>
+        <Navbar />
+        <ProductDetail id={id} />
+        <Footer />
+      </main>
     </>
   );
 }

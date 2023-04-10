@@ -1,8 +1,9 @@
 import Head from "next/head";
 import Navbar from "@/components/Navbar/Navbar";
 import Orders from "@/components/Orders/Orders";
+import Auth from "@/utils/auth";
 
-export default function CheckoutPage() {
+export default function OrdersPage() {
   return (
     <>
       <Head>
@@ -15,10 +16,12 @@ export default function CheckoutPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <Navbar />
-        <Orders />
-      </main>
+      <Auth>
+        <main>
+          <Navbar />
+          <Orders />
+        </main>
+      </Auth>
     </>
   );
 }

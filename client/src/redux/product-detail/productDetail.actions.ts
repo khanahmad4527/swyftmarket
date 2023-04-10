@@ -48,7 +48,7 @@ export const getProductDetail =
   async (dispatch: AppDispatch) => {
     dispatch(getProductDetailLoading());
     try {
-      const responce = await instance.get(`/products/${id}`);
+      const responce = await instance.get(`/product/${id}`);
       dispatch(getProductDetailSuccess(responce.data));
     } catch (err) {
       dispatch(getProductDetailError());

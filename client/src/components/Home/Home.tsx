@@ -35,7 +35,6 @@ const Home = () => {
     }
   }, []);
 
-  console.log("query", router.query);
 
   return (
     <Flex flexDirection="column">

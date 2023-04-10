@@ -96,6 +96,16 @@ export interface AddOrder {
   items: OrderItem[];
 }
 
+export interface Coupon {
+  _id: string;
+  code: string;
+  discount: number;
+  type: string;
+  minimumSpend: number;
+  expires: string;
+  description: string;
+}
+
 export interface ProductSearchParams {
   q?: string;
   category?: string[];

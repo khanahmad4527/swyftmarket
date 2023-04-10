@@ -1,5 +1,19 @@
 const ProductModel = require("../models/product.model");
 
+const getSingleProduct = async (req, res) => {
+  const { productId } = req.params;
+
+  try {
+    const product = await ProductModel.findById(productId).lean();
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    return res.status(200).json(product);
+  } catch (err) {
+    return res.status(400).json({ message: err.message });
+  }
+};
+
 const getProducts = async (req, res) => {
   const { q, _page, _limit, _sort, _order, category } = req.query;
 
@@ -48,7 +62,7 @@ const getProducts = async (req, res) => {
   try {
     if (_page && _sort) {
       const [products, totalCount] = await Promise.all([
-        ProductModel.find(filters).sort(sort).skip(skip).limit(limit),
+        ProductModel.find(filters).sort(sort).skip(skip).limit(limit).lean(),
         ProductModel.countDocuments(filters),
       ]);
       res.header("Access-Control-Expose-Headers", "x-total-count");
@@ -56,7 +70,7 @@ const getProducts = async (req, res) => {
       return res.status(200).json(products);
     } else if (_page) {
       const [products, totalCount] = await Promise.all([
-        ProductModel.find(filters).skip(skip).limit(limit),
+        ProductModel.find(filters).skip(skip).limit(limit).lean(),
         ProductModel.countDocuments(filters),
       ]);
       res.header("Access-Control-Expose-Headers", "x-total-count");
@@ -64,7 +78,7 @@ const getProducts = async (req, res) => {
       return res.status(200).json(products);
     } else if (_sort) {
       const [products, totalCount] = await Promise.all([
-        ProductModel.find(filters).sort(sort),
+        ProductModel.find(filters).sort(sort).lean(),
         ProductModel.countDocuments(filters),
       ]);
       res.header("Access-Control-Expose-Headers", "x-total-count");
@@ -72,24 +86,13 @@ const getProducts = async (req, res) => {
       return res.status(200).json(products);
     } else {
       const [products, totalCount] = await Promise.all([
-        ProductModel.find(filters),
+        ProductModel.find(filters).lean(),
         ProductModel.countDocuments(filters),
       ]);
       res.header("Access-Control-Expose-Headers", "x-total-count");
       res.header("x-total-count", totalCount);
       return res.status(200).json(products);
     }
-  } catch (err) {
-    return res.status(400).json({ message: err.message });
-  }
-};
-
-const getSingleProduct = async (req, res) => {
-  const { productId } = req.params;
-
-  try {
-    const product = await ProductModel.findById(productId);
-    return res.status(200).json(product);
   } catch (err) {
     return res.status(400).json({ message: err.message });
   }

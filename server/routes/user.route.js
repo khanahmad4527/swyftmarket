@@ -36,9 +36,9 @@ routesToValidate.forEach((route) => {
   userRoute.use(route, validator);
 });
 
-userRoute.get("/products", getProducts);
+userRoute.get("/product/:productId", getSingleProduct);
 
-userRoute.get("/products/:productId", getSingleProduct);
+userRoute.get("/products", getProducts);
 
 userRoute.get("/cart", getCart);
 

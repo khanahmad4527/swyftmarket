@@ -19,11 +19,11 @@ const { validator } = require("../middlewares/validator");
 router.post("/user/auth/register", signup);
 router.post("/user/auth/login", login);
 
+
 /********************** verify routes *****************************/
 router.post("/user/auth/generate-otp", generateOTP);
 router.post("/user/auth/send-email", sendEmail);
 router.post("/user/auth/verify-email", verifyEmail);
-
 
 
 /********************** product routes *****************************/
@@ -53,5 +53,6 @@ router.delete("/address/delete/:addressId", validator, deleteAddress);
 /********************** order routes *****************************/
 router.get("/orders", validator, getOrders);
 router.post("/orders/add", validator, addOrder);
+
 
 module.exports = { router };

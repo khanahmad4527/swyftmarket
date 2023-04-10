@@ -1,4 +1,4 @@
-const ProductModel = require("../models/product.model");
+const { ProductModel } = require("../models/product.model");
 
 const getSingleProduct = async (req, res) => {
   const { productId } = req.params;

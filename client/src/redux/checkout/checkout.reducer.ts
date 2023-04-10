@@ -16,7 +16,7 @@ import {
   GET_COUPONS_ERROR,
 } from "./checkout.types";
 import { AddressAction } from "./checkout.actions";
-import { Address } from "@/utils/types";
+import { Address, Coupon } from "@/utils/types";
 
 interface CheckoutState {
   getCheckoutIsLoading: boolean;
@@ -30,7 +30,7 @@ interface CheckoutState {
   userAddress: Address[];
   getCouponIsLoading: boolean;
   getCouponIsError: boolean;
-  coupons: string[];
+  coupons: Coupon[];
 }
 
 const initState: CheckoutState = {
@@ -79,30 +79,30 @@ export const checkoutReducer = (
       };
     }
 
-    // case GET_COUPONS_LOADING: {
-    //   return {
-    //     ...state,
-    //     getCouponIsLoading: true,
-    //     getCouponIsError: false,
-    //   };
-    // }
+    case GET_COUPONS_LOADING: {
+      return {
+        ...state,
+        getCouponIsLoading: true,
+        getCouponIsError: false,
+      };
+    }
 
-    // case GET_COUPONS_SUCCESS: {
-    //   return {
-    //     ...state,
-    //     getCouponIsLoading: false,
-    //     getCouponIsError: false,
-    //     coupons: action.payload,
-    //   };
-    // }
+    case GET_COUPONS_SUCCESS: {
+      return {
+        ...state,
+        getCouponIsLoading: false,
+        getCouponIsError: false,
+        coupons: action.payload,
+      };
+    }
 
-    // case GET_COUPONS_ERROR: {
-    //   return {
-    //     ...state,
-    //     getCouponIsLoading: false,
-    //     getCouponIsError: true,
-    //   };
-    // }
+    case GET_COUPONS_ERROR: {
+      return {
+        ...state,
+        getCouponIsLoading: false,
+        getCouponIsError: true,
+      };
+    }
 
     case ADD_ADDRESS_LOADING: {
       return {

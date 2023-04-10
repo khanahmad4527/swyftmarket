@@ -1,6 +1,6 @@
 import instance from "../../utils/axiosInstance";
 import { AppDispatch } from "../store";
-import { AddAddress, Address } from "@/utils/types";
+import { AddAddress, Address, Coupon } from "@/utils/types";
 import {
   GET_ADDRESS_LOADING,
   GET_ADDRESS_SUCCESS,
@@ -79,6 +79,7 @@ interface GetCouponsLoadingAction {
 
 interface GetCouponsSuccessAction {
   type: typeof GET_COUPONS_SUCCESS;
+  payload: Coupon[];
 }
 
 interface GetCouponsErrorAction {
@@ -152,17 +153,17 @@ const deleteAddressError = (): DeleteAddressErrorAction => {
   return { type: REMOVE_ADDRESS_ERROR };
 };
 
-// const getCouponsLoading = (): GetCouponsLoadingAction => {
-//   return { type: GET_COUPONS_LOADING };
-// };
+const getCouponsLoading = (): GetCouponsLoadingAction => {
+  return { type: GET_COUPONS_LOADING };
+};
 
-// const getCouponsSuccess = (data: any): GetCouponsSuccessAction => {
-//   return { type: GET_COUPONS_SUCCESS, payload: data };
-// };
+const getCouponsSuccess = (data: Coupon[]): GetCouponsSuccessAction => {
+  return { type: GET_COUPONS_SUCCESS, payload: data };
+};
 
-// const getCouponsError = (): GetCouponsErrorAction => {
-//   return { type: GET_COUPONS_ERROR };
-// };
+const getCouponsError = (): GetCouponsErrorAction => {
+  return { type: GET_COUPONS_ERROR };
+};
 
 /*****    action creators dispatch function     *****/
 
@@ -176,15 +177,15 @@ export const getAddress = (): any => async (dispatch: AppDispatch) => {
   }
 };
 
-// export const getCoupons = () => async (dispatch: AppDispatch) => {
-//   dispatch({ type: GET_COUPONS_LOADING });
-//   try {
-//     const responce = await instance.get(`/coupons`);
-//     dispatch({ type: GET_COUPONS_SUCCESS, payload: responce.data });
-//   } catch (error) {
-//     dispatch({ type: GET_COUPONS_ERROR });
-//   }
-// };
+export const getCoupons = (): any => async (dispatch: AppDispatch) => {
+  dispatch(getCouponsLoading());
+  try {
+    const responce = await instance.get(`/coupons`);
+    dispatch(getCouponsSuccess(responce.data));
+  } catch (error) {
+    dispatch(getCouponsError());
+  }
+};
 
 export const addAddress =
   (payload: AddAddress): any =>

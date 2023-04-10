@@ -67,7 +67,6 @@ const AddressModal = ({
           position: "top",
         });
         const { _id, userId, ...newAddress } = values;
-        console.log("addaddress", newAddress);
         dispatch(addAddress(newAddress));
       } else if (addressOperation === "edit") {
         toast({

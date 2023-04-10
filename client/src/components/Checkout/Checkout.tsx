@@ -32,8 +32,9 @@ import { emptyCart, getCartData } from "../../redux/cart/cart.actions";
 import {
   getAddress,
   deleteAddress,
+  getCoupons,
 } from "../../redux/checkout/checkout.actions";
-//import { addToOrder } from "../../redux/order/order.actions";
+import { addToOrder, getOrderData } from "../../redux/order/order.actions";
 import Error from "../../utils/Error";
 import Loading from "../../utils/Loading";
 import AddressModal from "./AddressModal";
@@ -89,6 +90,10 @@ const Checkout = () => {
     (store) => store.cart
   );
 
+  const { getOrderIsLoading, getOrderIsError, orderData } = useAppSelector(
+    (store) => store.order
+  );
+
   const {
     getCheckoutIsLoading,
     getCheckoutIsError,
@@ -122,28 +127,28 @@ const Checkout = () => {
 
   const handleCoupons = () => {
     let flag = true;
-    // for (let i = 0; i < coupons.length; i++) {
-    //   if (coupon === coupons[i].code) {
-    //     if (subtotal >= coupons[i].minimumSpend) {
-    //       calculateFinalAmount(coupons[i].discount);
-    //       flag = false;
-    //       break;
-    //     } else {
-    //       flag = false;
-    //       const final = subtotal + deliveryAmount;
-    //       setFinalAmount(final);
-    //       toast({
-    //         title: "Apply Coupon and Save!",
-    //         description: `Spend at least ${coupons[i].minimumSpend} to unlock amazing discounts with our coupons. Start saving now!`,
-    //         status: "warning",
-    //         position: "top",
-    //         duration: 2000,
-    //         isClosable: true,
-    //       });
-    //       break;
-    //     }
-    //   }
-    // }
+    for (let i = 0; i < coupons.length; i++) {
+      if (coupon === coupons[i].code) {
+        if (subtotal >= coupons[i].minimumSpend) {
+          calculateFinalAmount(coupons[i].discount);
+          flag = false;
+          break;
+        } else {
+          flag = false;
+          const final = subtotal + deliveryAmount;
+          setFinalAmount(final);
+          toast({
+            title: "Apply Coupon and Save!",
+            description: `Spend at least ${coupons[i].minimumSpend} to unlock amazing discounts with our coupons. Start saving now!`,
+            status: "warning",
+            position: "top",
+            duration: 2000,
+            isClosable: true,
+          });
+          break;
+        }
+      }
+    }
 
     if (flag) {
       const final = subtotal + deliveryAmount;
@@ -205,7 +210,7 @@ const Checkout = () => {
         };
       }),
     };
-    //dispatch(addToOrder(newOrder));
+    dispatch(addToOrder(newOrder));
     router.push("/");
   };
 
@@ -221,14 +226,20 @@ const Checkout = () => {
       dispatch(getAddress());
     }
 
-    // if (!coupons.length) {
-    //   dispatch(getCoupons());
-    // }
+    if (!coupons.length) {
+      dispatch(getCoupons());
+    }
 
-    // if (!orderData.length) {
-    //   dispatch(getOrderData());
-    // }
-  }, []);
+    if (!orderData.length) {
+      dispatch(getOrderData());
+    }
+  }, [
+    cartData.length,
+    coupons.length,
+    dispatch,
+    orderData.length,
+    userAddress.length,
+  ]);
 
   useEffect(() => {
     let subtotal = 0;
@@ -249,13 +260,23 @@ const Checkout = () => {
     }
   }, [formData]);
 
-  if (getCheckoutIsLoading) {
+  if (
+    getCheckoutIsLoading ||
+    getOrderIsLoading ||
+    getCartIsLoading ||
+    getCouponIsLoading
+  ) {
     return (
       <Flex w="100%" h="100vh">
         <Loading />
       </Flex>
     );
-  } else if (getCheckoutIsError) {
+  } else if (
+    getCheckoutIsError ||
+    getOrderIsError ||
+    getCartIsError ||
+    getCouponIsError
+  ) {
     return (
       <Flex w="100%" h="100vh">
         <Error />

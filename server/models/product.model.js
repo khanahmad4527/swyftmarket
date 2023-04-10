@@ -11,7 +11,7 @@ const productSchema = mongoose.Schema(
     reviews: { type: Number, required: true },
     image: { type: String, required: true },
     images: { type: [[String]], required: true },
-    colours: { type: [[String]]},
+    colours: { type: [[String]], required: true },
     sizes: { type: [String], required: true },
     quantity: { type: Number, required: true },
     description: { type: String, required: true },
@@ -25,4 +25,4 @@ const productSchema = mongoose.Schema(
 );
 const ProductModel = mongoose.model("product", productSchema);
 
-module.exports = ProductModel;
+module.exports = { ProductModel };

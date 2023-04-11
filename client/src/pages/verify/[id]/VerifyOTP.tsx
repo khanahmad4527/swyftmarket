@@ -16,60 +16,101 @@ import {
 import instance from "@/utils/axiosInstance";
 import { useRouter } from "next/router";
 
-const VerifyOTP = () => {
+const VerifyOTP = ({ expiry }: { expiry: number | undefined }) => {
   const [pin, setPin] = useState<string>("");
   const toast = useToast();
   const router = useRouter();
-  const { id } = router.query;
+  const id = router.query?.id;
 
   const handleVerify = async () => {
-    try {
-      const responce = await instance.post(`/user/verify/verifyemail/${id}`, {
-        code: pin,
-      });
-      if (responce.status === 201) {
+    if (id && id) {
+      try {
+        const response = await instance.post(`/user/verify/verifyemail/${id}`, {
+          code: pin,
+        });
+        if (response.status === 201) {
+          toast({
+            title: "Account Verified",
+            description: "Your account has been successfully verified.",
+            status: "success",
+            position: "top",
+            duration: 3000,
+            isClosable: true,
+          });
+          router.push("/login");
+        }
+        if (response.status === 200) {
+          toast({
+            title: "Account Verified",
+            description: "Your account has already been verified.",
+            status: "info",
+            position: "top",
+            duration: 3000,
+            isClosable: true,
+          });
+          router.push("/login");
+        }
+      } catch (error: any) {
+        if (error.response.status === 409) {
+          toast({
+            title: error.response.data.message,
+            description: error.response.data.description,
+            status: "error",
+            position: "top",
+            duration: 3000,
+            isClosable: true,
+          });
+        } else if (error.response.status === 404) {
+          toast({
+            title: "User not found",
+            description: "Please signup",
+            status: "error",
+            position: "top",
+            duration: 3000,
+            isClosable: true,
+          });
+          router.push("/signup");
+        }
+      }
+    }
+  };
+
+  const requestOTP = async () => {
+    if (expiry && id) {
+      const timeDiffMs = Date.now() - expiry;
+
+      if (timeDiffMs > 600000) {
+        if (id && id) {
+          const otpResponce = await instance.post("/user/verify/generateotp", {
+            userId: id,
+          });
+          const { OTP } = otpResponce.data;
+          await instance.post("/user/verify/sendemail", {
+            code: OTP,
+            userId: id,
+          });
+        }
         toast({
-          title: "Account Verified",
-          description: "Your account has been successfully verified.",
+          title: "OTP Sent Successfully",
+          description: "Please check your email for the OTP",
           status: "success",
           position: "top",
-          duration: 3000,
+          duration: 5000,
           isClosable: true,
         });
-        router.push("/login");
-      }
-      if (responce.status === 200) {
+        router.replace(`/verify/${id}`);
+      } else {
         toast({
-          title: "Account Verified",
-          description: "Your account has already been verified.",
-          status: "info",
+          title: "OTP Request Failed",
+          description: "You can only request OTP after 10 minute",
+          status: "warning",
           position: "top",
-          duration: 3000,
+          duration: 5000,
           isClosable: true,
         });
-        router.push("/login");
       }
-    } catch (error: any) {
-      if (error.response.status === 409) {
-        toast({
-          title: "Invalid OTP",
-          description: "Please enter a valid 6-digit OTP.",
-          status: "error",
-          position: "top",
-          duration: 3000,
-          isClosable: true,
-        });
-      } else if (error.response.status === 404) {
-        toast({
-          title: "User not found",
-          description: "Please signup",
-          status: "error",
-          position: "top",
-          duration: 3000,
-          isClosable: true,
-        });
-        router.push("/signup");
-      }
+
+      console.log(expiry);
     }
   };
 
@@ -111,9 +152,15 @@ const VerifyOTP = () => {
             </HStack>
           </FormControl>
         </Flex>
-        <Button colorScheme="blue" onClick={handleVerify}>
-          Verify Account
-        </Button>
+        <HStack>
+          <Button colorScheme="blue" onClick={handleVerify}>
+            Verify Account
+          </Button>
+          <Button colorScheme="blue" onClick={requestOTP}>
+            Request OTP
+          </Button>
+        </HStack>
+
         <Text mt="4" fontSize="sm">
           Please check your email for the OTP. If you haven&apos;t received it,
           please check your spam folder or click the resend button.

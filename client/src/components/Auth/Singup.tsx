@@ -61,8 +61,8 @@ export default function Signup() {
         };
 
         setIsButton(true);
-        const responce = await isEmailAvailable(user_data);
-        if (responce.status === 409) {
+        const response = await isEmailAvailable(user_data);
+        if (response.status === 409) {
           toast({
             title: "Email address already in use",
             description: "Email address already associated with an account",
@@ -72,7 +72,7 @@ export default function Signup() {
             isClosable: true,
           });
           setIsButton(false);
-        } else if (responce.status === 201) {
+        } else if (response.status === 201) {
           toast({
             title: "Account created successfully",
             description: "Kindly verify your email.",
@@ -83,14 +83,23 @@ export default function Signup() {
           });
           setIsButton(false);
 
-          const userId = responce?.data?.userId;
+          const userId = response?.data?.userId;
 
           const otpResponce = await instance.post("/user/verify/generateotp", {
             userId,
           });
           const { OTP } = otpResponce.data;
 
-          await instance.post("/user/verify/sendemail", { code:OTP, userId });
+          await instance.post("/user/verify/sendemail", { code: OTP, userId });
+
+          toast({
+            title: "OTP Sent Successfully",
+            description: "Please check your email for the OTP",
+            status: "success",
+            position: "top",
+            duration: 5000,
+            isClosable: true,
+          });
 
           router.push(`/verify/${userId}`);
         } else {

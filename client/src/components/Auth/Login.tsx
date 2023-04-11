@@ -39,8 +39,8 @@ export default function Login() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setIsButton(true);
-    const { status, role } = await existingUser(email, password);
-    if (status === 200) {
+    const response = await existingUser(email, password);
+    if (response.status === 200) {
       dispatch(login(email, password));
       toast({
         title: "Login Successful",
@@ -50,13 +50,16 @@ export default function Login() {
         isClosable: true,
         position: "top",
       });
-      if (role === "admin" || role === "superadmin") {
+      if (
+        response.data.role === "admin" ||
+        response.data.role === "superadmin"
+      ) {
         router.push("/admin");
       } else {
         router.push("/");
       }
       setIsButton(false);
-    } else if (status === 404) {
+    } else if (response.status === 404) {
       toast({
         title: "No results found",
         description: "Please sign up to create an account.",
@@ -66,15 +69,27 @@ export default function Login() {
         isClosable: true,
       });
       setIsButton(false);
-    } else if (status === 401) {
-      toast({
-        title: "Incorrect Password",
-        description: "Please enter write password.",
-        status: "warning",
-        duration: 3000,
-        position: "top",
-        isClosable: true,
-      });
+    } else if (response.status === 401) {
+      if (response.data.message === "Email verification needed") {
+        toast({
+          title: response.data.message,
+          description: response.data.description,
+          status: "warning",
+          duration: 3000,
+          position: "top",
+          isClosable: true,
+        });
+        router.push(`/verify/${response.data.id}`);
+      } else {
+        toast({
+          title: response.data.message,
+          description: response.data.description,
+          status: "warning",
+          duration: 3000,
+          position: "top",
+          isClosable: true,
+        });
+      }
       setIsButton(false);
     }
     setEmail("");

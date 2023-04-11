@@ -109,8 +109,6 @@ const VerifyOTP = ({ expiry }: { expiry: number | undefined }) => {
           isClosable: true,
         });
       }
-
-      console.log(expiry);
     }
   };
 

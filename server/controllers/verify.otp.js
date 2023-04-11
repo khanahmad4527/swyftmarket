@@ -1,4 +1,5 @@
 const otpGenerator = require("otp-generator");
+const { sedngridSendEmail } = require("../utils/sendEmail");
 const { UserModel } = require("../models/user.model");
 
 const generateOTP = async (req, res) => {
@@ -14,13 +15,16 @@ const generateOTP = async (req, res) => {
     if (userExist) {
       const { isEmailVerified } = userExist;
       if (!isEmailVerified) {
-        await UserModel.findByIdAndUpdate(userId, { emailOTP: OTP });
+        await UserModel.findByIdAndUpdate(userId, {
+          OTP,
+          expiry: Date.now(),
+        });
         return res.status(201).json({ OTP });
       } else if (isEmailVerified) {
         return res.status(200).json({ message: "Already Verified" });
       }
     } else {
-      return res.status(404).json({ message: "User Not found" });
+      return res.status(404).json({ message: "User not found" });
     }
   } catch (err) {
     res.status(500).json({ message: err });
@@ -36,7 +40,7 @@ const sendEmail = async (req, res) => {
       const { email, isEmailVerified } = userExist;
       if (!isEmailVerified) {
         try {
-          await sendEmail({
+          await sedngridSendEmail({
             to: email,
             from: "khanahmad4527@gmail.com",
             subject: "Verify your SwyftMarket Account",
@@ -59,6 +63,16 @@ const sendEmail = async (req, res) => {
                       margin: 30px;
                       font-size: 16px;
                     }
+
+                    .button {
+                      display: inline-block;
+                      margin-top: 30px;
+                      padding: 10px 20px;
+                      background-color: #ffd500;
+                      color: #000000;
+                      text-decoration: none;
+                      border-radius: 5px;
+                    }
                   </style>
                 </head>
                 <body>
@@ -68,6 +82,7 @@ const sendEmail = async (req, res) => {
                   <div class="content">
                     <p>Thank you for registering with SwyftMarket. Please enter the below OTP to verify your account.</p>
                     <p>Your OTP is: ${code}</p>
+                    <a href="#" class="button">Verify Account</a>
                   </div>
                 </body>
               </html>`,
@@ -80,37 +95,39 @@ const sendEmail = async (req, res) => {
         return res.status(200).json({ message: "Already Verified" });
       }
     } else {
-      return res.status(404).json({ message: "User Not found" });
+      return res.status(404).json({ message: "User not found" });
     }
   } catch (err) {
     res.status(500).json({ message: err });
   }
 };
 
-const verifyEmail = async (req, res) => {
+const verifyOTP = async (req, res) => {
   const { userId } = req.params;
   const { code } = req.body;
   try {
     const userExist = await UserModel.findById(userId);
     if (userExist) {
-      const { emailOTP, isEmailVerified } = userExist;
-
+      const { OTP, isEmailVerified } = userExist;
       if (!isEmailVerified) {
-        if (emailOTP === code) {
-          await UserModel.findByIdAndUpdate(userId, { isEmailVerified: true });
-          return res.status(200).json({ message: "Successfully Verified" });
+        if (OTP === code) {
+          await UserModel.findByIdAndUpdate(userId, {
+            isEmailVerified: true,
+            OTP: "",
+          });
+          return res.status(201).json({ message: "Successfully Verified" });
         } else {
           return res.status(409).json({ message: "Invalid OTP" });
         }
       } else {
-        return res.status(409).json({ message: "Already Verified" });
+        return res.status(200).json({ message: "Already Verified" });
       }
     } else {
-      return res.status(404).json({ message: "User Not found" });
+      return res.status(404).json({ message: "User not found" });
     }
   } catch (err) {
     res.status(500).json({ message: err });
   }
 };
 
-module.exports = { generateOTP, sendEmail, verifyEmail };
+module.exports = { generateOTP, sendEmail, verifyOTP };

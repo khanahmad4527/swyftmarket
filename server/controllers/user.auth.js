@@ -21,9 +21,15 @@ const signup = async (req, res) => {
       email,
       role: "user",
       hashedPassword,
+      isEmailVerified: false,
+      OTP: "",
+      expiry: Date.now(),
+      session: false,
     });
     await newUser.save();
-    res.status(201).json({ message: "Registration Successfull" });
+    res
+      .status(201)
+      .json({ message: "Registration successful.", userId: newUser._id });
   } catch (err) {
     res.status(400).json({ message: err });
   }
@@ -75,4 +81,21 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { login, signup };
+const checkEmailVerification = async (req, res) => {
+  const { userId } = req.body;
+  try {
+    let userExist = await UserModel.findById(userId);
+    if (userExist) {
+      const { isEmailVerified } = userExist;
+      if (!isEmailVerified) {
+        return res.status(200).json({ message: "Not Verified" });
+      }
+    } else {
+      return res.status(404).json({ message: "User not found" });
+    }
+  } catch (err) {
+    return res.status(500).json({ message: err });
+  }
+};
+
+module.exports = { login, signup, checkEmailVerification };

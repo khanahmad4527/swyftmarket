@@ -3,12 +3,14 @@ const router = express.Router();
 
 
 /****************** controllers ***********************/
-const { login, signup } = require("../controllers/user.auth");
+const { login, signup, checkEmailVerification } = require("../controllers/user.auth");
 const { getProducts, getSingleProduct } = require("../controllers/products");
 const { getCart, addCart, updateCart, deleteCart, emptyCart } = require("../controllers/cart");
 const { getAddress, addAddress, updateAddress, deleteAddress } = require("../controllers/address");
 const { getOrders, addOrder } = require("../controllers/orders");
 const { getCoupons } = require("../controllers/coupon");
+const { generateOTP, sendEmail, verifyOTP } = require("../controllers/verify.otp")
+const { generateResetOTP, sendResetEmail, resetPassword } = require("../controllers/reset.password");
 
 
 /********************** middleware ***********************/
@@ -18,12 +20,19 @@ const { validator } = require("../middlewares/validator");
 /********************** user routes *****************************/
 router.post("/user/auth/register", signup);
 router.post("/user/auth/login", login);
+router.post("/user/auth/detail", checkEmailVerification);
 
 
 /********************** verify routes *****************************/
-router.post("/user/auth/generate-otp", generateOTP);
-router.post("/user/auth/send-email", sendEmail);
-router.post("/user/auth/verify-email", verifyEmail);
+router.post("/user/verify/generateotp", generateOTP);
+router.post("/user/verify/sendemail", sendEmail);
+router.post("/user/verify/verifyemail/:userId", verifyOTP);
+
+
+/********************** reset routes *****************************/
+router.post("/user/reset/generateotp", generateResetOTP);
+router.post("/user/reset/sendemail", sendResetEmail);
+router.post("/user/reset/resetpassword/:userId", resetPassword);
 
 
 /********************** product routes *****************************/

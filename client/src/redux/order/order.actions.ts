@@ -77,8 +77,8 @@ const addOrdersError = (): AddOrdersErrorAction => {
 export const getOrderData = (): any => async (dispatch: AppDispatch) => {
   dispatch(getOrdersLoading());
   try {
-    const responce = await instance.get(`/orders`);
-    dispatch(getOrdersSuccess(responce.data));
+    const response = await instance.get(`/orders`);
+    dispatch(getOrdersSuccess(response.data));
   } catch (err) {
     dispatch(getOrdersError());
   }
@@ -89,8 +89,8 @@ export const addToOrder =
   async (dispatch: AppDispatch) => {
     dispatch(addOrdersLoading());
     try {
-      const responce = await instance.post(`/orders/add`, newOrder);
-      dispatch(addOrdersSuccess(responce.data));
+      const response = await instance.post(`/orders/add`, newOrder);
+      dispatch(addOrdersSuccess(response.data));
     } catch (err) {
       dispatch(addOrdersError());
     }

@@ -50,9 +50,9 @@ export const getProducts =
   async (dispatch: AppDispatch) => {
     dispatch(getProductsLoading());
     try {
-      const responce = await instance.get(`/products`, { params });
-      const data = responce.data;
-      const totalProductCount = responce.headers["x-total-count"];
+      const response = await instance.get(`/products`, { params });
+      const data = response.data;
+      const totalProductCount = response.headers["x-total-count"];
       dispatch(getProductsSuccess(data, totalProductCount));
     } catch (err) {
       dispatch(getProductsError());

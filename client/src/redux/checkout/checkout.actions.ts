@@ -170,8 +170,8 @@ const getCouponsError = (): GetCouponsErrorAction => {
 export const getAddress = (): any => async (dispatch: AppDispatch) => {
   dispatch(getAddressLoading());
   try {
-    const responce = await instance.get(`/address`);
-    dispatch(getAddressSuccess(responce.data));
+    const response = await instance.get(`/address`);
+    dispatch(getAddressSuccess(response.data));
   } catch (error) {
     dispatch(getAddressError());
   }
@@ -180,8 +180,8 @@ export const getAddress = (): any => async (dispatch: AppDispatch) => {
 export const getCoupons = (): any => async (dispatch: AppDispatch) => {
   dispatch(getCouponsLoading());
   try {
-    const responce = await instance.get(`/coupons`);
-    dispatch(getCouponsSuccess(responce.data));
+    const response = await instance.get(`/coupons`);
+    dispatch(getCouponsSuccess(response.data));
   } catch (error) {
     dispatch(getCouponsError());
   }
@@ -192,8 +192,8 @@ export const addAddress =
   async (dispatch: AppDispatch) => {
     dispatch(addAddressLoading());
     try {
-      const responce = await instance.post(`/address/add`, payload);
-      dispatch(addAddressSuccess(responce.data));
+      const response = await instance.post(`/address/add`, payload);
+      dispatch(addAddressSuccess(response.data));
     } catch (error) {
       dispatch(addAddressError());
     }
@@ -204,11 +204,11 @@ export const updateAddress =
   async (dispatch: AppDispatch) => {
     dispatch(updateAddressLoading());
     try {
-      const responce = await instance.patch(
+      const response = await instance.patch(
         `/address/update/${id}`,
         updatedAddress
       );
-      dispatch(updateAddressSuccess(responce.data));
+      dispatch(updateAddressSuccess(response.data));
     } catch (error) {
       dispatch(updateAddressError());
     }
@@ -219,8 +219,8 @@ export const deleteAddress =
   async (dispatch: AppDispatch) => {
     dispatch(deleteAddressLoading());
     try {
-      const responce = await instance.delete(`/address/delete/${id}`);
-      dispatch(deleteAddressSuccess(responce.data));
+      const response = await instance.delete(`/address/delete/${id}`);
+      dispatch(deleteAddressSuccess(response.data));
     } catch (error) {
       dispatch(deleteAddressError());
     }

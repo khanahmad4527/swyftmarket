@@ -110,8 +110,8 @@ const getHomeAppliancesError = (): GetHomeAppliancesErrorAction => {
 export const getMobiles = (): any => async (dispatch: AppDispatch) => {
   dispatch(getMobilesLoading());
   try {
-    const responce = await instance.get(`/products?category=dress`);
-    dispatch(getMobilesSuccess(responce.data));
+    const response = await instance.get(`/products?category=dress`);
+    dispatch(getMobilesSuccess(response.data));
   } catch (error) {
     console.log(error);
     dispatch(getMobilesError());
@@ -121,8 +121,8 @@ export const getMobiles = (): any => async (dispatch: AppDispatch) => {
 export const getTvs = (): any => async (dispatch: AppDispatch) => {
   dispatch(getTvsLoading());
   try {
-    const responce = await instance.get(`/products?category=shoes`);
-    dispatch(getTvsSuccess(responce.data));
+    const response = await instance.get(`/products?category=shoes`);
+    dispatch(getTvsSuccess(response.data));
   } catch (error) {
     console.log(error);
     dispatch(getTvsError());
@@ -132,8 +132,8 @@ export const getTvs = (): any => async (dispatch: AppDispatch) => {
 export const getHomeAppliances = (): any => async (dispatch: AppDispatch) => {
   dispatch(getHomeAppliancesLoading());
   try {
-    const responce = await instance.get(`/products?category=candles`);
-    dispatch(getHomeAppliancesSuccess(responce.data));
+    const response = await instance.get(`/products?category=candles`);
+    dispatch(getHomeAppliancesSuccess(response.data));
   } catch (error) {
     console.log(error);
     dispatch(getHomeAppliancesError());

@@ -169,8 +169,8 @@ const emptyCartError = (): EmptyCartErrorAction => {
 export const getCartData = (): any => async (dispatch: AppDispatch) => {
   dispatch(getCartLoading());
   try {
-    const responce = await instance.get(`/cart`);
-    dispatch(getCartSuccess(responce.data));
+    const response = await instance.get(`/cart`);
+    dispatch(getCartSuccess(response.data));
   } catch (error) {
     dispatch(getCartError());
   }
@@ -181,8 +181,8 @@ export const addToCart =
   async (dispatch: AppDispatch) => {
     dispatch(addCartLoading());
     try {
-      const responce = await instance.post(`/cart/add`, newCart);
-      dispatch(addCartSuccess(responce.data));
+      const response = await instance.post(`/cart/add`, newCart);
+      dispatch(addCartSuccess(response.data));
     } catch (error) {
       dispatch(addCartError());
     }
@@ -193,10 +193,10 @@ export const updateCartData =
   async (dispatch: AppDispatch) => {
     dispatch(updateCartLoading());
     try {
-      const responce = await instance.patch(`/cart/update/${id}`, {
+      const response = await instance.patch(`/cart/update/${id}`, {
         quantity: updatedQuantity,
       });
-      dispatch(updateCartSuccess(responce.data));
+      dispatch(updateCartSuccess(response.data));
     } catch (error) {
       dispatch(updateCartError());
     }
@@ -207,8 +207,8 @@ export const deleteCartData =
   async (dispatch: AppDispatch) => {
     dispatch(deleteCartLoading());
     try {
-      const responce = await instance.delete(`/cart/delete/${id}`);
-      dispatch(deleteCartSuccess(responce.data));
+      const response = await instance.delete(`/cart/delete/${id}`);
+      dispatch(deleteCartSuccess(response.data));
     } catch (error) {
       dispatch(deleteCartError());
     }

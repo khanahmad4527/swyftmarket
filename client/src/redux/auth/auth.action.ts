@@ -60,11 +60,11 @@ export const login =
   async (dispatch: AppDispatch) => {
     dispatch(getAuthLoading());
     try {
-      const responce = await instance.post(`/user/auth/login`, {
+      const response = await instance.post(`/user/auth/login`, {
         email,
         password,
       });
-      dispatch(getAuthSuccess(responce.data));
+      dispatch(getAuthSuccess(response.data));
     } catch (error: any) {
       dispatch(getAuthError());
     }
@@ -72,22 +72,22 @@ export const login =
 
 export const existingUser = async (email: string, password: string) => {
   try {
-    const responce = await instance.post(`/user/auth/login`, {
+    const response = await instance.post(`/user/auth/login`, {
       email,
       password,
     });
-    const status = responce.status;
-    const role = responce.data.userData.role;
-    return { status, role };
+    // const status = response.status;
+    // const role = response.data.userData.role;
+    return response;
   } catch (error: any) {
-    return { status: error.response.status };
+    return error.response;
   }
 };
 
 export const isEmailAvailable = async (newUser: NewUser) => {
   try {
-    const responce = await instance.post(`/user/auth/register`, newUser);
-    return responce;
+    const response = await instance.post(`/user/auth/register`, newUser);
+    return response;
   } catch (error: any) {
     return error.response;
   }

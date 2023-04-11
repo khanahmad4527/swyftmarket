@@ -1,7 +1,20 @@
 import Head from "next/head";
-import Signup from "@/components/Auth/Singup";
+import { useEffect } from "react";
+import { useAppSelector } from "@/redux/store";
+import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+
+const Signup = dynamic(() => import("@/components/Auth/Signup"), { ssr: false });
 
 export default function SignupPage() {
+  const { isAuth } = useAppSelector((store) => store.auth);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isAuth) {
+      router.push("/");
+    }
+  }, [isAuth, router]);
   return (
     <>
       <Head>
@@ -11,9 +24,7 @@ export default function SignupPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <Signup />
-      </main>
+      <main>{!isAuth && <Signup />}</main>
     </>
   );
 }

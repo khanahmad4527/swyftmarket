@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-export const signUpSchema = Yup.object({
+export const resetPasswordSchema = Yup.object({
   password: Yup.string()
     .required("Password is required")
     .min(8, "Password must be at least 8 characters")

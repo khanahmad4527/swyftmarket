@@ -151,7 +151,7 @@ export default function ProductDetail({ id }: { id: string }) {
                         style={{
                           width: "50px",
                           height: "60px",
-                          border: "1px solid #FFEB3B",
+                          border: "1px solid #D69E2E",
                         }}
                         {...(imageIndex === index
                           ? {
@@ -183,6 +183,7 @@ export default function ProductDetail({ id }: { id: string }) {
             <GridItem position={"relative"}>
               <Flex
                 position={"absolute"}
+                bgColor="white"
                 top="1%"
                 right="1%"
                 p={"10px"}

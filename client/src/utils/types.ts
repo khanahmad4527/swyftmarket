@@ -8,9 +8,7 @@ export interface Product {
   rating: number;
   reviews: number;
   image: string;
-  images: string[][];
-  colours: string[][];
-  sizes: string[];
+  images: string[];
   quantity: number;
   description: string;
   brand: string;
@@ -28,8 +26,6 @@ export interface Cart {
   quantity: number;
   totalPrice: number;
   image: string;
-  colour: string;
-  size: string;
   description: string;
 }
 
@@ -41,8 +37,6 @@ export interface AddToCart {
   quantity: number;
   totalPrice: number;
   image: string;
-  colour: string;
-  size: string;
   description: string;
 }
 

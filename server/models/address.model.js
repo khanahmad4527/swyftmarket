@@ -11,7 +11,7 @@ const addressSchema = mongoose.Schema(
   { _id: false }
 );
 
-const userAddressSchema = mongoose.Schema(
+const userAddressSchema = new mongoose.Schema(
   {
     userId: { type: String, required: true },
     country: { type: String, required: true },

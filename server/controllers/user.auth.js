@@ -107,7 +107,6 @@ const getUserDetail = async (req, res) => {
 
 const updateUserDetail = async (req, res) => {
   const { userId, password, email } = req.body;
-  console.log("user", req.body);
   try {
     let userExist = await UserModel.findById(userId);
     if (userExist) {

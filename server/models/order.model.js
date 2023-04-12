@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const itemSchema = mongoose.Schema(
+const itemSchema = new mongoose.Schema(
   {
     quantity: { type: Number, required: true },
     title: { type: String, required: true },
@@ -9,7 +9,7 @@ const itemSchema = mongoose.Schema(
   { _id: false }
 );
 
-const orderSchema = mongoose.Schema(
+const orderSchema = new mongoose.Schema(
   {
     userId: { type: String, required: true },
     orderDate: { type: String, required: true },

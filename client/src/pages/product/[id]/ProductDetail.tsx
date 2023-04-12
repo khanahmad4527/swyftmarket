@@ -6,7 +6,6 @@ import {
   Flex,
   Heading,
   StackDivider,
-  useColorModeValue,
   List,
   ListItem,
   Grid,
@@ -22,8 +21,8 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { getProductDetail } from "../../../redux/product-detail/productDetail.actions";
 import Error from "../../../utils/Error";
 import Loading from "../../../utils/Loading";
-import { AddToCart, Cart, Product } from "@/utils/types";
-import { addToCart, getCartData } from "@/redux/cart/cart.actions";
+import { AddToCart, Product } from "@/utils/types";
+import { addToCart } from "@/redux/cart/cart.actions";
 
 export default function ProductDetail({ id }: { id: string }) {
   const [imageIndex, setImageIndex] = useState<number>(0);
@@ -41,28 +40,23 @@ export default function ProductDetail({ id }: { id: string }) {
     title,
     category,
     price,
-    discount,
     discountPrice,
     rating,
-    reviews,
     image,
     images,
     colours,
     sizes,
-    quantity,
     description,
     brand,
-    addedAt,
-    updatedAt,
   }: Product = productDetailData;
 
-  const { getCartIsLoading, getCartIsError, cartData } = useAppSelector(
-    (store) => store.cart
-  );
+  const { cartData } = useAppSelector((store) => store.cart);
 
   const { isAuth } = useAppSelector((store) => store.auth);
 
   const dispatch = useAppDispatch();
+
+  /********** handle add to cart ******************/
 
   const handleAddToCart = (item: AddToCart) => {
     setIsAdded(true);
@@ -83,7 +77,7 @@ export default function ProductDetail({ id }: { id: string }) {
     if (id && id !== "") {
       dispatch(getProductDetail(id && id));
     }
-  }, [id]);
+  }, [dispatch, id]);
 
   useEffect(() => {
     if (isAuth) {
@@ -94,6 +88,8 @@ export default function ProductDetail({ id }: { id: string }) {
       }
     }
   }, [cartData, id, isAuth]);
+
+  /********** render conditionally for good UX ******************/
 
   if (getProductDetailIsLoading) {
     return (

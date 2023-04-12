@@ -6,8 +6,8 @@ const getAddress = async (req, res) => {
   try {
     const userAddress = await AddressModel.find({ userId });
     return res.status(200).json(userAddress);
-  } catch (err) {
-    return res.status(400).json({ message: err });
+  } catch (error) {
+    return res.status(400).json({ message: error });
   }
 };
 
@@ -16,8 +16,8 @@ const addAddress = async (req, res) => {
     const newAddress = new AddressModel(req.body);
     await newAddress.save();
     return res.status(200).json(newAddress);
-  } catch (err) {
-    return res.status(400).json({ message: err });
+  } catch (error) {
+    return res.status(400).json({ message: error });
   }
 };
 
@@ -42,8 +42,8 @@ const updateAddress = async (req, res) => {
     } else {
       return res.status(404).json({ message: "No address found" });
     }
-  } catch (err) {
-    return res.status(400).json({ message: err });
+  } catch (error) {
+    return res.status(400).json({ message: error });
   }
 };
 
@@ -61,8 +61,8 @@ const deleteAddress = async (req, res) => {
     } else {
       return res.status(404).json({ message: "No address found" });
     }
-  } catch (err) {
-    return res.status(400).json({ message: err });
+  } catch (error) {
+    return res.status(400).json({ message: error });
   }
 };
 

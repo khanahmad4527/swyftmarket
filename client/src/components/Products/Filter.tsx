@@ -84,6 +84,8 @@ const Filter = ({
     }
   };
 
+  /********** determine if we can use clear filter button ******************/
+
   useEffect(() => {
     if (
       category.length === 0 &&

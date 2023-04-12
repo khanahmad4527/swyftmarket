@@ -6,8 +6,8 @@ import {
   getMobiles,
   getTvs,
 } from "../../redux/home/home.action";
-import CategoryCarosuel from "./CategoryCarosuel";
-import ProductCarouel from "./ProductCarouel";
+import CategoryCarousel from "./CategoryCarousel";
+import ProductCarousel from "./ProductCarousel";
 import { useRouter } from "next/router";
 
 const Home = () => {
@@ -16,10 +16,9 @@ const Home = () => {
   const home = useAppSelector((store) => store.home);
 
   const dispatch = useAppDispatch();
-  const router = useRouter();
 
   useEffect(() => {
-    /**********    page will always loads at top position   ******************/
+    /********** page will always loads at top position ******************/
     window.scrollTo(0, 0);
 
     if (!mobile.mobileData.length) {
@@ -35,23 +34,22 @@ const Home = () => {
     }
   }, []);
 
-
   return (
     <Flex flexDirection="column">
-      <CategoryCarosuel />
-      <ProductCarouel
+      <CategoryCarousel />
+      <ProductCarousel
         title="Mobiles"
         data={mobile.mobileData}
         loading={mobile.getMobileIsLoading}
         error={mobile.getMobileIsError}
       />
-      <ProductCarouel
+      <ProductCarousel
         title="Tvs"
         data={tv.tvData}
         loading={tv.getTvIsLoading}
         error={tv.getTvIsError}
       />
-      <ProductCarouel
+      <ProductCarousel
         title="Home Appliances"
         data={home.homeData}
         loading={home.getHomeIsLoading}

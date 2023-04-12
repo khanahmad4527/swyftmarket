@@ -18,6 +18,7 @@ import {
   GET_COUPONS_SUCCESS,
   GET_COUPONS_ERROR,
 } from "./checkout.types";
+import { resetAuth } from "../auth/auth.action";
 
 /*****    action creators interface     *****/
 
@@ -172,7 +173,10 @@ export const getAddress = (): any => async (dispatch: AppDispatch) => {
   try {
     const response = await instance.get(`/address`);
     dispatch(getAddressSuccess(response.data));
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.response?.status === 404) {
+      dispatch(resetAuth());
+    }
     dispatch(getAddressError());
   }
 };
@@ -182,7 +186,7 @@ export const getCoupons = (): any => async (dispatch: AppDispatch) => {
   try {
     const response = await instance.get(`/coupons`);
     dispatch(getCouponsSuccess(response.data));
-  } catch (error) {
+  } catch (error: any) {
     dispatch(getCouponsError());
   }
 };
@@ -194,7 +198,10 @@ export const addAddress =
     try {
       const response = await instance.post(`/address/add`, payload);
       dispatch(addAddressSuccess(response.data));
-    } catch (error) {
+    } catch (error: any) {
+      if (error?.response?.status === 404) {
+        dispatch(resetAuth());
+      }
       dispatch(addAddressError());
     }
   };
@@ -209,7 +216,10 @@ export const updateAddress =
         updatedAddress
       );
       dispatch(updateAddressSuccess(response.data));
-    } catch (error) {
+    } catch (error: any) {
+      if (error?.response?.status === 404) {
+        dispatch(resetAuth());
+      }
       dispatch(updateAddressError());
     }
   };
@@ -221,7 +231,10 @@ export const deleteAddress =
     try {
       const response = await instance.delete(`/address/delete/${id}`);
       dispatch(deleteAddressSuccess(response.data));
-    } catch (error) {
+    } catch (error: any) {
+      if (error?.response?.status === 404) {
+        dispatch(resetAuth());
+      }
       dispatch(deleteAddressError());
     }
   };

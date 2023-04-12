@@ -45,51 +45,42 @@ const AddressModal = ({
 
   const dispatch = useAppDispatch();
 
-  const {
-    values,
-    setValues,
-    errors,
-    touched,
-    handleBlur,
-    handleChange,
-    handleSubmit,
-  } = useFormik({
-    initialValues: formData,
-    validationSchema: addressSchema,
-    onSubmit: async (values, action) => {
-      if (addressOperation === "add") {
-        toast({
-          title: "Successfully Added",
-          description: "We've added the new address in your account",
-          status: "success",
-          duration: 2000,
-          isClosable: true,
-          position: "top",
-        });
-        const { _id, userId, ...newAddress } = values;
-        dispatch(addAddress(newAddress));
-      } else if (addressOperation === "edit") {
-        toast({
-          title: "Successfully Updated",
-          description: "We've updated the address in your account",
-          status: "success",
-          duration: 2000,
-          isClosable: true,
-          position: "top",
-        });
-        dispatch(updateAddress(values._id, values));
-      }
+  /*********************** formik and yup validation **********************************/
 
-      setFormData(initialFormData);
-      onClose2();
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik<Address>({
+      initialValues: formData,
+      validationSchema: addressSchema,
+      onSubmit: async (values: Address, action) => {
+        if (addressOperation === "add") {
+          toast({
+            title: "Successfully Added",
+            description: "We've added the new address in your account",
+            status: "success",
+            duration: 2000,
+            isClosable: true,
+            position: "top",
+          });
+          const { _id, userId, ...newAddress } = values;
+          dispatch(addAddress(newAddress));
+        } else if (addressOperation === "edit") {
+          toast({
+            title: "Successfully Updated",
+            description: "We've updated the address in your account",
+            status: "success",
+            duration: 2000,
+            isClosable: true,
+            position: "top",
+          });
+          dispatch(updateAddress(values._id, values));
+        }
 
-      action.resetForm();
-    },
-  });
+        setFormData(initialFormData);
+        onClose2();
 
-  // useEffect(() => {
-  //   setValues(formData);
-  // }, [formData]);
+        action.resetForm();
+      },
+    });
 
   return (
     <Modal

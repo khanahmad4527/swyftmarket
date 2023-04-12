@@ -9,6 +9,9 @@ export default function VerifyOTPPage() {
   const [expiry, setExpiry] = useState<number>();
   const router = useRouter();
   const { id } = router.query;
+
+  /********** display only if user's email is not verified else redirect to home page/signup page ******************/
+
   useEffect(() => {
     if (id && id) {
       (async () => {
@@ -17,13 +20,17 @@ export default function VerifyOTPPage() {
             userId: id && id,
           });
           if (response.status === 200) {
-            setExpiry(response.data.expiry);
-            setIsAllow(true);
+            if (!response.data.isEmailVerified) {
+              setExpiry(response.data.expiry);
+              setIsAllow(true);
+            } else {
+              router.push("/");
+            }
           } else {
-            router.push("/login");
+            router.push("/signup");
           }
-        } catch (error) {
-          router.push("/login");
+        } catch (error: any) {
+          router.push("/signup");
         }
       })();
     }

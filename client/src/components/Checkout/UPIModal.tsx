@@ -22,10 +22,10 @@ const initialValues: UPI = {
 
 const UPIModal = ({ orderConfirmed }: { orderConfirmed: () => void }) => {
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
+    useFormik<UPI>({
       initialValues,
       validationSchema: upiSchema,
-      onSubmit: async (values, action) => {
+      onSubmit: async (values: UPI, action) => {
         orderConfirmed();
         action.resetForm();
       },

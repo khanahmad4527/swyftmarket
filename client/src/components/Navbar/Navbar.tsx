@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
-import Loading from "@/utils/Loading";
 import NavbarLoading from "./NavbarLoading";
+
+  /********** loading navbar dynamically to avoid hydration error ******************/
 
 const DynamicComponentWithLoading = dynamic(() => import("./NavbarHelper"), {
   loading: () => <NavbarLoading />,

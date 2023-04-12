@@ -11,8 +11,8 @@ const getCart = async (req, res) => {
     res.header("x-total-count", totalCount);
 
     return res.status(200).json(cartProducts);
-  } catch (err) {
-    return res.status(400).json({ message: err });
+  } catch (error) {
+    return res.status(400).json({ message: error });
   }
 };
 
@@ -21,8 +21,8 @@ const addCart = async (req, res) => {
     const newCart = new CartModel(req.body);
     await newCart.save();
     return res.status(200).json(newCart);
-  } catch (err) {
-    return res.status(400).json({ message: err });
+  } catch (error) {
+    return res.status(400).json({ message: error });
   }
 };
 
@@ -43,8 +43,8 @@ const updateCart = async (req, res) => {
     } else {
       return res.status(404).json({ message: "Product does not exists" });
     }
-  } catch (err) {
-    return res.status(400).json({ message: err });
+  } catch (error) {
+    return res.status(400).json({ message: error });
   }
 };
 
@@ -62,8 +62,8 @@ const deleteCart = async (req, res) => {
     } else {
       return res.status(404).json({ message: "Product does not exists" });
     }
-  } catch (err) {
-    return res.status(400).json({ message: err });
+  } catch (error) {
+    return res.status(400).json({ message: error });
   }
 };
 
@@ -73,8 +73,8 @@ const emptyCart = async (req, res) => {
   try {
     await CartModel.deleteMany({ userId });
     return res.status(200);
-  } catch (err) {
-    return res.status(400).json({ message: err });
+  } catch (error) {
+    return res.status(400).json({ message: error });
   }
 };
 

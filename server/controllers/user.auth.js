@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const signup = async (req, res) => {
   const { firstname, lastname, email, password } = req.body;
   try {
-    let userExist = await UserModel.findOne({ email });
+    const userExist = await UserModel.findOne({ email });
     if (userExist) {
       return res.status(409).json({
         message:
@@ -30,8 +30,8 @@ const signup = async (req, res) => {
     res
       .status(201)
       .json({ message: "Registration successful.", userId: newUser._id });
-  } catch (err) {
-    res.status(400).json({ message: err });
+  } catch (error) {
+    res.status(400).json({ message: error });
   }
 };
 
@@ -48,10 +48,20 @@ const login = async (req, res) => {
         email,
         role,
         hashedPassword,
+        isEmailVerified,
       } = userExist;
       const isCorrect = await bcrypt.compare(password, hashedPassword);
       if (!isCorrect) {
-        return res.status(401).json({ message: "Incorrect Password" });
+        return res.status(401).json({
+          message: "Incorrect Password",
+          description: "Please enter correct password.",
+        });
+      } else if (!isEmailVerified) {
+        return res.status(401).json({
+          message: "Email verification needed",
+          description: "Kindly verify you email account",
+          id,
+        });
       } else {
         jwt.sign(
           { id, firstname, lastname, email, role },
@@ -59,12 +69,12 @@ const login = async (req, res) => {
           {
             expiresIn: "3d",
           },
-          (err, token) => {
-            if (err) {
-              return res.status(500).json({ message: err });
+          (error, token) => {
+            if (error) {
+              return res.status(500).json({ message: error });
             }
             res.status(200).json({
-              message: "Login Successfull",
+              message: "Login Successful",
               token,
               userData: { id, firstname, lastname, email, role },
             });
@@ -76,26 +86,79 @@ const login = async (req, res) => {
         message: "User not found. Please check your email and try again.",
       });
     }
-  } catch (err) {
-    res.status(400).json({ message: err });
+  } catch (error) {
+    res.status(400).json({ message: error });
   }
 };
 
-const checkEmailVerification = async (req, res) => {
+const getUserDetail = async (req, res) => {
   const { userId } = req.body;
   try {
     let userExist = await UserModel.findById(userId);
     if (userExist) {
-      const { isEmailVerified } = userExist;
-      if (!isEmailVerified) {
-        return res.status(200).json({ message: "Not Verified" });
-      }
+      return res.status(200).json(userExist);
     } else {
       return res.status(404).json({ message: "User not found" });
     }
-  } catch (err) {
-    return res.status(500).json({ message: err });
+  } catch (error) {
+    return res.status(500).json({ message: error });
   }
 };
 
-module.exports = { login, signup, checkEmailVerification };
+const updateUserDetail = async (req, res) => {
+  const { userId, password, email } = req.body;
+  console.log("user", req.body);
+  try {
+    let userExist = await UserModel.findById(userId);
+    if (userExist) {
+      if (userExist._id.toString() === userId) {
+        if (password) {
+          const hashedPassword = await bcrypt.hash(password, 12);
+
+          await UserModel.findByIdAndUpdate(userId, { hashedPassword });
+          return res.status(200).json({
+            message: "successfully Updated",
+            description: "We have successfully updated your password",
+          });
+        } else {
+          if (userExist.email === email) {
+            await UserModel.findByIdAndUpdate(userId, req.body);
+            return res.status(200).json({
+              message: "successfully Updated",
+              description: "We have successfully updated your details",
+            });
+          } else {
+            const isEmailExist = await UserModel.findOne({ email });
+            if (isEmailExist) {
+              return res.status(409).json({
+                message: "Email not available",
+                description:
+                  "Email address is already in use. Please provide a different email address.",
+              });
+            } else {
+              await UserModel.findByIdAndUpdate(userId, req.body);
+              return res.status(200).json({
+                message: "successfully Updated",
+                description: "We have successfully updated your details",
+              });
+            }
+          }
+        }
+      } else {
+        return res.status(401).json({
+          message: "Unauthorized",
+          description: "You are not authorized to edit",
+        });
+      }
+    } else {
+      return res.status(404).json({
+        message: "User not found",
+        description: "Kindly signup to create an account",
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error });
+  }
+};
+
+module.exports = { login, signup, getUserDetail, updateUserDetail };

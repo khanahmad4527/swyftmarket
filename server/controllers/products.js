@@ -9,8 +9,8 @@ const getSingleProduct = async (req, res) => {
       return res.status(404).json({ message: "Product not found" });
     }
     return res.status(200).json(product);
-  } catch (err) {
-    return res.status(400).json({ message: err.message });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
   }
 };
 
@@ -93,8 +93,8 @@ const getProducts = async (req, res) => {
       res.header("x-total-count", totalCount);
       return res.status(200).json(products);
     }
-  } catch (err) {
-    return res.status(400).json({ message: err.message });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
   }
 };
 

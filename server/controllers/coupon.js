@@ -10,8 +10,8 @@ const getCoupons = async (req, res) => {
     res.header("x-total-count", totalCount);
 
     return res.status(200).json(coupons);
-  } catch (err) {
-    return res.status(400).json({ message: err });
+  } catch (error) {
+    return res.status(400).json({ message: error });
   }
 };
 
@@ -20,8 +20,8 @@ const addCoupon = async (req, res) => {
     const newCoupon = new CouponModel(req.body);
     await newCoupon.save();
     return res.status(200).json(newCoupon);
-  } catch (err) {
-    return res.status(400).json({ message: err });
+  } catch (error) {
+    return res.status(400).json({ message: error });
   }
 };
 

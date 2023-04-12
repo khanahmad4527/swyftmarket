@@ -14,7 +14,6 @@ import {
   Link,
   FormErrorMessage,
   useToast,
-  Divider,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -41,10 +40,12 @@ const initialForm: SignupFormValues = {
 };
 
 export default function Signup() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [isButton, setIsButton] = useState(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isButton, setIsButton] = useState<boolean>(false);
   const toast = useToast();
   const router = useRouter();
+
+  /*********************** formik and yup validation to handle signup **********************************/
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik<SignupFormValues>({

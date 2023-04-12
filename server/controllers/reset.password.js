@@ -1,9 +1,10 @@
 const otpGenerator = require("otp-generator");
 const bcrypt = require("bcrypt");
 const { UserModel } = require("../models/user.model");
+const { sedngridSendEmail } = require("../utils/sendEmail");
 
 const generateResetOTP = async (req, res) => {
-  const { userId } = req.body;
+  const { email, userId } = req.body;
   const OTP = otpGenerator.generate(6, {
     lowerCaseAlphabets: false,
     upperCaseAlphabets: false,
@@ -11,37 +12,50 @@ const generateResetOTP = async (req, res) => {
   });
 
   try {
-    const userExist = await UserModel.findById(userId);
+    let userExist;
+    if (userId) {
+      userExist = await UserModel.findById(userId);
+    } else if (email) {
+      userExist = await UserModel.findOne({ email });
+    }
     if (userExist) {
-      const { isEmailVerified } = userExist;
+      const { _id, isEmailVerified } = userExist;
       if (isEmailVerified) {
-        await UserModel.findByIdAndUpdate(userId, {
+        await UserModel.findByIdAndUpdate(_id, {
           OTP: OTP,
           expiry: Date.now(),
-          session: true,
         });
-        return res.status(201).json({ OTP });
+        return res.status(201).json({ OTP, _id });
       } else if (!isEmailVerified) {
-        return res.status(401).json({ message: "Kindly verify your email" });
+        return res.status(401).json({
+          message: "Email verification needed",
+          description: "Kindly verify you email account",
+        });
       }
     } else {
       return res.status(404).json({ message: "User not found" });
     }
-  } catch (err) {
-    res.status(500).json({ message: err });
+  } catch (error) {
+    res.status(500).json({ message: error });
   }
 };
 
 const sendResetEmail = async (req, res) => {
-  const { code, userId } = req.body;
+  const { code, email, userId } = req.body;
 
   try {
-    const userExist = await UserModel.findById(userId);
+    let userExist;
+    if (userId) {
+      userExist = await UserModel.findById(userId);
+    } else if (email) {
+      userExist = await UserModel.findOne({ email });
+    }
+
     if (userExist) {
-      const { email, isEmailVerified } = userExist;
+      const { email, _id, isEmailVerified } = userExist;
       if (isEmailVerified) {
         try {
-          await sendEmail({
+          await sedngridSendEmail({
             to: email,
             from: "khanahmad4527@gmail.com",
             subject: "Reset your SwyftMarket password",
@@ -83,14 +97,59 @@ const sendResetEmail = async (req, res) => {
                   <div class="content">
                     <p>Thank you for registering with SwyftMarket. Please enter the below OTP to reset your password.</p>
                     <p>Your OTP is: ${code}</p>
-                    <a href="#" class="button">Reset Password</a>
+                    <a href="${`http://localhost:3000/reset/${_id}/verifyotp`}" class="button">Reset Password</a>
                   </div>
                 </body>
               </html>`,
           });
           res.status(200).json({ message: "Successful" });
-        } catch (err) {
-          res.status(400).json({ message: err });
+        } catch (error) {
+          res.status(400).json({ message: error });
+        }
+      } else if (!isEmailVerified) {
+        return res.status(401).json({
+          message: "Email verification needed",
+          description: "Kindly verify you email account",
+        });
+      }
+    } else {
+      return res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
+
+const verifyResetOTP = async (req, res) => {
+  const { code, userId } = req.body;
+  try {
+    const userExist = await UserModel.findById(userId);
+    if (userExist) {
+      const { expiry, OTP, isEmailVerified } = userExist;
+      if (isEmailVerified) {
+        if (code === OTP) {
+          const timeDiff = Date.now() - expiry;
+          if (timeDiff < 600000) {
+            await UserModel.findByIdAndUpdate(userId, {
+              OTP: "",
+              session: true,
+            });
+            return res.status(201).json({
+              message: "OTP Verified",
+              description: "Your OTP has been successfully verified.",
+            });
+          } else {
+            return res.status(409).json({
+              message: "Invalid OTP",
+              description:
+                "Sorry, the OTP has expired. Please request a new OTP.",
+            });
+          }
+        } else {
+          return res.status(409).json({
+            message: "Invalid OTP",
+            description: "Please enter a valid 6-digit OTP.",
+          });
         }
       } else if (!isEmailVerified) {
         return res.status(401).json({ message: "Kindly verify your email" });
@@ -98,39 +157,42 @@ const sendResetEmail = async (req, res) => {
     } else {
       return res.status(404).json({ message: "User not found" });
     }
-  } catch (err) {
-    res.status(500).json({ message: err });
+  } catch (error) {
+    res.status(500).json({ message: error });
   }
 };
 
 const resetPassword = async (req, res) => {
   const { userId } = req.params;
-  const { code, password } = req.body;
+  const { password } = req.body;
   try {
     const userExist = await UserModel.findById(userId);
     if (userExist) {
-      const { OTP, isEmailVerified, session } = userExist;
+      const { isEmailVerified, session } = userExist;
       if (session && isEmailVerified) {
-        if (OTP === code) {
-          const hashedPassword = await bcrypt.hash(password, 12);
-          await UserModel.findByIdAndUpdate(userId, {
-            hashedPassword,
-            session: false,
-            OTP: "",
-          });
-          return res.status(201).json({ message: "Successfully reset" });
-        } else {
-          return res.status(409).json({ message: "Invalid OTP" });
-        }
+        const hashedPassword = await bcrypt.hash(password, 12);
+        await UserModel.findByIdAndUpdate(userId, {
+          hashedPassword,
+          session: false,
+        });
+        return res.status(200).json({ message: "Successfully reset" });
       } else if (!isEmailVerified) {
-        return res.status(401).json({ message: "Kindly verify your email" });
+        return res.status(401).json({
+          message: "Email verification needed",
+          description: "Kindly verify you email account",
+        });
       }
     } else {
       return res.status(404).json({ message: "User not found" });
     }
-  } catch (err) {
-    res.status(500).json({ message: err });
+  } catch (error) {
+    res.status(500).json({ message: error });
   }
 };
 
-module.exports = { generateResetOTP, sendResetEmail, resetPassword };
+module.exports = {
+  generateResetOTP,
+  sendResetEmail,
+  verifyResetOTP,
+  resetPassword,
+};

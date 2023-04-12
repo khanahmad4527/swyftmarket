@@ -9,7 +9,6 @@ import {
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { cardSchema } from "../../schemas/payment";
-import { useState } from "react";
 
 interface CardModal {
   cardNumber: string;
@@ -27,10 +26,10 @@ const initialValues: CardModal = {
 
 const CardModal = ({ orderConfirmed }: { orderConfirmed: () => void }) => {
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
+    useFormik<CardModal>({
       initialValues,
       validationSchema: cardSchema,
-      onSubmit: (values, action) => {
+      onSubmit: (values: CardModal, action) => {
         orderConfirmed();
         action.resetForm();
       },

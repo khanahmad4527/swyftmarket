@@ -1,4 +1,3 @@
-import { AddIcon, CheckCircleIcon } from "@chakra-ui/icons";
 import {
   Accordion,
   AccordionButton,
@@ -25,7 +24,7 @@ import {
   ModalCloseButton,
   useToast,
 } from "@chakra-ui/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { useRouter } from "next/router";
 import { emptyCart, getCartData } from "../../redux/cart/cart.actions";
@@ -34,6 +33,7 @@ import {
   deleteAddress,
   getCoupons,
 } from "../../redux/checkout/checkout.actions";
+import { AddIcon } from "@chakra-ui/icons";
 import { addToOrder, getOrderData } from "../../redux/order/order.actions";
 import Error from "../../utils/Error";
 import Loading from "../../utils/Loading";
@@ -71,20 +71,26 @@ const Checkout = () => {
   const [coupon, setCoupon] = useState<string>("");
   const [formDataLoaded, setFormDataLoaded] = useState<boolean>(false);
 
+  /*********************** modal for payment **********************************/
   const {
     isOpen: isOpen1,
     onOpen: onOpen1,
     onClose: onClose1,
   } = useDisclosure();
+
+  /*********************** modal for address **********************************/
+
   const {
     isOpen: isOpen2,
     onOpen: onOpen2,
     onClose: onClose2,
   } = useDisclosure();
 
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const [deliveryAddress, setDeliveryAddress] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState<string>("");
+  const [deliveryAddress, setDeliveryAddress] = useState<string>("");
   const toast = useToast();
+
+  /*********************** cart, order, checkout store **********************************/
 
   const { getCartIsLoading, getCartIsError, cartData } = useAppSelector(
     (store) => store.cart
@@ -111,6 +117,8 @@ const Checkout = () => {
     dispatch(deleteAddress(id));
   };
 
+  /*********************** calculate amount when coupon applied **********************************/
+
   const calculateFinalAmount = (discount: number) => {
     const final = subtotal - subtotal * (discount / 100);
     setFinalAmount(final);
@@ -124,6 +132,8 @@ const Checkout = () => {
       isClosable: true,
     });
   };
+
+  /*********************** to handle coupons **********************************/
 
   const handleCoupons = () => {
     let flag = true;
@@ -164,6 +174,8 @@ const Checkout = () => {
       });
     }
   };
+
+  /*********************** when user clicks on PAY after entering payment details **********************************/
 
   const orderConfirmed = () => {
     dispatch(emptyCart());
@@ -214,6 +226,8 @@ const Checkout = () => {
     router.push("/");
   };
 
+  /*********************** to load load on mount or changes **********************************/
+
   useEffect(() => {
     /**********    page will always loads at top position   ******************/
     window.scrollTo(0, 0);
@@ -241,6 +255,8 @@ const Checkout = () => {
     userAddress.length,
   ]);
 
+  /*********************** calculate amount when mount without coupon **********************************/
+
   useEffect(() => {
     let subtotal = 0;
 
@@ -259,6 +275,8 @@ const Checkout = () => {
       setFormDataLoaded(true);
     }
   }, [formData]);
+
+  /*********************** loading all data first then showing checkout for good UX **********************************/
 
   if (
     getCheckoutIsLoading ||
@@ -639,6 +657,8 @@ const Checkout = () => {
           </Flex>
         </Flex>
 
+        {/************************ payment modal ***********************************/}
+
         {paymentMethod !== "" ? (
           <Modal isOpen={isOpen1} onClose={onClose1}>
             <ModalOverlay />
@@ -663,6 +683,8 @@ const Checkout = () => {
         ) : (
           ""
         )}
+
+        {/************************ address modal ***********************************/}
 
         {formDataLoaded && (
           <AddressModal

@@ -14,7 +14,7 @@ instance.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error: any) => Promise.reject(error)
 );
 
 // Add a response interceptor to set token as cookie after receiving a response
@@ -26,7 +26,7 @@ instance.interceptors.response.use(
     }
     return response;
   },
-  (error) => Promise.reject(error)
+  (error: any) => Promise.reject(error)
 );
 
 export default instance;

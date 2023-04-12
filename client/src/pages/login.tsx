@@ -1,20 +1,11 @@
 import Head from "next/head";
-import { useEffect } from "react";
 import { useAppSelector } from "@/redux/store";
-import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 
 const Login = dynamic(() => import("@/components/Auth/Login"), { ssr: false });
 
 export default function LoginPage() {
   const { isAuth } = useAppSelector((store) => store.auth);
-  const router = useRouter();
-
-  useEffect(() => {
-    if (isAuth) {
-      router.push("/");
-    }
-  }, [isAuth, router]);
 
   return (
     <>

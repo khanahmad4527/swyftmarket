@@ -41,6 +41,8 @@ const Cart = () => {
     }
   }, []);
 
+  /*********************** calculate total when ever item quantity changes **********************************/
+
   useEffect(() => {
     let subtotal = 0;
 
@@ -53,6 +55,8 @@ const Cart = () => {
 
     setSubtotal(subtotal);
   }, [cartData]);
+
+    /*********************** render conditional for good UX **********************************/
 
   if (getCartIsLoading) {
     return (

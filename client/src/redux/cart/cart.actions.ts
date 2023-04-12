@@ -18,6 +18,7 @@ import {
   EMPTY_CART_ITEMS_SUCCESS,
   EMPTY_CART_ITEMS_ERROR,
 } from "./cart.types";
+import { resetAuth } from "../auth/auth.action";
 
 /*****    action creators interface     *****/
 
@@ -171,7 +172,10 @@ export const getCartData = (): any => async (dispatch: AppDispatch) => {
   try {
     const response = await instance.get(`/cart`);
     dispatch(getCartSuccess(response.data));
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.response?.status === 404) {
+      dispatch(resetAuth());
+    }
     dispatch(getCartError());
   }
 };
@@ -183,7 +187,10 @@ export const addToCart =
     try {
       const response = await instance.post(`/cart/add`, newCart);
       dispatch(addCartSuccess(response.data));
-    } catch (error) {
+    } catch (error: any) {
+      if (error?.response?.status === 404) {
+        dispatch(resetAuth());
+      }
       dispatch(addCartError());
     }
   };
@@ -197,7 +204,10 @@ export const updateCartData =
         quantity: updatedQuantity,
       });
       dispatch(updateCartSuccess(response.data));
-    } catch (error) {
+    } catch (error: any) {
+      if (error?.response?.status === 404) {
+        dispatch(resetAuth());
+      }
       dispatch(updateCartError());
     }
   };
@@ -209,7 +219,10 @@ export const deleteCartData =
     try {
       const response = await instance.delete(`/cart/delete/${id}`);
       dispatch(deleteCartSuccess(response.data));
-    } catch (error) {
+    } catch (error: any) {
+      if (error?.response?.status === 404) {
+        dispatch(resetAuth());
+      }
       dispatch(deleteCartError());
     }
   };
@@ -219,7 +232,10 @@ export const emptyCart = (): any => async (dispatch: AppDispatch) => {
   try {
     dispatch(emptyCartSuccess());
     await instance.delete(`/cart/emptycart`);
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.response?.status === 404) {
+      dispatch(resetAuth());
+    }
     dispatch(emptyCartError());
   }
 };

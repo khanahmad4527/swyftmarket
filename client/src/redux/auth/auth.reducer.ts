@@ -56,7 +56,6 @@ export const authReducer = (
         Cookies.set("token", action.payload.token, { expires: 3 });
         Cookies.set("smUserData", JSON.stringify(action.payload.userData), {
           expires: 3, // Set cookie expiration time to 3 days
-          sameSite: "lax", // Set sameSite to lax
         });
       }
 

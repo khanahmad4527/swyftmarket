@@ -9,6 +9,7 @@ import {
   ADD_ITEM_TO_ORDER_ERROR,
 } from "./order.types";
 import { AppDispatch } from "../store";
+import { resetAuth } from "../auth/auth.action";
 
 /*****    action creators interface     *****/
 
@@ -79,7 +80,10 @@ export const getOrderData = (): any => async (dispatch: AppDispatch) => {
   try {
     const response = await instance.get(`/orders`);
     dispatch(getOrdersSuccess(response.data));
-  } catch (err) {
+  } catch (error: any) {
+    if (error?.response?.status === 404) {
+      dispatch(resetAuth());
+    }
     dispatch(getOrdersError());
   }
 };
@@ -91,7 +95,10 @@ export const addToOrder =
     try {
       const response = await instance.post(`/orders/add`, newOrder);
       dispatch(addOrdersSuccess(response.data));
-    } catch (err) {
+    } catch (error: any) {
+      if (error?.response?.status === 404) {
+        dispatch(resetAuth());
+      }
       dispatch(addOrdersError());
     }
   };

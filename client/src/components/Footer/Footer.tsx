@@ -109,6 +109,8 @@ export default function Footer() {
   );
 }
 
+/*********************** to render social media buttons **********************************/
+
 const SocialButton = ({
   children,
   label,

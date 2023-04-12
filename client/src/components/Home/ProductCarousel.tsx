@@ -9,7 +9,7 @@ import Loading from "../../utils/Loading";
 import Error from "../../utils/Error";
 import { Product } from "@/utils/types";
 
-const ProductCarouel = ({
+const ProductCarousel = ({
   title,
   data,
   loading,
@@ -20,6 +20,8 @@ const ProductCarouel = ({
   loading: boolean;
   error: boolean;
 }) => {
+  /*********************** carousel props **********************************/
+
   const settings = {
     infinite: true,
     speed: 200,
@@ -80,7 +82,9 @@ const ProductCarouel = ({
   );
 };
 
-export default ProductCarouel;
+export default ProductCarousel;
+
+/*********************** custom button for carousel **********************************/
 
 const CustomPrevArrow = ({ onClick }: any) => (
   <Circle

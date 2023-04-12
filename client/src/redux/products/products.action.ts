@@ -54,7 +54,7 @@ export const getProducts =
       const data = response.data;
       const totalProductCount = response.headers["x-total-count"];
       dispatch(getProductsSuccess(data, totalProductCount));
-    } catch (err) {
+    } catch (error) {
       dispatch(getProductsError());
     }
   };

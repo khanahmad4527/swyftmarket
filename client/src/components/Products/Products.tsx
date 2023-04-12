@@ -32,6 +32,8 @@ const Products = () => {
   const router = useRouter();
   const query = router.query;
 
+  /********** loading params from URL if exits otherwise default values if required ******************/
+
   const [productPerPage, setProductPerPage] = useState<number>(
     Number(query._limit) || 10
   );
@@ -91,6 +93,8 @@ const Products = () => {
   } = useAppSelector((store) => store.products);
 
   const dispatch = useAppDispatch();
+
+  /********** functions to change params onChange ******************/
 
   const paginate = (value: number) => {
     setCurrentPage(Number(value));
@@ -216,6 +220,8 @@ const Products = () => {
     rating_lte,
   ]);
 
+  /********** detect change when typed in navbar ******************/
+
   useEffect(() => {
     let navQuery = Array.isArray(query?.q) ? query?.q[0] : query?.q;
     if (navQuery !== undefined && navQuery !== "" && navQuery !== q) {
@@ -260,7 +266,7 @@ const Products = () => {
       setQ("");
     }
 
-     let navPage = Number(query._page);
+    let navPage = Number(query._page);
 
     if (navPage && navPage !== 0 && navPage !== currentPage) {
       setCurrentPage(navPage);
@@ -376,6 +382,8 @@ const Products = () => {
           />
         </Flex>
       </Flex>
+
+      {/*********** filter, sort for mobile *******************/}
 
       {isMobile && (
         <Square

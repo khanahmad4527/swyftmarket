@@ -17,7 +17,9 @@ const Orders = () => {
     if (!orderData.length) {
       dispatch(getOrderData());
     }
-  }, [orderData.length]);
+  }, [dispatch, orderData.length]);
+
+  /********** loading conditionally for good UX ******************/
 
   if (getOrderIsLoading) {
     return (

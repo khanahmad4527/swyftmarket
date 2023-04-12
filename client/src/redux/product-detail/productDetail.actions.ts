@@ -50,7 +50,7 @@ export const getProductDetail =
     try {
       const response = await instance.get(`/product/${id}`);
       dispatch(getProductDetailSuccess(response.data));
-    } catch (err) {
+    } catch (error) {
       dispatch(getProductDetailError());
     }
   };

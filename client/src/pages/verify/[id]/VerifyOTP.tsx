@@ -22,6 +22,8 @@ const VerifyOTP = ({ expiry }: { expiry: number | undefined }) => {
   const router = useRouter();
   const id = router.query?.id;
 
+  /********** handle verify otp ******************/
+
   const handleVerify = async () => {
     if (id && id) {
       try {
@@ -60,7 +62,7 @@ const VerifyOTP = ({ expiry }: { expiry: number | undefined }) => {
             duration: 3000,
             isClosable: true,
           });
-        } else if (error.response.status === 404) {
+        } else if (error?.response?.status === 404) {
           toast({
             title: "User not found",
             description: "Please signup",
@@ -74,6 +76,8 @@ const VerifyOTP = ({ expiry }: { expiry: number | undefined }) => {
       }
     }
   };
+
+  /********** request otp if otp expiry ******************/
 
   const requestOTP = async () => {
     if (expiry && id) {
@@ -151,7 +155,11 @@ const VerifyOTP = ({ expiry }: { expiry: number | undefined }) => {
           </FormControl>
         </Flex>
         <HStack>
-          <Button colorScheme="blue" onClick={handleVerify}>
+          <Button
+            colorScheme="blue"
+            onClick={handleVerify}
+            isDisabled={pin.length < 6}
+          >
             Verify Account
           </Button>
           <Button colorScheme="blue" onClick={requestOTP}>

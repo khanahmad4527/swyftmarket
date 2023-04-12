@@ -27,9 +27,13 @@ const CartCard = ({ item }: CartCard) => {
 
   const router = useRouter();
 
+  /*********************** increment cart item quantity **********************************/
+
   const handleCount = (value: number) => {
     dispatch(updateCartData(item._id, value));
   };
+
+  /*********************** delete cart item **********************************/
 
   const handleDelete = (id: string) => {
     dispatch(deleteCartData(id));
@@ -131,8 +135,8 @@ const CartCard = ({ item }: CartCard) => {
             transform: "scale(1.1)",
             transition: "all 0.2s ease-in",
           }}
-          //align="right"
-          style={{ alignItems: "right" }}
+          display={"flex"}
+          justifyContent={"center"}
           onClick={() => handleDelete(item._id)}
         >
           <RxCross2 size="30px" />

@@ -112,8 +112,7 @@ export const getMobiles = (): any => async (dispatch: AppDispatch) => {
   try {
     const response = await instance.get(`/products?category=dress`);
     dispatch(getMobilesSuccess(response.data));
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
     dispatch(getMobilesError());
   }
 };
@@ -123,8 +122,7 @@ export const getTvs = (): any => async (dispatch: AppDispatch) => {
   try {
     const response = await instance.get(`/products?category=shoes`);
     dispatch(getTvsSuccess(response.data));
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
     dispatch(getTvsError());
   }
 };
@@ -134,8 +132,7 @@ export const getHomeAppliances = (): any => async (dispatch: AppDispatch) => {
   try {
     const response = await instance.get(`/products?category=candles`);
     dispatch(getHomeAppliancesSuccess(response.data));
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
     dispatch(getHomeAppliancesError());
   }
 };

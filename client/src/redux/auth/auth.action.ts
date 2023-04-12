@@ -49,7 +49,7 @@ const getAuthError = (): GetAuthErrorAction => {
   return { type: GET_AUTH_ERROR };
 };
 
-const resetAuth = (): ResetAuthAction => {
+export const resetAuth = (): ResetAuthAction => {
   return { type: RESET_AUTH };
 };
 
@@ -76,8 +76,6 @@ export const existingUser = async (email: string, password: string) => {
       email,
       password,
     });
-    // const status = response.status;
-    // const role = response.data.userData.role;
     return response;
   } catch (error: any) {
     return error.response;

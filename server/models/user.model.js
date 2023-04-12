@@ -6,6 +6,10 @@ const userSchema = mongoose.Schema(
     lastname: { type: String, required: true },
     email: { type: String, required: true },
     hashedPassword: { type: String, required: true },
+    isEmailVerified: { type: Boolean, default: false, required: true },
+    OTP: { type: String, default: "" },
+    expiry: { type: Number, default: Date.now() },
+    session: { type: Boolean, default: false, required: true },
     role: {
       type: String,
       enum: ["admin", "user", "superadmin"],

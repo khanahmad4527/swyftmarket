@@ -75,6 +75,8 @@ const Navbar = () => {
     { name: "watch", displayName: "Watch" },
   ];
 
+  /********** handle query search on different pages ******************/
+
   const handleSearch = () => {
     const { q } = router.query;
 
@@ -111,6 +113,8 @@ const Navbar = () => {
     }
   };
 
+  /********** load query and category if exits to show on navbar ******************/
+
   useEffect(() => {
     setQuery(
       Array.isArray(router.query?.q) ? router.query.q[0] : router.query?.q || ""
@@ -131,13 +135,7 @@ const Navbar = () => {
     isAuth,
   } = useAppSelector((store) => store.auth);
 
-  const {
-    getCartIsLoading,
-    getCartIsError,
-    postCartIsLoading,
-    postCartIsError,
-    cartData,
-  } = useAppSelector((store) => store.cart);
+  const { getCartIsLoading, cartData } = useAppSelector((store) => store.cart);
 
   const dispatch = useAppDispatch();
 
@@ -241,7 +239,7 @@ const Navbar = () => {
                       </MenuButton>
                       <MenuList position={"relative"} zIndex={10}>
                         <MenuGroup title="Profile">
-                          <MenuItem>
+                          <MenuItem onClick={() => router.push("/profile")}>
                             Name: {`${firstname} ${lastname}`}
                           </MenuItem>
                         </MenuGroup>
@@ -408,7 +406,9 @@ const Navbar = () => {
               </MenuButton>
               <MenuList position={"relative"} zIndex={10}>
                 <MenuGroup title="Profile">
-                  <MenuItem>Name: {`${firstname} ${lastname}`}</MenuItem>
+                  <MenuItem onClick={() => router.push("/profile")}>
+                    Name: {`${firstname} ${lastname}`}
+                  </MenuItem>
                   <MenuItem onClick={() => router.push("/orders")}>
                     Orders
                   </MenuItem>

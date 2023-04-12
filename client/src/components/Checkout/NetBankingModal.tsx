@@ -50,10 +50,10 @@ const NetBankingModal = ({
   ];
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
+    useFormik<NetBanking>({
       initialValues,
       validationSchema: netBankingSchema,
-      onSubmit: async (values, action) => {
+      onSubmit: async (values: NetBanking, action) => {
         orderConfirmed();
         action.resetForm();
       },

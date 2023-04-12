@@ -26,8 +26,8 @@ const generateOTP = async (req, res) => {
     } else {
       return res.status(404).json({ message: "User not found" });
     }
-  } catch (err) {
-    res.status(500).json({ message: err });
+  } catch (error) {
+    res.status(500).json({ message: error });
   }
 };
 
@@ -37,7 +37,7 @@ const sendEmail = async (req, res) => {
   try {
     const userExist = await UserModel.findById(userId);
     if (userExist) {
-      const { email, isEmailVerified } = userExist;
+      const { _id, email, isEmailVerified } = userExist;
       if (!isEmailVerified) {
         try {
           await sedngridSendEmail({
@@ -82,14 +82,14 @@ const sendEmail = async (req, res) => {
                   <div class="content">
                     <p>Thank you for registering with SwyftMarket. Please enter the below OTP to verify your account.</p>
                     <p>Your OTP is: ${code}</p>
-                    <a href="#" class="button">Verify Account</a>
+                    <a href="${`http://localhost:3000/verify/${_id}`}" class="button">Verify Account</a>
                   </div>
                 </body>
               </html>`,
           });
           res.status(200).json({ message: "Successful" });
-        } catch (err) {
-          res.status(400).json({ message: err });
+        } catch (error) {
+          res.status(400).json({ message: error });
         }
       } else if (isEmailVerified) {
         return res.status(200).json({ message: "Already Verified" });
@@ -97,8 +97,8 @@ const sendEmail = async (req, res) => {
     } else {
       return res.status(404).json({ message: "User not found" });
     }
-  } catch (err) {
-    res.status(500).json({ message: err });
+  } catch (error) {
+    res.status(500).json({ message: error });
   }
 };
 
@@ -108,16 +108,31 @@ const verifyOTP = async (req, res) => {
   try {
     const userExist = await UserModel.findById(userId);
     if (userExist) {
-      const { OTP, isEmailVerified } = userExist;
+      const { expiry, OTP, isEmailVerified } = userExist;
       if (!isEmailVerified) {
         if (OTP === code) {
-          await UserModel.findByIdAndUpdate(userId, {
-            isEmailVerified: true,
-            OTP: "",
-          });
-          return res.status(201).json({ message: "Successfully Verified" });
+          const timeDiff = Date.now() - expiry;
+          if (timeDiff < 600000) {
+            await UserModel.findByIdAndUpdate(userId, {
+              isEmailVerified: true,
+              OTP: "",
+            });
+            return res.status(201).json({
+              message: "Account Verified",
+              description: "Your account has been successfully verified.",
+            });
+          } else {
+            return res.status(409).json({
+              message: "Invalid OTP",
+              description:
+                "Sorry, the OTP has expired. Please request a new OTP.",
+            });
+          }
         } else {
-          return res.status(409).json({ message: "Invalid OTP" });
+          return res.status(409).json({
+            message: "Invalid OTP",
+            description: "Please enter a valid 6-digit OTP.",
+          });
         }
       } else {
         return res.status(200).json({ message: "Already Verified" });
@@ -125,8 +140,8 @@ const verifyOTP = async (req, res) => {
     } else {
       return res.status(404).json({ message: "User not found" });
     }
-  } catch (err) {
-    res.status(500).json({ message: err });
+  } catch (error) {
+    res.status(500).json({ message: error });
   }
 };
 

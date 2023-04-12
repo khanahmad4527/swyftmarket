@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
+import { FiShare } from "react-icons/fi";
 import { MdLocalShipping } from "react-icons/md";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { getProductDetail } from "../../../redux/product-detail/productDetail.actions";
@@ -40,15 +41,32 @@ export default function ProductDetail({ id }: { id: string }) {
     title,
     category,
     price,
-    discountPrice,
     rating,
     image,
     images,
-    colours,
-    sizes,
     description,
     brand,
   }: Product = productDetailData;
+
+  /************************* to copy the current url when user clicks on copy *********************************/
+
+  const handleCopyClick = () => {
+    const urlInput = document.createElement("input");
+    urlInput.value = window.location.href;
+    document.body.appendChild(urlInput);
+    urlInput.select();
+    document.execCommand("copy");
+    document.body.removeChild(urlInput);
+
+    toast({
+      title: "URL copied",
+      description: "The URL has been copied to your clipboard",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+      position: "top",
+    });
+  };
 
   const { cartData } = useAppSelector((store) => store.cart);
 
@@ -149,7 +167,7 @@ export default function ProductDetail({ id }: { id: string }) {
                       >
                         <Image
                           p={1}
-                          src={image[0]}
+                          src={image}
                           alt="Image belongs to Amazon. Used for educatinal purposes and showcasing web development skills only."
                           w="100%"
                           h="100%"
@@ -162,12 +180,24 @@ export default function ProductDetail({ id }: { id: string }) {
               </Flex>
             </GridItem>
 
-            <GridItem>
+            <GridItem position={"relative"}>
+              <Flex
+                position={"absolute"}
+                top="1%"
+                right="1%"
+                p={"10px"}
+                border="1px solid gray"
+                rounded={"full"}
+                cursor={"pointer"}
+                onClick={handleCopyClick}
+              >
+                <FiShare />
+              </Flex>
               <Flex w="100%">
                 <Image
                   p={5}
                   bgColor="white"
-                  src={images && images[0][imageIndex]}
+                  src={images && images[imageIndex]}
                   alt="Image belongs to Amazon. Used for educatinal purposes and showcasing web development skills only."
                   align="center"
                   w="100%"
@@ -294,12 +324,10 @@ export default function ProductDetail({ id }: { id: string }) {
                           productId: id,
                           title,
                           category,
-                          itemPrice: discountPrice,
+                          itemPrice: price,
                           quantity: 1,
-                          totalPrice: discountPrice,
+                          totalPrice: price,
                           image,
-                          colour: colours[0][0],
-                          size: sizes[0],
                           description,
                         });
                       }

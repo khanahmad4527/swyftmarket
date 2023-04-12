@@ -97,7 +97,7 @@ const sendResetEmail = async (req, res) => {
                   <div class="content">
                     <p>Thank you for registering with SwyftMarket. Please enter the below OTP to reset your password.</p>
                     <p>Your OTP is: ${code}</p>
-                    <a href="${`http://localhost:3000/reset/${_id}/verifyotp`}" class="button">Reset Password</a>
+                    <a href="${`https://swyftmarket.vercel.app/reset/${_id}/verifyotp`}" class="button">Reset Password</a>
                   </div>
                 </body>
               </html>`,

@@ -82,7 +82,7 @@ const sendEmail = async (req, res) => {
                   <div class="content">
                     <p>Thank you for registering with SwyftMarket. Please enter the below OTP to verify your account.</p>
                     <p>Your OTP is: ${code}</p>
-                    <a href="${`http://localhost:3000/verify/${_id}`}" class="button">Verify Account</a>
+                    <a href="${`https://swyftmarket.vercel.app/verify/${_id}`}" class="button">Verify Account</a>
                   </div>
                 </body>
               </html>`,

@@ -55,8 +55,8 @@ const Navbar = () => {
   const toast = useToast();
 
   const categories = [
-    { name: "dress", displayName: "Dress" },
-    { name: "shoes", displayName: "Shoes" },
+    { name: "air_conditioner", displayName: "Air Conditioner" },
+    { name: "beds", displayName: "Beds" },
     { name: "dining_tables", displayName: "Dining Tables" },
     { name: "earbuds", displayName: "Earbuds" },
     { name: "electronics", displayName: "Electronics" },

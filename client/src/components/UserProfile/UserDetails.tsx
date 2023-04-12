@@ -90,7 +90,6 @@ const UserDetails = () => {
         Cookies.set("smUserData", JSON.stringify(user_data));
         router.replace("/");
       } catch (error: any) {
-        console.log("error", error);
         toast({
           title: error.response.data.message,
           description: error.response.data.description,

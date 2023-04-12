@@ -22,17 +22,17 @@ const Home = () => {
     window.scrollTo(0, 0);
 
     if (!mobile.mobileData.length) {
-      dispatch(getMobiles());
+      dispatch(getMobiles("mobiles"));
     }
 
     if (!tv.tvData.length) {
-      dispatch(getTvs());
+      dispatch(getTvs("tvs"));
     }
 
     if (!home.homeData.length) {
-      dispatch(getHomeAppliances());
+      dispatch(getHomeAppliances("home_appliances"));
     }
-  }, []);
+  }, [dispatch, home.homeData.length, mobile.mobileData.length, tv.tvData.length]);
 
   return (
     <Flex flexDirection="column">

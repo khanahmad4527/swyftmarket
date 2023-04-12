@@ -135,7 +135,16 @@ function ProductsCard({
             <Box
               display={{ base: "none", lg: "flex" }}
               onClick={() => {
-                if (isAuth) {
+                if (!isAuth) {
+                  toast({
+                    title: "Kindly login",
+                    description: "Please login first to add products",
+                    status: "warning",
+                    duration: 2000,
+                    isClosable: true,
+                    position: "top",
+                  });
+                } else {
                   handleAddToCart({
                     productId: _id,
                     title,
@@ -145,15 +154,6 @@ function ProductsCard({
                     totalPrice: price * 1,
                     image,
                     description,
-                  });
-                } else {
-                  toast({
-                    title: "Kindly login",
-                    description: "Please login first to add products",
-                    status: "warning",
-                    duration: 2000,
-                    isClosable: true,
-                    position: "top",
                   });
                 }
               }}
@@ -198,8 +198,32 @@ function ProductsCard({
           {isAdded ? (
             <Box
               color="sm.buff"
+              onClick={() =>
+                toast({
+                  title: "Product in cart",
+                  description: "Product is already in the cart",
+                  status: "warning",
+                  duration: 2000,
+                  isClosable: true,
+                  position: "top",
+                })
+              }
+            >
+              <Icon as={FiShoppingCart} h={7} w={7} alignSelf={"center"} />
+            </Box>
+          ) : (
+            <Box
               onClick={() => {
-                if (isAuth) {
+                if (!isAuth) {
+                  toast({
+                    title: "Kindly login",
+                    description: "Please login first to add products",
+                    status: "warning",
+                    duration: 2000,
+                    isClosable: true,
+                    position: "top",
+                  });
+                } else {
                   handleAddToCart({
                     productId: _id,
                     title,
@@ -210,34 +234,8 @@ function ProductsCard({
                     image,
                     description,
                   });
-                } else {
-                  toast({
-                    title: "Kindly login",
-                    description: "Please login first to add products",
-                    status: "warning",
-                    duration: 2000,
-                    isClosable: true,
-                    position: "top",
-                  });
                 }
               }}
-            >
-              <Icon as={FiShoppingCart} h={7} w={7} alignSelf={"center"} />
-            </Box>
-          ) : (
-            <Box
-              onClick={() =>
-                handleAddToCart({
-                  productId: _id,
-                  title,
-                  category,
-                  itemPrice: price,
-                  quantity: 1,
-                  totalPrice: price * 1,
-                  image,
-                  description,
-                })
-              }
             >
               <Icon as={FiShoppingCart} h={7} w={7} alignSelf={"center"} />
             </Box>

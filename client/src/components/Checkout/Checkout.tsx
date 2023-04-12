@@ -367,6 +367,7 @@ const Checkout = () => {
                                   <Link
                                     color="yellow.500"
                                     onClick={() => {
+                                      setFormDataLoaded(true);
                                       setAddressTitle("Edit the address");
                                       setAddressOperation("edit");
                                       setFormData(item);

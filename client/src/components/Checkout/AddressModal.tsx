@@ -14,7 +14,7 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   addAddress,
   updateAddress,
@@ -47,40 +47,51 @@ const AddressModal = ({
 
   /*********************** formik and yup validation **********************************/
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik<Address>({
-      initialValues: formData,
-      validationSchema: addressSchema,
-      onSubmit: async (values: Address, action) => {
-        if (addressOperation === "add") {
-          toast({
-            title: "Successfully Added",
-            description: "We've added the new address in your account",
-            status: "success",
-            duration: 2000,
-            isClosable: true,
-            position: "top",
-          });
-          const { _id, userId, ...newAddress } = values;
-          dispatch(addAddress(newAddress));
-        } else if (addressOperation === "edit") {
-          toast({
-            title: "Successfully Updated",
-            description: "We've updated the address in your account",
-            status: "success",
-            duration: 2000,
-            isClosable: true,
-            position: "top",
-          });
-          dispatch(updateAddress(values._id, values));
-        }
+  const {
+    values,
+    setValues,
+    errors,
+    touched,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+  } = useFormik<Address>({
+    initialValues: initialFormData,
+    validationSchema: addressSchema,
+    onSubmit: async (values: Address, action) => {
+      if (addressOperation === "add") {
+        toast({
+          title: "Successfully Added",
+          description: "We've added the new address in your account",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+          position: "top",
+        });
+        const { _id, userId, ...newAddress } = values;
+        dispatch(addAddress(newAddress));
+      } else if (addressOperation === "edit") {
+        toast({
+          title: "Successfully Updated",
+          description: "We've updated the address in your account",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+          position: "top",
+        });
+        dispatch(updateAddress(values._id, values));
+      }
 
-        setFormData(initialFormData);
-        onClose2();
+      setFormData(initialFormData);
+      onClose2();
 
-        action.resetForm();
-      },
-    });
+      action.resetForm();
+    },
+  });
+
+  useEffect(() => {
+    setValues(addressOperation === "add" ? initialFormData : formData);
+  }, [addressOperation, formData, initialFormData, setValues]);
 
   return (
     <Modal

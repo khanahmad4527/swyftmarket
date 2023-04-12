@@ -107,32 +107,38 @@ const getHomeAppliancesError = (): GetHomeAppliancesErrorAction => {
 
 /*****    action creators dispatch function     *****/
 
-export const getMobiles = (): any => async (dispatch: AppDispatch) => {
-  dispatch(getMobilesLoading());
-  try {
-    const response = await instance.get(`/products?category=dress`);
-    dispatch(getMobilesSuccess(response.data));
-  } catch (error: any) {
-    dispatch(getMobilesError());
-  }
-};
+export const getMobiles =
+  (category: string): any =>
+  async (dispatch: AppDispatch) => {
+    dispatch(getMobilesLoading());
+    try {
+      const response = await instance.get(`/products?category=${category}`);
+      dispatch(getMobilesSuccess(response.data));
+    } catch (error: any) {
+      dispatch(getMobilesError());
+    }
+  };
 
-export const getTvs = (): any => async (dispatch: AppDispatch) => {
-  dispatch(getTvsLoading());
-  try {
-    const response = await instance.get(`/products?category=shoes`);
-    dispatch(getTvsSuccess(response.data));
-  } catch (error: any) {
-    dispatch(getTvsError());
-  }
-};
+export const getTvs =
+  (category: string): any =>
+  async (dispatch: AppDispatch) => {
+    dispatch(getTvsLoading());
+    try {
+      const response = await instance.get(`/products?category=${category}`);
+      dispatch(getTvsSuccess(response.data));
+    } catch (error: any) {
+      dispatch(getTvsError());
+    }
+  };
 
-export const getHomeAppliances = (): any => async (dispatch: AppDispatch) => {
-  dispatch(getHomeAppliancesLoading());
-  try {
-    const response = await instance.get(`/products?category=candles`);
-    dispatch(getHomeAppliancesSuccess(response.data));
-  } catch (error: any) {
-    dispatch(getHomeAppliancesError());
-  }
-};
+export const getHomeAppliances =
+  (category: string): any =>
+  async (dispatch: AppDispatch) => {
+    dispatch(getHomeAppliancesLoading());
+    try {
+      const response = await instance.get(`/products?category=${category}`);
+      dispatch(getHomeAppliancesSuccess(response.data));
+    } catch (error: any) {
+      dispatch(getHomeAppliancesError());
+    }
+  };

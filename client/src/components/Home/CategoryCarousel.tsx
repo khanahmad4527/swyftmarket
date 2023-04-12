@@ -10,8 +10,8 @@ const CarosuelImages = [
   {
     image:
       "https://teja10.kuikr.com/escrow/assets/image/certified_landing_page/other-furnitures.png",
-    title: "Dress",
-    link: "/products?category=dress",
+    title: "All Furnitures",
+    link: "/products?category=furnitures&category=sofa&category=beds&category=wardrobes&category=dining_tables",
   },
   {
     image:

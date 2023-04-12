@@ -3,8 +3,6 @@ import {
   Box,
   Image,
   Icon,
-  chakra,
-  Tooltip,
   Text,
   Stack,
   useToast,
@@ -14,9 +12,8 @@ import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { addToCart } from "../../redux/cart/cart.actions";
-import { useRouter } from "next/router";
-import Link from "next/link";
 import { AddToCart, Product } from "@/utils/types";
+import Link from "next/link";
 
 function ProductsCard({
   _id,
@@ -29,21 +26,15 @@ function ProductsCard({
   reviews,
   image,
   images,
-  colours,
-  sizes,
   quantity,
   description,
   brand,
 }: Product) {
   const [isAdded, setIsAdded] = useState(false);
 
-  const router = useRouter();
-
   const toast = useToast();
 
-  const { getCartIsLoading, getCartIsError, cartData } = useAppSelector(
-    (store) => store.cart
-  );
+  const { cartData } = useAppSelector((store) => store.cart);
 
   const { isAuth } = useAppSelector((store) => store.auth);
 
@@ -64,12 +55,16 @@ function ProductsCard({
   };
 
   useEffect(() => {
-    for (let i = 0; i < cartData.length; i++) {
-      if (cartData[i].productId === _id) {
-        setIsAdded(true);
+    if (isAuth) {
+      for (let i = 0; i < cartData.length; i++) {
+        if (cartData[i].productId === _id) {
+          setIsAdded(true);
+        }
       }
     }
-  }, []);
+  }, [_id, cartData, isAuth]);
+
+  const realPrice = Math.floor((100 * price) / (100 - discount));
 
   return (
     <Box
@@ -82,7 +77,7 @@ function ProductsCard({
     >
       <Link href={`/product/${_id}`}>
         <Image
-          src={images[0][0] || image}
+          src={image && image}
           alt="Image belongs to Amazon. Used for educatinal purposes and showcasing web development skills only."
           w={{
             base: "200px",
@@ -144,12 +139,10 @@ function ProductsCard({
                   productId: _id,
                   title,
                   category,
-                  itemPrice: discountPrice,
+                  itemPrice: price,
                   quantity: 1,
-                  totalPrice: discountPrice * 1,
+                  totalPrice: price * 1,
                   image,
-                  colour: colours[0][0],
-                  size: sizes[0],
                   description,
                 })
               }
@@ -164,12 +157,12 @@ function ProductsCard({
           <Box display={{ base: "none", lg: "block" }}>
             <Text textDecoration="line-through" textAlign="right">
               <span>&#8377;</span>
-              {price && formatMoney(price)}
+              {realPrice && formatMoney(realPrice)}
             </Text>
             <Text fontSize="20px">
               <span style={{ color: "red" }}>-{discount}%</span>{" "}
               <span>&#8377;</span>
-              {discountPrice && formatMoney(discountPrice)}
+              {price && formatMoney(price)}
             </Text>
           </Box>
         </Flex>
@@ -183,11 +176,11 @@ function ProductsCard({
             <Text fontSize="20px">
               <span style={{ color: "red" }}>-{discount}%</span>{" "}
               <span>&#8377;</span>
-              {discountPrice && formatMoney(discountPrice)}
+              {price && formatMoney(price)}
             </Text>
             <Text textDecoration="line-through">
               <span>&#8377;</span>
-              {price && formatMoney(price)}
+              {realPrice && formatMoney(realPrice)}
             </Text>
           </Box>
 
@@ -214,12 +207,10 @@ function ProductsCard({
                   productId: _id,
                   title,
                   category,
-                  itemPrice: discountPrice,
+                  itemPrice: price,
                   quantity: 1,
-                  totalPrice: discountPrice * 1,
+                  totalPrice: price * 1,
                   image,
-                  colour: colours[0][0],
-                  size: sizes[0],
                   description,
                 })
               }

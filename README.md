@@ -29,7 +29,23 @@ Swyftmarket is an online platform that provides a seamless shopping experience f
   <img src="https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white" alt="redux"/> 
 </p>
 
-## Features
+<h4 align="center">Backend:</h4>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="nodejs" />
+  <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white" alt="expressjs" />
+  <img src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white" alt="mongodb" />
+  <img src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white" alt="mongodb" />
+</p>
+
+<h4 align="center">Deployed On:</h4>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="vercerl">
+</p>
+
+
+## 🚀 Features
 
 - Browse and purchase a wide range of products with ease
 - Filter and search for products to find the perfect items
@@ -55,34 +71,36 @@ npm install
 3. Start the project
 
 ```bash
-npm start
+npm run dev
 ```
 
 ## Usage
 
 To use Swyftmarket, follow these steps:
 
-1. Create an account or log in if you already have one
-2. Browse and search for products using the search bar or by browsing product categories
-3. Click on a product to view its details, including images, descriptions, and specifications
-4. Click the "Add to Cart" button to add the product to your cart
-5. Review your cart to ensure that all desired products are included
-6. Select the desired quantity click the "Checkout" button to proceed to the checkout page
-7. Enter your shipping and payment information, including your name, shipping address, and payment method
-8. Click the "Place Order" button to complete your purchase
+1. Create an account, and authenticate email address or log in if you already have one
+3. Browse and search for products using the search bar or by browsing product categories
+4. Filter, sort, and pagination can be used
+5. Click on a product to view its details, including images, descriptions, and specifications
+6. Click the "Add to Cart" button to add the product to your cart
+7. Review your cart to ensure that all desired products are included
+8. Select the desired quantity click the "Checkout" button to proceed to the checkout page
+9. Enter your shipping and payment information, including your name, shipping address, and payment method
+10. Click the "Confirm" button to complete your purchase
 
 
 
 ## Screenshots
 
 <div align="center">
-  <h3>Home Page</h3>
-  <img src="https://user-images.githubusercontent.com/112630634/213929836-17fec47c-a276-41e5-8012-1566c3c33a0d.png" width="800">
+  <h3>Login and Signup Page</h3>
+  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364714/Screenshot_412_k826b6.png" width="300">
+  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364714/Screenshot_412_k826b6.png" width="300">
 </div>
 
 <div align="center">
-  <h3>Login Page</h3>
-  <img src="https://user-images.githubusercontent.com/112630634/213930076-c6c6084f-6226-4ebc-99b0-bd5300b557dc.png" width="800">
+  <h3>Home Page</h3>
+  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364711/Screenshot_170_zo9kjv.png" width="800">
 </div>
 
 <div align="center">

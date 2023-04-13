@@ -35,7 +35,6 @@ Swyftmarket is an online platform that provides a seamless shopping experience f
   <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="nodejs" />
   <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white" alt="expressjs" />
   <img src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white" alt="mongodb" />
-  <img src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white" alt="mongodb" />
 </p>
 
 <h4 align="center">Deployed On:</h4>
@@ -45,7 +44,7 @@ Swyftmarket is an online platform that provides a seamless shopping experience f
 </p>
 
 
-## 🚀 Features
+## Features
 
 - Browse and purchase a wide range of products with ease
 - Filter and search for products to find the perfect items

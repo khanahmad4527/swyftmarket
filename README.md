@@ -94,40 +94,48 @@ To use Swyftmarket, follow these steps:
 
 <div align="center">
   <h3>Login and Signup Page</h3>
-  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364714/Screenshot_412_k826b6.png" width="300">
-  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364714/Screenshot_412_k826b6.png" width="300">
+  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364714/Screenshot_412_k826b6.png" width="500">
+  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681407469/Screenshot_416_mkw6u7.png" width="500">
+</div>
+
+<div align="center">
+  <h3>Email Authentication</h3>
+  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364713/Screenshot_398_zh3wge.png" width="500">
+  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364714/Screenshot_401_nctlyi.png" width="500">
 </div>
 
 <div align="center">
   <h3>Home Page</h3>
-  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364711/Screenshot_170_zo9kjv.png" width="800">
+  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364711/Screenshot_170_zo9kjv.png" width="500">
 </div>
 
 <div align="center">
   <h3>Products Page & Search Functionality</h3>
-  <img src="https://user-images.githubusercontent.com/112630634/213930231-45487d5e-da29-41bf-a050-73b5a463ae0a.png" width="800">
-  <img src="https://user-images.githubusercontent.com/112630634/213930235-fd6971a6-6af9-4ac1-88a0-47f153541a45.png" width="800">
-  <img src="https://user-images.githubusercontent.com/112630634/213930245-4fa93cf1-4478-4f02-af1c-d0602278f399.png" width="800">
+  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364712/Screenshot_172_m7dw46.png" width="500">
+  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364712/Screenshot_179_dcpbg5.png" width="500">
 </div>
 
 <div align="center">
   <h3>Product Details Page</h3>
-  <img src="https://user-images.githubusercontent.com/112630634/213930364-eae3b152-f4b0-4e08-ba9c-34d3d5dd1e7d.png" width="800">
+  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364712/Screenshot_176_n9rbwz.png" width="500">
+  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364712/Screenshot_177_howx3d.png" width="500">
 </div>
 
 <div align="center">
-  <h3>Cart</h3>
-  <img src="https://user-images.githubusercontent.com/112630634/213930427-3bb0a223-e99e-4642-8d26-c4b2c0bffef5.png" width="800">
+  <h3>Cart, Checkout, and Orders</h3>
+  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364713/Screenshot_180_tsllmc.png" width="300">
+  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364712/Screenshot_321_sh30uu.png" width="300">
+  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364713/Screenshot_386_tn6oze.png" width="300">
+  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364713/Screenshot_389_sm5xya.png" width="300">
 </div>
 
 <div align="center">
-  <h3>Checkout</h3>
-  <img src="https://user-images.githubusercontent.com/112630634/213930501-ca3fec7a-9ad3-4267-872d-229503cbff13.png" width="800">
-</div>
-
-<div align="center">
-  <h3>Orders</h3>
-  <img src="https://user-images.githubusercontent.com/112630634/213930555-3137a837-3ae2-4238-b874-21d5a7e164da.png" width="800">
+  <h3>User Profile and reset password</h3>
+  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364713/Screenshot_390_aqynk9.png" width="300">
+  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364713/Screenshot_391_xqntdq.png" width="300">
+  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364715/Screenshot_405_sjqdmz.png" width="300">
+  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364714/Screenshot_413_qt4cuw.png" width="300">
+  <img src="https://res.cloudinary.com/dalqx198y/image/upload/v1681364714/Screenshot_410_ds1owj.png" width="300">
 </div>
 
 ## Demo

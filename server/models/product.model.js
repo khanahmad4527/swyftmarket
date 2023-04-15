@@ -6,7 +6,7 @@ const productSchema = new mongoose.Schema(
     category: { type: String, required: true },
     price: { type: Number, required: true },
     discount: { type: Number, required: true },
-    discountPrice: { type: Number, required: true },
+    realPrice: { type: Number, required: true },
     rating: { type: Number, required: true },
     reviews: { type: Number, required: true },
     image: { type: String, required: true },
@@ -14,10 +14,9 @@ const productSchema = new mongoose.Schema(
     quantity: { type: Number, required: true },
     description: { type: String, required: true },
     brand: { type: String, required: true },
-    addedAt: { type: String, required: true },
-    updatedAt: { type: String, required: true },
   },
   {
+    timestamps: true,
     versionKey: false,
   }
 );

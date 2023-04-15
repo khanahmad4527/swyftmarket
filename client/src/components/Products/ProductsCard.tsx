@@ -20,8 +20,8 @@ function ProductsCard({
   title,
   category,
   price,
+  realPrice,
   discount,
-  discountPrice,
   rating,
   reviews,
   image,
@@ -64,8 +64,6 @@ function ProductsCard({
     }
   }, [_id, cartData, isAuth]);
 
-  const realPrice = Math.floor((100 * price) / (100 - discount));
-
   return (
     <Box
       bgColor="white"
@@ -78,7 +76,7 @@ function ProductsCard({
       <Link href={`/product/${_id}`}>
         <Image
           src={image && image}
-          alt="Image belongs to Amazon. Used for educatinal purposes and showcasing web development skills only."
+          alt="Image belongs to Amazon. Used for educational purposes and showcasing web development skills only."
           w={{
             base: "200px",
             sm: "250px",

@@ -34,7 +34,7 @@ const ProductCard = ({
         <CardBody>
           <Image
             src={image && image}
-            alt="Image belongs to Amazon. Used for educatinal purposes and showcasing web development skills only."
+            alt="Image belongs to Amazon. Used for educational purposes and showcasing web development skills only."
             display="block"
             margin="auto"
             h={{ base: "150px", sm: "200px", lg: "250px" }}

@@ -168,7 +168,7 @@ export default function ProductDetail({ id }: { id: string }) {
                         <Image
                           p={1}
                           src={image}
-                          alt="Image belongs to Amazon. Used for educatinal purposes and showcasing web development skills only."
+                          alt="Image belongs to Amazon. Used for educational purposes and showcasing web development skills only."
                           w="100%"
                           h="100%"
                           objectFit="contain"
@@ -199,7 +199,7 @@ export default function ProductDetail({ id }: { id: string }) {
                   p={5}
                   bgColor="white"
                   src={images && images[imageIndex]}
-                  alt="Image belongs to Amazon. Used for educatinal purposes and showcasing web development skills only."
+                  alt="Image belongs to Amazon. Used for educational purposes and showcasing web development skills only."
                   align="center"
                   w="100%"
                   h={{ base: "100%", sm: "400px", lg: "500px" }}

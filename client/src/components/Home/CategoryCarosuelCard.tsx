@@ -36,7 +36,7 @@ const CategoryCarosuelCard = ({
               display="block"
               margin="auto"
               src={image}
-              alt="Image belongs to QuickrBazaar. Used for educatinal purposes and showcasing web development skills only."
+              alt="Image belongs to QuickrBazaar. Used for educational purposes and showcasing web development skills only."
             />
           </Square>
           <Text textAlign="center" fontWeight={500}>

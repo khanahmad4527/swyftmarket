@@ -4,7 +4,7 @@ export interface Product {
   category: string;
   price: number;
   discount: number;
-  discountPrice: number;
+  realPrice: number;
   rating: number;
   reviews: number;
   image: string;
@@ -12,8 +12,8 @@ export interface Product {
   quantity: number;
   description: string;
   brand: string;
-  addedAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface Cart {

@@ -167,297 +167,305 @@ const Navbar = () => {
   }, [isAuth]);
 
   return (
-    <Grid
-      bgColor="sm.sparkle"
-      justifyContent={"space-between"}
-      alignItems="center"
-      gap="10px"
-      templateColumns="repeat(1,1fr)"
-      alignSelf={"center"}
-      position="sticky"
-      top="0"
-      left="0"
-      width="100%"
-      zIndex={100}
-    >
-      {/*** 🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃 Mobile logo 🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃 ***/}
-
-      <Box display={{ base: "block", lg: "none" }} m="auto">
+    <>
+      <Box
+        display={{ base: "block", lg: "none" }}
+        m="auto"
+        w="100%"
+        bgColor="sm.sparkle"
+      >
         <Image
           src={alphaLogo}
           height={100}
           width={100}
           alt="SwyftMarket"
           onClick={() => router.push("/")}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer", display: "block", margin: "auto" }}
         />
       </Box>
 
-      {/*** 🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁 Mobile logo 🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁 ***/}
-
-      <Flex
+      <Grid
+        bgColor="sm.sparkle"
         justifyContent={"space-between"}
         alignItems="center"
         gap="10px"
-        p={{ base: "0px 10px 20px 10px", lg: "0px 20px 0px 10px" }}
+        paddingTop={{ base: "10px", lg: "0" }}
+        templateColumns="repeat(1,1fr)"
+        alignSelf={"center"}
+        position="sticky"
+        top="0"
+        left="0"
+        width="100%"
+        zIndex={100}
       >
-        {/*** 🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃 Mobile Logout Login My Account 🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃 ***/}
+        {/*** 🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃 Mobile logo 🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃 ***/}
 
-        <Box display={{ base: "block", lg: "none" }}>
-          <Icon
-            boxSize="8"
-            as={HamburgerIcon}
-            color={"sm.buff"}
-            onClick={onOpen}
-          />
-          <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
-            <DrawerOverlay />
-            <DrawerContent style={{ width: "200px" }}>
-              <DrawerCloseButton />
-              <DrawerHeader borderBottomWidth="1px" color="sm.sparkle">
-                SwyftMarket
-              </DrawerHeader>
-              <DrawerBody>
-                <Flex flexDirection="column" gap="10px">
-                  {isAuth && (
-                    <Menu>
-                      <MenuButton
-                        as={Button}
-                        bg="sm.sparkle"
-                        color="yellow.500"
-                        _hover={{
-                          color: "sm.sparkle",
-                          bg: "yellow.500",
-                        }}
-                        leftIcon={<BiUserCircle size="30px" />}
-                        variant="unstyled"
-                        display="flex"
-                        alignItems="center"
-                        px="10px"
+        {/*** 🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁 Mobile logo 🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁 ***/}
+
+        <Flex
+          justifyContent={"space-between"}
+          alignItems="center"
+          gap="10px"
+          p={{ base: "0px 10px 20px 10px", lg: "0px 20px 0px 10px" }}
+        >
+          {/*** 🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃 Mobile Logout Login My Account 🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃 ***/}
+
+          <Box display={{ base: "block", lg: "none" }}>
+            <Icon
+              boxSize="8"
+              as={HamburgerIcon}
+              color={"sm.buff"}
+              onClick={onOpen}
+            />
+            <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
+              <DrawerOverlay />
+              <DrawerContent style={{ width: "200px" }}>
+                <DrawerCloseButton />
+                <DrawerHeader borderBottomWidth="1px" color="sm.sparkle">
+                  SwyftMarket
+                </DrawerHeader>
+                <DrawerBody>
+                  <Flex flexDirection="column" gap="10px">
+                    {isAuth && (
+                      <Menu>
+                        <MenuButton
+                          as={Button}
+                          bg="sm.sparkle"
+                          color="yellow.500"
+                          _hover={{
+                            color: "sm.sparkle",
+                            bg: "yellow.500",
+                          }}
+                          leftIcon={<BiUserCircle size="30px" />}
+                          variant="unstyled"
+                          display="flex"
+                          alignItems="center"
+                          px="10px"
+                        >
+                          My Account
+                        </MenuButton>
+                        <MenuList position={"relative"} zIndex={10}>
+                          <MenuGroup title="Profile">
+                            <MenuItem onClick={() => router.push("/profile")}>
+                              Name: {`${firstname} ${lastname}`}
+                            </MenuItem>
+                          </MenuGroup>
+                        </MenuList>
+                      </Menu>
+                    )}
+
+                    {isAuth && (
+                      <Box>
+                        <Button
+                          bg="sm.sparkle"
+                          color="yellow.500"
+                          _hover={{
+                            color: "sm.sparkle",
+                            bg: "yellow.500",
+                          }}
+                          variant="unstyled"
+                          px="10px"
+                          onClick={() => router.push("/orders")}
+                        >
+                          Orders
+                        </Button>
+                      </Box>
+                    )}
+
+                    {!isAuth && (
+                      <Box>
+                        <Button
+                          bg="sm.sparkle"
+                          color="yellow.500"
+                          _hover={{
+                            color: "sm.sparkle",
+                            bg: "yellow.500",
+                          }}
+                          variant="unstyled"
+                          px="10px"
+                          onClick={() => router.push("/login")}
+                        >
+                          Login
+                        </Button>
+                      </Box>
+                    )}
+
+                    {isAuth && (
+                      <Box>
+                        <Button
+                          bg="sm.sparkle"
+                          color="yellow.500"
+                          _hover={{
+                            color: "sm.sparkle",
+                            bg: "yellow.500",
+                          }}
+                          variant="unstyled"
+                          px="10px"
+                          onClick={handleLogout}
+                        >
+                          Logout
+                        </Button>
+                      </Box>
+                    )}
+                  </Flex>
+                </DrawerBody>
+              </DrawerContent>
+            </Drawer>
+          </Box>
+
+          {/*** 🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁 Mobile Logout Login My Account 🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁 ***/}
+
+          {/*** 🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃 Laptop Logout Login My Account 🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃 ***/}
+
+          <Box display={{ base: "none", lg: "block" }}>
+            <Image
+              src={alphaLogo}
+              width={100}
+              height={100}
+              alt="SwyftMarket"
+              onClick={() => router.push("/")}
+              style={{ cursor: "pointer" }}
+            />
+          </Box>
+
+          {/*** 🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃 Search Bar 🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃 ***/}
+
+          <Box>
+            <InputGroup outline="2px solid" outlineColor="sm.buff">
+              <InputLeftAddon bg="none" border="none" p="0">
+                <Select
+                  value={category[0]}
+                  onChange={(e) => setCategory([e.target.value])}
+                  _focus={{ boxShadow: "none" }}
+                  w={{ base: "120px", sm: "100%" }}
+                  placeholder="All Categories"
+                  m="auto"
+                  border="none"
+                  outline="none"
+                >
+                  {categories.map((category) => {
+                    return (
+                      <option
+                        value={category.name}
+                        key={Date() + Math.random() + category.name}
                       >
-                        My Account
-                      </MenuButton>
-                      <MenuList position={"relative"} zIndex={10}>
-                        <MenuGroup title="Profile">
-                          <MenuItem onClick={() => router.push("/profile")}>
-                            Name: {`${firstname} ${lastname}`}
-                          </MenuItem>
-                        </MenuGroup>
-                      </MenuList>
-                    </Menu>
-                  )}
-
-                  {isAuth && (
-                    <Box>
-                      <Button
-                        bg="sm.sparkle"
-                        color="yellow.500"
-                        _hover={{
-                          color: "sm.sparkle",
-                          bg: "yellow.500",
-                        }}
-                        variant="unstyled"
-                        px="10px"
-                        onClick={() => router.push("/orders")}
-                      >
-                        Orders
-                      </Button>
-                    </Box>
-                  )}
-
-                  {!isAuth && (
-                    <Box>
-                      <Button
-                        bg="sm.sparkle"
-                        color="yellow.500"
-                        _hover={{
-                          color: "sm.sparkle",
-                          bg: "yellow.500",
-                        }}
-                        variant="unstyled"
-                        px="10px"
-                        onClick={() => router.push("/login")}
-                      >
-                        Login
-                      </Button>
-                    </Box>
-                  )}
-
-                  {isAuth && (
-                    <Box>
-                      <Button
-                        bg="sm.sparkle"
-                        color="yellow.500"
-                        _hover={{
-                          color: "sm.sparkle",
-                          bg: "yellow.500",
-                        }}
-                        variant="unstyled"
-                        px="10px"
-                        onClick={handleLogout}
-                      >
-                        Logout
-                      </Button>
-                    </Box>
-                  )}
-                </Flex>
-              </DrawerBody>
-            </DrawerContent>
-          </Drawer>
-        </Box>
-
-        {/*** 🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁 Mobile Logout Login My Account 🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁 ***/}
-
-        {/*** 🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃 Laptop Logout Login My Account 🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃 ***/}
-
-        <Box display={{ base: "none", lg: "block" }}>
-          <Image
-            src={alphaLogo}
-            width={100}
-            height={100}
-            alt="SwyftMarket"
-            onClick={() => router.push("/")}
-            style={{ cursor: "pointer" }}
-          />
-        </Box>
-
-        {/*** 🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃 Search Bar 🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃 ***/}
-
-        <Box>
-          <InputGroup outline="2px solid" outlineColor="sm.buff">
-            <InputLeftAddon bg="none" border="none" p="0">
-              <Select
-                value={category[0]}
-                onChange={(e) => setCategory([e.target.value])}
+                        {category.displayName}
+                      </option>
+                    );
+                  })}
+                </Select>
+                <Divider
+                  h="6"
+                  color="sm.buff"
+                  orientation="vertical"
+                  borderWidth="1px"
+                />
+              </InputLeftAddon>
+              <Input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
                 _focus={{ boxShadow: "none" }}
-                w={{ base: "120px", sm: "100%" }}
-                placeholder="All Categories"
+                w={{ base: "100%", sm: "400px", md: "450px", lg: "400px" }}
                 m="auto"
                 border="none"
-                outline="none"
-              >
-                {categories.map((category) => {
-                  return (
-                    <option
-                      value={category.name}
-                      key={Date() + Math.random() + category.name}
-                    >
-                      {category.displayName}
-                    </option>
-                  );
-                })}
-              </Select>
-              <Divider
-                h="6"
-                color="sm.buff"
-                orientation="vertical"
-                borderWidth="1px"
+                alignSelf="center"
               />
-            </InputLeftAddon>
-            <Input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              _focus={{ boxShadow: "none" }}
-              w={{ base: "100%", sm: "400px", md: "450px", lg: "400px" }}
-              m="auto"
-              border="none"
-              alignSelf="center"
-            />
-            <InputRightAddon
-              bg="sm.buff"
-              border="none"
-              borderRadius="none"
-              cursor="pointer"
-              onClick={handleSearch}
-            >
-              <Icon boxSize="5" as={SearchIcon} />
-            </InputRightAddon>
-          </InputGroup>
-        </Box>
-
-        {/*** 🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁 Search Bar 🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁 ***/}
-
-        {!isAuth && (
-          <Box display={{ base: "none", lg: "block" }}>
-            <Button
-              bgColor={"sm.buff"}
-              variant="unstyled"
-              px="10px"
-              onClick={() => router.push("/login")}
-            >
-              Login
-            </Button>
-          </Box>
-        )}
-
-        {isAuth && (
-          <Box display={{ base: "none", lg: "block" }}>
-            <Menu>
-              <MenuButton
-                as={Button}
-                bgColor={"sm.buff"}
-                leftIcon={<BiUserCircle size="30px" />}
-                variant="unstyled"
-                display="flex"
-                alignItems="center"
-                px="10px"
-              >
-                My Account
-              </MenuButton>
-              <MenuList position={"relative"} zIndex={10}>
-                <MenuGroup title="Profile">
-                  <MenuItem onClick={() => router.push("/profile")}>
-                    Name: {`${firstname} ${lastname}`}
-                  </MenuItem>
-                  <MenuItem onClick={() => router.push("/orders")}>
-                    Orders
-                  </MenuItem>
-                </MenuGroup>
-                <MenuDivider />
-                <MenuItem onClick={handleLogout}>Logout</MenuItem>
-              </MenuList>
-            </Menu>
-          </Box>
-        )}
-
-        {isAuth && (
-          <Square
-            onClick={() => router.push("/cart")}
-            cursor="pointer"
-            position="relative"
-          >
-            <Icon boxSize={50} as={FiShoppingCart} color="sm.buff" />
-            {getCartIsLoading ? (
-              <Spinner
-                position="absolute"
-                top={0}
-                right={0}
-                thickness="2px"
-                speed="0.65s"
-                color="yellow.500"
-                boxSize="25px"
-              />
-            ) : (
-              <Circle
-                border="2px solid"
-                borderColor="yellow.500"
-                borderRadius="50%"
-                size="25px"
+              <InputRightAddon
                 bg="sm.buff"
-                color="sm.sparkle"
-                position="absolute"
-                top={0}
-                right={0}
+                border="none"
+                borderRadius="none"
+                cursor="pointer"
+                onClick={handleSearch}
               >
-                {cartData && cartData.length}
-              </Circle>
-            )}
-          </Square>
-        )}
+                <Icon boxSize="5" as={SearchIcon} />
+              </InputRightAddon>
+            </InputGroup>
+          </Box>
 
-        {/*** 🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁 Laptop Logout Login My Account 🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁 ***/}
-      </Flex>
-    </Grid>
+          {/*** 🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁 Search Bar 🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁 ***/}
+
+          {!isAuth && (
+            <Box display={{ base: "none", lg: "block" }}>
+              <Button
+                bgColor={"sm.buff"}
+                variant="unstyled"
+                px="10px"
+                onClick={() => router.push("/login")}
+              >
+                Login
+              </Button>
+            </Box>
+          )}
+
+          {isAuth && (
+            <Box display={{ base: "none", lg: "block" }}>
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  bgColor={"sm.buff"}
+                  leftIcon={<BiUserCircle size="30px" />}
+                  variant="unstyled"
+                  display="flex"
+                  alignItems="center"
+                  px="10px"
+                >
+                  My Account
+                </MenuButton>
+                <MenuList position={"relative"} zIndex={10}>
+                  <MenuGroup title="Profile">
+                    <MenuItem onClick={() => router.push("/profile")}>
+                      Name: {`${firstname} ${lastname}`}
+                    </MenuItem>
+                    <MenuItem onClick={() => router.push("/orders")}>
+                      Orders
+                    </MenuItem>
+                  </MenuGroup>
+                  <MenuDivider />
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                </MenuList>
+              </Menu>
+            </Box>
+          )}
+
+          {isAuth && (
+            <Square
+              onClick={() => router.push("/cart")}
+              cursor="pointer"
+              position="relative"
+            >
+              <Icon boxSize={50} as={FiShoppingCart} color="sm.buff" />
+              {getCartIsLoading ? (
+                <Spinner
+                  position="absolute"
+                  top={0}
+                  right={0}
+                  thickness="2px"
+                  speed="0.65s"
+                  color="yellow.500"
+                  boxSize="25px"
+                />
+              ) : (
+                <Circle
+                  border="2px solid"
+                  borderColor="yellow.500"
+                  borderRadius="50%"
+                  size="25px"
+                  bg="sm.buff"
+                  color="sm.sparkle"
+                  position="absolute"
+                  top={0}
+                  right={0}
+                >
+                  {cartData && cartData.length}
+                </Circle>
+              )}
+            </Square>
+          )}
+
+          {/*** 🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁 Laptop Logout Login My Account 🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁 ***/}
+        </Flex>
+      </Grid>
+    </>
   );
 };
 

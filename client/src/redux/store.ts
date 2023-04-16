@@ -1,4 +1,5 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 import {
   legacy_createStore,
   compose,
@@ -25,23 +26,26 @@ const rootReducer = combineReducers({
 });
 
 /*****************       In Production    ***************************/
-interface CustomWindow extends Window {
-  __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-}
+// interface CustomWindow extends Window {
+//   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+// }
 
-const composeEnhancer =
-  (typeof window !== "undefined" &&
-    (window as CustomWindow).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
-  compose;
+// const composeEnhancer =
+//   (typeof window !== "undefined" &&
+//     (window as CustomWindow).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+//   compose;
 
-export const store = legacy_createStore(
-  rootReducer,
-  composeEnhancer(applyMiddleware(thunk))
-);
+// export const store = legacy_createStore(
+//   rootReducer,
+//   composeEnhancer(applyMiddleware(thunk))
+// );
 
 /*****************       For Users    ***************************/
 
-// export const store = legacy_createStore(rootReducer, applyMiddleware(thunk));
+export const store = legacy_createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
 
 /**************      TypeScript for redux useDispatch and useSelector      ************/
 

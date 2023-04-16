@@ -25,7 +25,7 @@ const initialForm: ForgetPasswordValues = {
   email: "",
 };
 
-  /********** email schema ******************/
+/********** email schema ******************/
 
 const emailSchema = Yup.object().shape({
   email: Yup.string()
@@ -38,7 +38,7 @@ export default function ForgotPasswordForm() {
   const toast = useToast();
   const router = useRouter();
 
-    /********** formik and yup validation ******************/
+  /********** formik and yup validation ******************/
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
@@ -101,7 +101,16 @@ export default function ForgotPasswordForm() {
     });
 
   return (
-    <Flex minH={"100vh"} align={"center"} justify={"center"}>
+    <Flex
+      minH={"100vh"}
+      align={"center"}
+      justify={"center"}
+      mx={"auto"}
+      maxW={"lg"}
+      py={12}
+      px={6}
+      w="max-content"
+    >
       <Stack
         spacing={4}
         w={"full"}

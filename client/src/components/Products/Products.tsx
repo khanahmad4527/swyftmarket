@@ -399,7 +399,6 @@ const Products = () => {
           <Button
             bgColor={"sm.buff"}
             color="sm.sparkle"
-            colorScheme="yellow"
             ref={btnRef}
             onClick={onOpen}
           >

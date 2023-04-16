@@ -4,9 +4,9 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import CategoryCarosuelCard from "./CategoryCarosuelCard";
+import CategoryCarouselCard from "./CategoryCarouselCard";
 
-const CarosuelImages = [
+const CarouselImages = [
   {
     image:
       "https://teja10.kuikr.com/escrow/assets/image/certified_landing_page/other-furnitures.png",
@@ -75,7 +75,7 @@ const CarosuelImages = [
   },
 ];
 
-const CategoryCarosuel = () => {
+const CategoryCarousel = () => {
   const settings = {
     infinite: true,
     speed: 200,
@@ -108,12 +108,13 @@ const CategoryCarosuel = () => {
       },
     ],
   };
+  
   return (
     <>
       <Box padding="20px" w="85%" margin=" 20px auto">
         <Slider {...settings}>
-          {CarosuelImages.map((item) => (
-            <CategoryCarosuelCard key={Date() + Math.random()} {...item} />
+          {CarouselImages.map((item) => (
+            <CategoryCarouselCard key={Date() + Math.random()} {...item} />
           ))}
         </Slider>
       </Box>
@@ -121,7 +122,7 @@ const CategoryCarosuel = () => {
   );
 };
 
-export default CategoryCarosuel;
+export default CategoryCarousel;
 
 const CustomPrevArrow = ({ onClick }: any) => (
   <Circle

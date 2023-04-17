@@ -50,10 +50,10 @@ Swyftmarket is an online platform that provides a seamless shopping experience f
 - Filter and search for products to find the perfect items
 - User-friendly interface with intuitive navigation and clean design
 - Easy checkout and payment options with multiple payment methods available
-- View order history and track orders in real-time
-- Change user information, including name, shipping address, and payment options
+- View order history
+- Change user information, including name, shipping address
 - User reviews and ratings to help you make informed purchasing decisions
-- Comprehensive product details, including images, descriptions, and specifications
+- Comprehensive product details, including images and descriptions
 
 ## Installation
 

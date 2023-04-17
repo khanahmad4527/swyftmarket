@@ -53,7 +53,6 @@ const Home = () => {
   }, [home, mobile, tv]);
 
   if (dataLoaded === false) {
-    // use new state to conditionally render loading or content
     return (
       <Flex w="100%" minH="100vh">
         <Loading />

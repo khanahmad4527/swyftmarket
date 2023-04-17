@@ -3,14 +3,10 @@ import {
   Button,
   Divider,
   Flex,
-  FormControl,
-  FormLabel,
   Input,
   InputGroup,
   InputLeftAddon,
-  InputLeftElement,
   InputRightAddon,
-  InputRightElement,
   Select,
   Icon,
   Grid,
@@ -168,6 +164,8 @@ const Navbar = () => {
 
   return (
     <>
+      {/*** 🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃 Mobile logo 🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃 ***/}
+
       <Box
         display={{ base: "block", lg: "none" }}
         m="auto"
@@ -184,12 +182,14 @@ const Navbar = () => {
         />
       </Box>
 
+      {/*** 🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁 Mobile logo 🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁 ***/}
+
       <Grid
         bgColor="sm.sparkle"
         justifyContent={"space-between"}
         alignItems="center"
         gap="10px"
-        paddingTop={{ base: "10px", lg: "0" }}
+        paddingTop={{ base: "20px", lg: "0" }}
         templateColumns="repeat(1,1fr)"
         alignSelf={"center"}
         position="sticky"
@@ -198,10 +198,6 @@ const Navbar = () => {
         width="100%"
         zIndex={100}
       >
-        {/*** 🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃 Mobile logo 🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃🢃 ***/}
-
-        {/*** 🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁 Mobile logo 🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁🢁 ***/}
-
         <Flex
           justifyContent={"space-between"}
           alignItems="center"

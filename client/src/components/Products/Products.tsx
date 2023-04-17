@@ -298,128 +298,38 @@ const Products = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  return (
-    <>
-      <Flex
-        w="85%"
-        minH="100vh"
-        margin="auto"
-        justifyContent={{ base: "center", md: "space-between" }}
-        py="20px"
-        gap="50px"
-        color="sm.sparkle"
-        marginTop={"20px"}
-      >
-        <Box
-          display={{ base: "none", md: "block" }}
-          w={{ md: "45%", lg: "30%" }}
-        >
-          <Filter
-            productCategoryOnchange={productCategoryOnchange}
-            category={category}
-            productBrandOnchange={productBrandOnchange}
-            brand={brand}
-            productPriceOnchange={productPriceOnchange}
-            price={`${price_gte},${price_lte}`}
-            productDiscountOnchange={productDiscountOnchange}
-            discount={`${discount_gte},${discount_lte}`}
-            productRatingOnchange={productRatingOnchange}
-            rating={`${rating_gte},${rating_lte}`}
-            resetFilter={resetFilter}
-          />
-        </Box>
+  const [dataLoaded, setDataLoaded] = useState<boolean>(false);
 
-        <Flex
-          flexDirection="column"
-          gap="20px"
-          w={{ base: "100%", md: "55%", lg: "70%" }}
-        >
-          <Box display={{ base: "none", md: "block" }}>
-            <Sort
-              productPerPageOnChange={productPerPageOnChange}
-              productPerPage={productPerPage}
-              productSortOnChange={productSortOnChange}
-              sort_order={`${sort},${order}`}
-            />
-          </Box>
+  useEffect(() => {
+    // check if all data has finished loading
+    if (getProductsIsLoading === false) {
+      setDataLoaded(true);
+    }
+  }, [getProductsIsLoading]);
 
-          {getProductsIsLoading ? (
-            <Loading />
-          ) : getProductsIsError ? (
-            <Error />
-          ) : productsData && productsData.length === 0 ? (
-            <Box textAlign="center">
-              <VStack spacing={4} mt={8}>
-                <Text fontSize="2xl">No results found</Text>
-                <Text fontSize="lg">
-                  We&apos;re sorry, We couldn&apos;t find any products matching
-                  your search. Please try a different search term.
-                </Text>
-              </VStack>
-            </Box>
-          ) : (
-            <Grid
-              templateColumns={{ base: "100%", lg: "repeat(2, 1fr)" }}
-              gap={10}
-            >
-              {productsData &&
-                productsData.map((elm) => {
-                  return (
-                    <ProductsCard
-                      key={Date() + Math.random()}
-                      {...elm} //cartData={cartData}
-                    />
-                  );
-                })}
-            </Grid>
-          )}
-
-          <Pagination
-            totalCount={totalProductCount}
-            currentPage={currentPage}
-            pageSize={productPerPage}
-            onPageChange={paginate}
-          />
-        </Flex>
+  if (dataLoaded === false) {
+    return (
+      <Flex w="100%" minH="100vh">
+        <Loading />
       </Flex>
-
-      {/*********** filter, sort for mobile *******************/}
-
-      {isMobile && (
-        <Square
-          position={"fixed"}
-          zIndex={1}
-          right={0}
-          left={0}
-          bottom={0}
-          bgColor="sm.sparkle"
-          display={isVisible ? "center" : "none"}
-          style={{ width: "100%", height: "60px" }}
+    );
+  } else {
+    return (
+      <>
+        <Flex
+          w="85%"
+          minH="100vh"
+          margin="auto"
+          justifyContent={{ base: "center", md: "space-between" }}
+          py="20px"
+          gap="50px"
+          color="sm.sparkle"
+          marginTop={"20px"}
         >
-          <Button
-            bgColor={"sm.buff"}
-            color="sm.sparkle"
-            ref={btnRef}
-            onClick={onOpen}
+          <Box
+            display={{ base: "none", md: "block" }}
+            w={{ md: "45%", lg: "30%" }}
           >
-            Apply Sort and Filter
-          </Button>
-        </Square>
-      )}
-
-      <Drawer
-        isOpen={isOpen}
-        placement="right"
-        onClose={onClose}
-        finalFocusRef={btnRef}
-        size="full"
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader color="sm.sparkle">Apply Sort and Filter</DrawerHeader>
-
-          <DrawerBody>
             <Filter
               productCategoryOnchange={productCategoryOnchange}
               category={category}
@@ -433,29 +343,138 @@ const Products = () => {
               rating={`${rating_gte},${rating_lte}`}
               resetFilter={resetFilter}
             />
+          </Box>
 
-            <Sort
-              productPerPageOnChange={productPerPageOnChange}
-              productPerPage={productPerPage}
-              productSortOnChange={productSortOnChange}
-              sort_order={`${sort},${order}`}
+          <Flex
+            flexDirection="column"
+            gap="20px"
+            w={{ base: "100%", md: "55%", lg: "70%" }}
+          >
+            <Box display={{ base: "none", md: "block" }}>
+              <Sort
+                productPerPageOnChange={productPerPageOnChange}
+                productPerPage={productPerPage}
+                productSortOnChange={productSortOnChange}
+                sort_order={`${sort},${order}`}
+              />
+            </Box>
+
+            {getProductsIsLoading ? (
+              <Loading />
+            ) : getProductsIsError ? (
+              <Error />
+            ) : productsData && productsData.length === 0 ? (
+              <Box textAlign="center">
+                <VStack spacing={4} mt={8}>
+                  <Text fontSize="2xl">No results found</Text>
+                  <Text fontSize="lg">
+                    We&apos;re sorry, We couldn&apos;t find any products
+                    matching your search. Please try a different search term.
+                  </Text>
+                </VStack>
+              </Box>
+            ) : (
+              <Grid
+                templateColumns={{ base: "100%", lg: "repeat(2, 1fr)" }}
+                gap={10}
+              >
+                {productsData &&
+                  productsData.map((elm) => {
+                    return (
+                      <ProductsCard
+                        key={Date() + Math.random()}
+                        {...elm} //cartData={cartData}
+                      />
+                    );
+                  })}
+              </Grid>
+            )}
+
+            <Pagination
+              totalCount={totalProductCount}
+              currentPage={currentPage}
+              pageSize={productPerPage}
+              onPageChange={paginate}
             />
-          </DrawerBody>
+          </Flex>
+        </Flex>
 
-          <DrawerFooter>
+        {/*********** filter, sort for mobile *******************/}
+
+        {isMobile && (
+          <Square
+            position={"fixed"}
+            zIndex={1}
+            right={0}
+            left={0}
+            bottom={0}
+            bgColor="sm.sparkle"
+            display={isVisible ? "center" : "none"}
+            style={{ width: "100%", height: "60px" }}
+          >
             <Button
               bgColor={"sm.buff"}
               color="sm.sparkle"
-              colorScheme="yellow"
-              onClick={onClose}
+              ref={btnRef}
+              onClick={onOpen}
             >
-              Close
+              Apply Sort and Filter
             </Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-    </>
-  );
+          </Square>
+        )}
+
+        <Drawer
+          isOpen={isOpen}
+          placement="right"
+          onClose={onClose}
+          finalFocusRef={btnRef}
+          size="full"
+        >
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader color="sm.sparkle">
+              Apply Sort and Filter
+            </DrawerHeader>
+
+            <DrawerBody>
+              <Filter
+                productCategoryOnchange={productCategoryOnchange}
+                category={category}
+                productBrandOnchange={productBrandOnchange}
+                brand={brand}
+                productPriceOnchange={productPriceOnchange}
+                price={`${price_gte},${price_lte}`}
+                productDiscountOnchange={productDiscountOnchange}
+                discount={`${discount_gte},${discount_lte}`}
+                productRatingOnchange={productRatingOnchange}
+                rating={`${rating_gte},${rating_lte}`}
+                resetFilter={resetFilter}
+              />
+
+              <Sort
+                productPerPageOnChange={productPerPageOnChange}
+                productPerPage={productPerPage}
+                productSortOnChange={productSortOnChange}
+                sort_order={`${sort},${order}`}
+              />
+            </DrawerBody>
+
+            <DrawerFooter>
+              <Button
+                bgColor={"sm.buff"}
+                color="sm.sparkle"
+                colorScheme="yellow"
+                onClick={onClose}
+              >
+                Close
+              </Button>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
+      </>
+    );
+  }
 };
 
 export default Products;

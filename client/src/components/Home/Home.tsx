@@ -1,5 +1,5 @@
 import { Box, Flex } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import {
   getHomeAppliances,
@@ -8,9 +8,11 @@ import {
 } from "../../redux/home/home.action";
 import CategoryCarousel from "./CategoryCarousel";
 import ProductCarousel from "./ProductCarousel";
-import { useRouter } from "next/router";
+import Loading from "@/utils/Loading";
+import Error from "@/utils/Error";
 
 const Home = () => {
+  const [dataLoaded, setDataLoaded] = useState<boolean>(false);
   const mobile = useAppSelector((store) => store.home);
   const tv = useAppSelector((store) => store.home);
   const home = useAppSelector((store) => store.home);
@@ -32,33 +34,68 @@ const Home = () => {
     if (!home.homeData.length) {
       dispatch(getHomeAppliances("home_appliances"));
     }
-  }, [dispatch, home.homeData.length, mobile.mobileData.length, tv.tvData.length]);
+  }, [
+    dispatch,
+    home.homeData.length,
+    mobile.mobileData.length,
+    tv.tvData.length,
+  ]);
 
-  return (
-    <Flex flexDirection="column">
-      <CategoryCarousel />
-      <ProductCarousel
-        title="Mobiles"
-        data={mobile.mobileData}
-        loading={mobile.getMobileIsLoading}
-        error={mobile.getMobileIsError}
-      />
-      <ProductCarousel
-        title="Tvs"
-        data={tv.tvData}
-        loading={tv.getTvIsLoading}
-        error={tv.getTvIsError}
-      />
-      <ProductCarousel
-        title="Home Appliances"
-        data={home.homeData}
-        loading={home.getHomeIsLoading}
-        error={home.getHomeIsError}
-      />
-      {/* To maintain the margin bottom with footer on home page */}
-      <Box mt={"20px"}></Box>
-    </Flex>
-  );
+  useEffect(() => {
+    // check if all data has finished loading
+    if (
+      mobile.getMobileIsLoading === false &&
+      tv.getTvIsLoading === false &&
+      home.getHomeIsLoading === false
+    ) {
+      setDataLoaded(true);
+    }
+  }, [home, mobile, tv]);
+
+  if (dataLoaded === false) {
+    // use new state to conditionally render loading or content
+    return (
+      <Flex w="100%" minH="100vh">
+        <Loading />
+      </Flex>
+    );
+  } else if (
+    mobile.getMobileIsError ||
+    tv.getTvIsError ||
+    home.getHomeIsError
+  ) {
+    return (
+      <Flex w="100%" minH="100vh">
+        <Error />
+      </Flex>
+    );
+  } else {
+    return (
+      <Flex flexDirection="column">
+        <CategoryCarousel />
+        <ProductCarousel
+          title="Mobiles"
+          data={mobile.mobileData}
+          loading={mobile.getMobileIsLoading}
+          error={mobile.getMobileIsError}
+        />
+        <ProductCarousel
+          title="Tvs"
+          data={tv.tvData}
+          loading={tv.getTvIsLoading}
+          error={tv.getTvIsError}
+        />
+        <ProductCarousel
+          title="Home Appliances"
+          data={home.homeData}
+          loading={home.getHomeIsLoading}
+          error={home.getHomeIsError}
+        />
+        {/* To maintain the margin bottom with footer on home page */}
+        <Box mt={"20px"}></Box>
+      </Flex>
+    );
+  }
 };
 
 export default Home;

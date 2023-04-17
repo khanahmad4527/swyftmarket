@@ -108,7 +108,7 @@ const CategoryCarousel = () => {
       },
     ],
   };
-  
+
   return (
     <>
       <Box padding="20px" w="85%" margin=" 20px auto">

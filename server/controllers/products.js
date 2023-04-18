@@ -15,7 +15,7 @@ const getSingleProduct = async (req, res) => {
 };
 
 const getProducts = async (req, res) => {
-  const { q, _page, _limit, _sort, _order, category } = req.query;
+  const { q, _page, _limit, _sort, _order, category, brand } = req.query;
 
   const filters = {};
 
@@ -28,6 +28,10 @@ const getProducts = async (req, res) => {
 
   if (category) {
     filters.category = { $in: category };
+  }
+
+  if (brand) {
+    filters.brand = { $in: brand };
   }
 
   Object.keys(req.query).forEach((key) => {

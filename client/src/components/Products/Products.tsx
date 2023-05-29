@@ -317,7 +317,7 @@ const Products = () => {
     return (
       <>
         <Flex
-          w="85%"
+          w={{ base: "85%", md: "90%", lg: "98%" }}
           minH="100vh"
           margin="auto"
           justifyContent={{ base: "center", md: "space-between" }}
@@ -328,7 +328,7 @@ const Products = () => {
         >
           <Box
             display={{ base: "none", md: "block" }}
-            w={{ md: "45%", lg: "30%" }}
+            w={{ md: "45%", lg: "15%" }}
           >
             <Filter
               productCategoryOnchange={productCategoryOnchange}
@@ -348,7 +348,7 @@ const Products = () => {
           <Flex
             flexDirection="column"
             gap="20px"
-            w={{ base: "100%", md: "55%", lg: "70%" }}
+            w={{ base: "100%", md: "55%", lg: "90%" }}
           >
             <Box display={{ base: "none", md: "block" }}>
               <Sort
@@ -375,7 +375,7 @@ const Products = () => {
               </Box>
             ) : (
               <Grid
-                templateColumns={{ base: "100%", lg: "repeat(2, 1fr)" }}
+                templateColumns={{ base: "100%", lg: "repeat(3, 1fr)" }}
                 gap={10}
               >
                 {productsData &&
